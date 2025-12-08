@@ -1,0 +1,210 @@
+{% extends layout %}
+
+{% block content %}
+
+
+    {% include 'components/modal_userinfo.twig' %}
+
+    <div class="profile-header">
+
+        <div class="cover-wrapper">
+            <img src="{{ assets.img }}no_cover.jpg" alt="">
+
+            {% if isAuth %}
+                <button class="btn-cover-upload">Загрузить обложку</button>
+            {% endif %}
+
+            <!-- Нижняя полоса -->
+            <div class="cover-bottom-bar">
+
+                <div class="cover-left">
+                    <img src="{{ assets.img }}avatar/no_ava_150.jpg" class="profile-avatar">
+
+                    <div class="profile-info-text">
+                        <h2 class="profile-name">{{ user.name }} {{ user.surname }}</h2>
+
+                        <div class="profile-status-block" data-user-id="{{ user_id }}">
+
+                            {% if user.status %}
+                                <span class="profile-status-text" id="text-select">{{ user.status }}</span>
+                            {% else %}
+                                {% if isAuth and isOwner %}
+                                    <span class="profile-status-text" id="text-select">Установить статус</span>
+                                {% else %}
+                                    <span class="profile-status-text">{{ user.status }}</span>
+                                {% endif %}
+                            {% endif %}
+
+                            <div class="status-add-bg" style="display:none;">
+                                <label>Введите текст статуса:</label>
+                                <input type="text" class="profile-status-input" placeholder="Введите статус" maxlength="186">
+                            </div>
+                        </div>
+
+                        <div class="profile-location-row">
+                            <div class="profile-birth">Дата рождения: {{ birth_date }}</div>
+                            <span class="dot"></span>
+                            <div class="profile-city">Город: {{ user.city }}</div>
+                            <span class="dot"></span>
+                            <div id="openModal" class="profile-info-show">Подробнее</div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="cover-right">
+                    {% if isAuth and isOwner %}
+                        <a href="#" class="button-blue">Сообщение</a>
+                        <a href="#" class="button-blue">Добавить</a>
+                        <a href="#" class="button-blue"><span class="add-prof-btn"></span></a>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="profile-body">
+
+        <div class="profile-sidebar">
+
+            <div class="friends-block">
+                <div class="friends-header">
+                    <span>Друзья</span>
+                    <span class="friends-count">124 друга</span>
+                </div>
+
+                <div class="friends-grid">
+                    <div class="friend-item">
+                        <a href="">
+                            <img src="{{ assets.img }}avatar/no_ava_50.png" alt="">
+                            <div class="friend-name">Анна</div>
+                        </a>
+                    </div>
+                    <div class="friend-item">
+                        <a href="">
+                            <img src="{{ assets.img }}avatar/no_ava_50.png" alt="">
+                            <div class="friend-name">Максим</div>
+                        </a>
+                    </div>
+                    <div class="friend-item">
+                        <a href="">
+                            <img src="{{ assets.img }}avatar/no_ava_50.png" alt="">
+                            <div class="friend-name">Петя</div>
+                        </a>
+                    </div>
+                    <div class="friend-item">
+                        <a href="">
+                            <img src="{{ assets.img }}avatar/no_ava_50.png" alt="">
+                            <div class="friend-name">Оля</div>
+                        </a>
+                    </div>
+                    <div class="friend-item">
+                        <a href="">
+                            <img src="{{ assets.img }}avatar/no_ava_50.png" alt="">
+                            <div class="friend-name">Лена</div>
+                        </a>
+                    </div>
+                    <div class="friend-item">
+                        <a href="">
+                            <img src="{{ assets.img }}avatar/no_ava_50.png" alt="">
+                            <div class="friend-name">Игорь</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="profile-content">
+
+            {% if isAuth %}
+            <div class="wall-block">
+                <div class="wall-header">
+                    Записей на стене: <strong>123</strong>
+                </div>
+
+                <input class="wall-input" placeholder="Что нового, {{ user.name }}?">
+{#                <textarea class="wall-textarea" style="display:none;"></textarea>#}
+                <div class="wall-textarea-wrap" style="display:none;">
+                    <textarea class="wall-textarea"></textarea>
+                    <button class="emoji-btn">😊</button>
+                </div>
+
+                <div class="wall-actions">
+                    <button class="button-silver file-btn">Добавить файл</button>
+                    <a class="button-silver more-btn">Еще</a>
+                    <div class="wall-actions-send">
+                        <a class="button-blue send-btn">Отправить</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="wall-post">
+                <div class="post-header">
+                    <img src="{{ assets.img }}avatar/no_ava_50.png" class="post-avatar">
+                    <div class="post-author">
+                        <span class="post-name">Максим Вадимович</span>
+                        <span class="post-date">только что</span>
+                    </div>
+
+                    <button class="post-menu-btn"></button>
+                </div>
+
+                <div class="post-text">
+                    Это пример красивого поста с фото, текстом и комментариями.
+                    Оформление как в актуальном VK.
+                </div>
+
+                <div class="post-photo">
+                    <img src="{{ assets.img }}avatar/no_ava_50.png">
+                </div>
+
+                <div class="post-actions">
+                    <button class="like-btn">128</button>
+                    <button class="comment-btn">24</button>
+                </div>
+
+                <div class="post-comments">
+
+                    <div class="comment">
+                        <img src="{{ assets.img }}avatar/no_ava_50.png" class="comment-avatar">
+                        <div class="comment-body">
+                            <div class="comment-name">Иван Петров</div>
+                            <div class="comment-text">Очень круто выглядит!</div>
+                            <div class="comment-actions">
+                                <span class="comment-date">5 мин назад</span>
+                                <button class="comment-reply">Ответить</button>
+                            </div>
+
+                            <!-- Ответ на комментарий -->
+                            <div class="comment-reply-block">
+                                <img src="{{ assets.img }}avatar/no_ava_50.png" class="comment-avatar">
+                                <div class="comment-body">
+                                    <div class="comment-name">Алексей</div>
+                                    <div class="comment-text">Полностью согласен!</div>
+                                    <div class="comment-actions">
+                                        <span class="comment-date">2 мин назад</span>
+                                        <button class="comment-reply">Ответить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Добавить комментарий -->
+                    <div class="add-comment">
+                        <img src="{{ assets.img }}avatar/no_ava_50.png" class="comment-avatar">
+                        <input type="text" placeholder="Написать комментарий..." class="comment-input">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

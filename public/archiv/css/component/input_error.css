@@ -1,0 +1,35 @@
+/* Ошибки в полях */
+.error-text {
+    color: #ff606f; /* фирменный iOS красный */
+    font-size: 12px;
+    margin-top: 4px;
+    line-height: 1.3;
+
+    opacity: 0;
+    transform: translateY(-3px);
+    max-height: 0;
+    overflow: hidden;
+
+    transition:
+            opacity 0.25s ease,
+            transform 0.25s ease,
+            max-height 0.25s ease;
+}
+
+.error-text.show {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 30px;
+}
+
+.input-error {
+    border-color: #ff606f !important;
+    background-color: #fffafa; /* лёгкий iOS красный фон */
+    transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.input-success {
+    border-color: #34c759 !important; /* iOS зеленый */
+    background-color: #f6fff8;
+    transition: border-color 0.25s ease, background-color 0.25s ease;
+}

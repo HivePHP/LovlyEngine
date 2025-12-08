@@ -1,0 +1,16 @@
+
+{% extends layout %}
+
+{% block content %}
+    <div class="profile-not-found">
+        <div class="pnf-card">
+            <div class="pnf-icon">😕</div>
+
+            <h2>Профиль не найден</h2>
+
+            <p>Пользователь с ID <strong>{{ user_id }}</strong> не существует или был удалён.</p>
+
+            <a href="/" class="pnf-btn">На главную</a>
+        </div>
+    </div>
+{% endblock %}

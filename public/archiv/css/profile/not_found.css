@@ -1,0 +1,48 @@
+.profile-not-found {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+}
+
+.pnf-card {
+    width: 100%;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px 25px;
+    text-align: center;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+}
+
+.pnf-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.pnf-card h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.pnf-card p {
+    color: #555;
+    font-size: 15px;
+    margin-bottom: 25px;
+}
+
+.pnf-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #1877f2;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.pnf-btn:hover {
+    background: #1468d8;
+}

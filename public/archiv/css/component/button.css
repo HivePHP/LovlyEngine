@@ -1,0 +1,86 @@
+/* Кнопка загрузки обложки */
+.btn-cover-upload {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.btn-cover-upload:hover {
+    background: rgba(0,0,0,0.7);
+}
+
+
+/* Общие стили для всех кнопок */
+.button-green,
+.button-silver,
+.button-blue {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: 0.2s;
+    text-decoration: none; /* для ссылок */
+    cursor: pointer;
+    user-select: none;
+    font-family: inherit;
+    border: none; /* убираем границы */
+}
+
+/* Цвета */
+.button-blue {
+    background-color: #1877f2;
+    color: #fff;
+}
+
+.button-silver {
+    background-color: #ccc;
+    color: #333;
+}
+
+.button-green {
+    background-color: #42b72a;
+    color: #fff;
+}
+
+/* Hover */
+.button-green:hover,
+.button-silver:hover,
+.button-blue:hover {
+    opacity: 0.9;
+}
+
+/* Специально для <a> — сохраняем поведение ссылки */
+a.button-green,
+a.button-silver,
+a.button-blue {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+/* Button Silver */
+.wall-btn {
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    background: #e8e8e8;
+    transition: .2s ease;
+}
+
+.wall-btn:hover {
+    background: #dcdcdc;
+}

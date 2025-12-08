@@ -1,0 +1,180 @@
+.wall-post {
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Header */
+.post-header {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.post-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.post-author {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-name {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.post-date {
+    font-size: 12px;
+    color: #777;
+}
+
+/* Text */
+.post-text {
+    margin: 10px 0;
+    line-height: 1.4;
+    font-size: 15px;
+}
+
+/* Photo */
+.post-photo img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+/* Actions */
+.post-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.post-actions button {
+    background: none;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 4px 0;
+    color: #555;
+}
+
+.post-actions button:hover {
+    opacity: .7;
+}
+
+/* Comments */
+.post-comments {
+    margin-top: 15px;
+}
+
+.comment {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.comment-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-body {
+    margin-left: 10px;
+    background: #f5f5f5;
+    padding: 8px 12px;
+    border-radius: 10px;
+}
+
+.comment-name {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.comment-text {
+    font-size: 14px;
+    margin: 4px 0;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+    color: #666;
+}
+
+.comment-reply {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #3b6db3;
+    padding: 0;
+}
+
+.comment-reply-block {
+    display: flex;
+    margin-top: 10px;
+}
+
+.add-comment {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.comment-input {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.post-menu-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #999;
+}
+
+.post-menu-btn:before{
+    font-family: "Font Awesome 6 Free", serif;
+    content: "\f141";
+    font-weight: 900;
+    margin-right: 5px;
+}
+
+
+.like-btn:before{
+    font-family: "Font Awesome 6 Free", serif;
+    content: "\f004";
+    font-weight: 900;
+    margin-right: 5px;
+    color: #ff3347;
+}
+
+.comment-btn:before{
+    font-family: "Font Awesome 6 Free", serif;
+    content: "\f075";
+    font-weight: 900;
+    margin-right: 5px;
+}
+
+.add-prof-btn:before{
+    font-family: "Font Awesome 6 Free", serif;
+    content: "\f141";
+    font-weight: 900;
+}
+

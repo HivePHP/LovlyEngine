@@ -1,0 +1,99 @@
+{% extends layout %}
+
+{% block content %}
+    <div class="cols" style="justify-content:center; width:100%;">
+        <div class="left-reg" style="margin:auto;">
+            <div class="card">
+                <h2>Регистрация</h2>
+
+                <form class="register-form" id="registerForm" novalidate>
+
+                    <div class="row">
+                        <div style="flex:1;">
+                            <label>Имя</label>
+                            <input id="name" name="name" type="text" placeholder="Введите имя">
+                            <div class="error-text" id="err_name"></div>
+                        </div>
+                        <div style="flex:1;">
+                            <label>Фамилия</label>
+                            <input id="surname" name="surname" type="text" placeholder="Введите фамилию">
+                            <div class="error-text" id="err_surname"></div>
+                        </div>
+                    </div>
+
+                    <label style="margin-top:14px">Пол</label>
+                    <select id="sex" name="sex">
+                        <option value="">Выберите пол</option>
+                        <option value="male">Мужской</option>
+                        <option value="female">Женский</option>
+                        <option value="other">Другое</option>
+                    </select>
+                    <div class="error-text" id="err_sex"></div>
+
+                    <label style="margin-top:14px">Дата рождения</label>
+                    <div class="register-select-group">
+                        <select id="day" name="day"></select>
+                        <select id="month" name="month"></select>
+                        <select id="year" name="year"></select>
+                    </div>
+                    <div class="error-text" id="err_birthday"></div>
+
+                    <div class="row">
+                        <div style="flex:1;">
+                            <label style="margin-top:14px">Город</label>
+                            <input id="select_city" name="city" type="text" placeholder="Ваш город">
+                            <div class="error-text" id="err_select_city"></div>
+                        </div>
+                        <div style="flex:1;">
+                            <label style="margin-top:14px">Страна</label>
+                            <input id="country" name="country" type="text" placeholder="Ваша страна">
+                            <div class="error-text" id="err_country"></div>
+                        </div>
+                    </div>
+
+                    <label style="margin-top:14px">Email</label>
+                    <input id="email" name="email" type="email" placeholder="you@example.com">
+                    <div class="error-text" id="err_email"></div>
+
+                    <div class="row" style="margin-top:14px;">
+                        <div style="flex:1;">
+                            <label>Пароль</label>
+                            <input id="new_pass" name="new_pass" type="password" placeholder="Введите пароль">
+                            <div class="error-text" id="err_new_pass"></div>
+                        </div>
+
+                        <div style="flex:1;">
+                            <label>Повторите пароль</label>
+                            <input id="new_pass2" name="new_pass2" type="password" placeholder="Повторите пароль">
+                            <div class="error-text" id="err_new_pass2"></div>
+                        </div>
+                    </div>
+
+                    <div id="password-strength" style="margin-top:6px; display:none;">
+                        <div id="strength-bar" style="height:6px; width:100%; background:#ddd; border-radius:3px; overflow:hidden;">
+                            <div id="strength-fill" style="width:0%; height:100%; background:red; transition:0.25s;"></div>
+                        </div>
+                        <div id="strength-text" style="margin-top:6px; font-size:13px; font-weight:600; color:#555;"></div>
+                    </div>
+
+                    <button class="btn btn-primary" id="registerSubmit" style="width:100%;margin-top:18px" type="submit">
+                        Зарегистрироваться
+                    </button>
+
+                    <a href="/" class="btn btn-ghost" style="margin-top:12px;text-align:center;text-decoration:none">
+                        У меня уже есть аккаунт!
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // инициализация регистрации
+        document.addEventListener('DOMContentLoaded', () => {
+            const reg = new RegisterForm('#registerForm', {endpoint: '/register'});
+            reg.init();
+        });
+    </script>
+
+{% endblock %}

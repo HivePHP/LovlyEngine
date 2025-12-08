@@ -1,0 +1,182 @@
+{% extends layout %}
+
+{% block content %}
+
+    <div class="profile-edit-wrapper">
+
+        <!-- Левый контент -->
+        <div class="edit-content">
+
+            <!-- ОСНОВНОЕ -->
+            <section class="edit-section" id="sec-main">
+
+                <h3 class="section-title">Основное</h3>
+
+                <div class="alert success" id="alert-main">Изменения сохранены</div>
+
+                <label class="edit-label">
+                    <span>Имя</span>
+                    <input type="text" class="edit-input" value="{{ user.name }}">
+                </label>
+
+                <label class="edit-label">
+                    <span>Фамилия</span>
+                    <input type="text" class="edit-input" value="{{ user.surname }}">
+                </label>
+
+                <label class="edit-label">
+                    <span>Отчество</span>
+                    <input type="text" class="edit-input" value="{{ user.patronymic }}">
+                </label>
+
+                <label class="edit-label">
+                    <span>Дата рождения</span>
+                    <input type="date" class="edit-input" value="{{ user.birth }}">
+                </label>
+
+                <label class="edit-label">
+                    <span>Пол</span>
+                    <select class="edit-input">
+                        <option value="1" {% if user.gender == 1 %}selected{% endif %}>Мужской</option>
+                        <option value="2" {% if user.gender == 2 %}selected{% endif %}>Женский</option>
+                    </select>
+                </label>
+
+                <label class="edit-label">
+                    <span>Город</span>
+                    <input type="text" class="edit-input" value="{{ user.city }}">
+                </label>
+
+                <button class="button-blue edit-save-btn" onclick="showAlert('alert-main')">Сохранить изменения</button>
+            </section>
+
+
+            <!-- КОНТАКТЫ -->
+            <section class="edit-section hidden" id="sec-contacts">
+
+                <h3 class="section-title">Контакты</h3>
+
+                <div class="alert success" id="alert-contacts">Сохранено</div>
+
+                <label class="edit-label">
+                    <span>Email</span>
+                    <input type="email" class="edit-input" value="{{ user.email }}">
+                </label>
+
+                <label class="edit-label">
+                    <span>Телефон</span>
+                    <input type="text" class="edit-input" value="{{ user.phone }}">
+                </label>
+
+                <label class="edit-label">
+                    <span>Телеграм</span>
+                    <input type="text" class="edit-input" value="{{ user.telegram }}">
+                </label>
+
+                <label class="edit-label">
+                    <span>VK</span>
+                    <input type="text" class="edit-input" value="{{ user.vk }}">
+                </label>
+
+                <button class="button-blue edit-save-btn" onclick="showAlert('alert-contacts')">Сохранить</button>
+            </section>
+
+
+            <!-- ИНТЕРЕСЫ -->
+            <section class="edit-section hidden" id="sec-interests">
+
+                <h3 class="section-title">Интересы</h3>
+
+                <div class="alert success" id="alert-interests">Сохранено</div>
+
+                <label class="edit-label">
+                    <span>О себе</span>
+                    <textarea class="edit-textarea">{{ user.about }}</textarea>
+                </label>
+
+                <label class="edit-label">
+                    <span>Интересы</span>
+                    <textarea class="edit-textarea">{{ user.interests }}</textarea>
+                </label>
+
+                <label class="edit-label">
+                    <span>Любимые фильмы</span>
+                    <textarea class="edit-textarea">{{ user.movies }}</textarea>
+                </label>
+
+                <label class="edit-label">
+                    <span>Любимая музыка</span>
+                    <textarea class="edit-textarea">{{ user.music }}</textarea>
+                </label>
+
+                <button class="button-blue edit-save-btn" onclick="showAlert('alert-interests')">Сохранить</button>
+            </section>
+
+
+            <!-- КАРЬЕРА -->
+            <section class="edit-section hidden" id="sec-career">
+
+                <h3 class="section-title">Карьера и образование</h3>
+
+                <div class="alert success" id="alert-career">Изменения сохранены</div>
+
+                <label class="edit-label">
+                    <span>Место работы</span>
+                    <input type="text" class="edit-input" value="{{ user.job }}">
+                </label>
+
+                <label class="edit-label">
+                    <span>Должность</span>
+                    <input type="text" class="edit-input" value="{{ user.position }}">
+                </label>
+
+                <label class="edit-label">
+                    <span>Образование</span>
+                    <input type="text" class="edit-input" value="{{ user.education }}">
+                </label>
+
+                <label class="edit-label">
+                    <span>Школа</span>
+                    <input type="text" class="edit-input" value="{{ user.school }}">
+                </label>
+
+                <button class="button-blue edit-save-btn" onclick="showAlert('alert-career')">Сохранить</button>
+            </section>
+
+        </div>
+
+        <!-- Правое меню -->
+        <div class="edit-menu">
+            <div class="edit-menu-item active" data-target="sec-main">Основное</div>
+            <div class="edit-menu-item" data-target="sec-contacts">Контакты</div>
+            <div class="edit-menu-item" data-target="sec-interests">Интересы</div>
+            <div class="edit-menu-item" data-target="sec-career">Карьера</div>
+        </div>
+
+    </div>
+
+    <script>
+        document.querySelectorAll(".edit-menu-item").forEach(item => {
+            item.addEventListener("click", () => {
+                const target = item.dataset.target;
+
+                document.querySelectorAll(".edit-menu-item").forEach(i => i.classList.remove("active"));
+                item.classList.add("active");
+
+                document.querySelectorAll(".edit-section").forEach(sec => sec.classList.add("hidden"));
+                document.getElementById(target).classList.remove("hidden");
+            });
+        });
+
+        function showAlert(id) {
+            const el = document.getElementById(id);
+            el.classList.add("show");
+
+            setTimeout(() => {
+                el.classList.remove("show");
+            }, 2000);
+        }
+    </script>
+
+{% endblock %}
+

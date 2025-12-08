@@ -1,0 +1,72 @@
+{% extends layout %}
+
+{% block content %}
+
+    <div class="cols">
+        <div class="left-login">
+            <div class="card">
+
+                <div class="error-text-general" id="err_auth"></div>
+
+                <h2>Вход в аккаунт</h2>
+
+                <form class="login-form" id="loginForm" novalidate>
+
+                    <label>Email</label>
+                    <input id="login_email" name="email" type="email" placeholder="you@example.com" />
+                    <div class="error-text" id="err_login_email"></div>
+
+                    <label style="margin-top:14px">Пароль</label>
+                    <input id="login_pass" name="password" type="password" placeholder="Введите пароль" />
+                    <div class="error-text" id="err_login_pass"></div>
+
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                        <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                            <input id="remember_me" name="remember" type="checkbox" style="width:16px; height:16px;">
+                            Запомнить меня
+                        </label>
+
+                        <a href="/restore" style="font-size:14px; color:var(--primary); text-decoration:none;">
+                            Забыли пароль?
+                        </a>
+                    </div>
+
+                    <button class="btn btn-primary" id="loginSubmit" type="submit" style="width:100%;margin-top:18px">Войти</button>
+
+                    <div class="login-divider">или</div>
+
+                    <a href="/register"  class="btn btn-ghost" style="margin-top:10px;text-align:center;text-decoration:none">
+                        Создать аккаунт
+                    </a>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="right">
+            <div class="card">
+                <h2>Почему именно мы</h2>
+                <p>Современный стиль, быстрая работа и удобство использования.</p>
+
+                <ul class="advantages">
+                    <li>Красивый интерфейс</li>
+                    <li>Удобная навигация</li>
+                    <li>Мгновенная регистрация</li>
+                </ul>
+
+                <div class="join-banner">
+                    Нас уже <span style='color:var(--primary-dark)'>{{ users_count }}</span> — присоединяйся!
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const lg = new LoginForm('#loginForm', {endpoint: '/login'});
+            lg.init();
+        });
+    </script>
+
+{% endblock %}

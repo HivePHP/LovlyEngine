@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" href="{{ assets.img }}favicon-32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="{{ assets.img }}favicon-16.png" sizes="16x16">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>{{ title }}</title>
+    {{ css() }}
+</head>
+<body>
+
+<header>
+    <div class="container" style="justify-content: space-between;">
+        <a href="/" class="logo">
+            {{ site.name }}
+        </a>
+
+        {% if isAuth %}
+        <!-- Аватар + выпадающее меню -->
+        <div class="avatar-menu">
+            <img src="{{ assets.img }}avatar/no_ava_50.png" class="avatar-trigger">
+
+            <div class="dropdown-menu">
+                <a href="/id{{ site.my_page }}">Профиль</a>
+                <a href="#">Настройки</a>
+                <a href="#">Уведомления</a>
+                <a href="/logout">Выход</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <div class="sidebar">
+
+
+            {% if not isAuth %}
+            <div class="error-text-general" id="err_auth"></div>
+
+            <form class="auth-form" id="loginForm" novalidate>
+                <label>
+                    <span>Email</span>
+                    <input id="login_email" type="email" name="email">
+                </label>
+                <div class="error-text" id="err_login_email"></div>
+
+                <label>
+                    <span>Пароль</span>
+                    <input id="login_pass" type="password" name="password">
+                </label>
+                <div class="error-text" id="err_login_pass"></div>
+
+                <label class="remember">
+                    <input id="remember_me" name="remember" type="checkbox"> Запомнить меня
+                </label>
+
+                <button id="loginSubmit" type="submit" class="btn-login">Войти</button>
+
+                <a href="/register" class="btn-register">Создать аккаунт</a>
+            </form>
+            {% endif %}
+
+            {% if isAuth %}
+            <nav class="vk-menu">
+                <a href="/id{{ site.my_page }}" class="menu-item active">
+                    <span class="icon-my-page"></span>
+                    <span class="title">Моя страница</span>
+                </a>
+
+                <a href="#" class="menu-item">
+                    <span class="icon-friends"></span>
+                    <span class="title">Друзья</span>
+                </a>
+
+                <a href="#" class="menu-item">
+                    <span class="icon-message"></span>
+                    <span class="title">Сообщения</span>
+                    <span class="badge">12</span>
+                </a>
+
+                <a href="#" class="menu-item">
+                    <span class="icon-albums"></span>
+                    <span class="title">Альбомы</span>
+                </a>
+
+                <a href="#" class="menu-item">
+                    <span class="icon-music"></span>
+                    <span class="title">Музыка</span>
+                </a>
+            </nav>
+            {% endif %}
+
+        </div>
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</main>
+
+{{ js() }}
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const lg = new LoginForm('#loginForm', {endpoint: '/login'});
+        lg.init();
+    });
+
+    // Инициализация всех меню на странице
+    document.querySelectorAll('.avatar-menu').forEach(menu => new DropMenu(menu));
+</script>
+
+</body>
+</html>

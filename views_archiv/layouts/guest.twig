@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" href="/img/favicon-32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/favicon-16.png" sizes="16x16">
+    <title>{{ title }}</title>
+    {{ css() }}
+
+</head>
+<body>
+<header>
+    <div class="container" style="justify-content: space-between;">
+        <a href="/" class="logo">
+            {{ site.name }}
+        </a>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</main>
+
+<footer>
+    <div class="container" style="justify-content:space-between;">
+        <div class="footer-links" style="display:flex;gap:18px;font-size:14px">
+            <a href="#">О нас</a>
+            <a href="#">Конфиденциальность</a>
+            <a href="#">Помощь</a>
+        </div>
+        <div style="font-size:14px;color:var(--muted)">© {{ site.year }} {{ site.name }}</div>
+    </div>
+</footer>
+
+
+{{ js() }}
+</body>
+</html>

@@ -1,0 +1,59 @@
+/* --- КОГДА МОДАЛКА ОТКРЫТА — ФИКСИРУЕМ ФОН --- */
+body.modal-open {
+    position: fixed;
+    width: 100%;
+    top: var(--scroll-y);
+    overflow: hidden;
+}
+
+/* --- ОБЁРТКА МОДАЛКИ --- */
+.modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 0;
+    background: rgba(0,0,0,0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+    z-index: 1000;
+    overflow-y: auto; /* <-- ВК стиль */
+}
+
+.modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* --- КОНТЕЙНЕР --- */
+.modal-content {
+    background: #fff;
+    width: 92%;
+    max-width: 680px;
+    padding: 25px;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    margin: auto; /* центрирование */
+    transform: translateY(-35px);
+    transition: transform .25s ease, opacity .25s ease;
+    opacity: 0;
+}
+
+.modal.active .modal-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* кнопка */
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
+    background: none;
+    border: none;
+}

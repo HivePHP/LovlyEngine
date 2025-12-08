@@ -1,0 +1,84 @@
+/* Боковой сайдбар */
+.vk-menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.icon-my-page, .icon-friends, .icon-message, .icon-albums, .icon-music {
+    font-family: "Font Awesome 6 Free", serif;
+    font-weight: 900;
+    margin-right: 5px;
+    color: #A9B9C9;
+}
+
+.icon-my-page:before{content: "\f015";}
+.icon-friends:before{content: "\f500";}
+.icon-message:before{content: "\f27a";}
+.icon-albums:before{content: "\f302";}
+.icon-music:before{content: "\f001";}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 10px 18px;
+    text-decoration: none;
+    color: var(--primary);
+
+    font-size: 15px;
+    font-weight: 500;
+
+    position: relative;
+
+    transition: background-color .23s, padding-left .23s, color .23s;
+    border-radius: 8px;
+}
+
+.menu-item .icon {
+    width: 22px;
+    text-align: center;
+    opacity: 0.85;
+    transition: opacity .25s;
+}
+
+.menu-item .title {
+    flex-grow: 1;
+}
+
+.menu-item .badge {
+    background: var(--badge);
+    color: white;
+
+    font-size: 12px;
+    min-width: 18px;
+
+    padding: 2px 6px;
+    border-radius: 10px;
+
+    text-align: center;
+    font-weight: 600;
+
+    animation: badge-appear .4s ease;
+}
+
+@keyframes badge-appear {
+    from { transform: scale(0.6); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+.menu-item:hover {
+    background: #e3eaf5;
+    color: #1a4d7c;
+    padding-left: 24px;
+}
+
+.menu-item:hover .icon {
+    opacity: 1;
+}
+
+.menu-item.active {
+    background: #d8e4f5;
+    color: var(--primary);
+    font-weight: 600;
+}

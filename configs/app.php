@@ -9,12 +9,7 @@
 
 declare(strict_types=1);
 
-namespace HivePHP;
-
-define('PATH', dirname(__DIR__));
-
-require PATH . '/vendor/autoload.php';
-
-$bootstrap = new Bootstrap();
-$bootstrap->run();
- 
+return [
+    'site_name' => "HivePHP",
+    'domain' => "localhost",
+];

@@ -9,12 +9,10 @@
 
 declare(strict_types=1);
 
-namespace HivePHP;
-
-define('PATH', dirname(__DIR__));
-
-require PATH . '/vendor/autoload.php';
-
-$bootstrap = new Bootstrap();
-$bootstrap->run();
- 
+return [
+    'host'    => '127.0.0.1',
+    'dbname'  => 'hivephp',
+    'user'    => 'root',
+    'pass'    => '',
+    'charset' => 'utf8mb4',
+];

@@ -9,15 +9,26 @@
 
 namespace App\Controllers;
 
+use HivePHP\AssetsManager;
+use HivePHP\View;
+
 class HomeController extends BaseController
 {
-    public function showLogin()
+    public function showLogin(): void
     {
-        echo 'Название сайта: ' . $this->config['site_name'];
+//        echo 'Название сайта: ' . $this->config['site_name'];
+
+        AssetsManager::addCss('/css/home/login.css');
+
+        View::render('home/login',
+            ['title' => 'Привет!']
+        );
     }
 
-    public function showRegister()
+    public function showRegister(): void
     {
-
+        View::render('home/register',
+            ['title' => 'Привет!']
+        );
     }
 }

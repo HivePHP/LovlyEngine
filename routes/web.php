@@ -13,8 +13,12 @@ use FastRoute\ConfigureRoutes;
 
 return function (ConfigureRoutes $routes): void {
 
+    /* GET */
     $routes->addRoute('GET', '/', ['App\Controllers\HomeController', 'showLogin']);
+    $routes->addRoute('GET', '/reg', ['App\Controllers\HomeController', 'showRegister']);
+    $routes->addRoute('GET', '/id{id:\d+}', ['App\Controllers\ProfileController', 'show']);
 
-    // пример
-    // $routes->addRoute('GET', '/login', ['App\Controllers\AuthController', 'login']);
+    /* POST */
+    $routes->addRoute('POST', '/login', ['App\Controllers\AuthController', 'login']);
+    $routes->addRoute('POST', '/reg', ['App\Controllers\AuthController', 'register']);
 };

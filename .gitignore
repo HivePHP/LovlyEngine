@@ -1,0 +1,32 @@
+# Composer
+/vendor/
+../localhost/composer.lock
+composer.json
+
+# Node modules (если используешь npm/yarn)
+node_modules/
+
+# IDE и редакторы
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Логи и временные файлы
+*.log
+*.cache
+*.tmp
+*.swp
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Настройки среды
+.env
+.env.local
+.env.*.local
+
+# Сборки и кеш
+/build/
+dist/

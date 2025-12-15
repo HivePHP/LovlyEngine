@@ -10,8 +10,7 @@ declare(strict_types=1);
 
 return [
     'path' => PATH . '/views',
-//    'cache' => PATH . '/storage/cache/twig', // false в dev
-    'cache' => false,
+    'cache' => PATH . '/storage/cache/twig', // false в dev
     'debug' => true,
     'auto_reload' => true,
 ];

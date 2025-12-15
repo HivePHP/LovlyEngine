@@ -12,7 +12,7 @@ namespace App\Controllers;
 
 class ProfileController extends BaseController
 {
-    public function show(int $id)
+    public function show(int $id): void
     {
         echo $id;
     }

@@ -21,5 +21,7 @@ abstract class BaseController
     {
         $this->config = $config;
         $this->db = $db;
+
+//        $this->loadAssets();
     }
 }

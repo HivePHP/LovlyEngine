@@ -31,8 +31,6 @@ class Bootstrap
         View::init(
             Config::load('view')
         );
-//        AssetsManager::addCss('/assets/css/layout.css');
-//        AssetsManager::addJs('/assets/js/app.js');
     }
 
     private function bootRouter(): void

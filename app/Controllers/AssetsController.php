@@ -10,20 +10,13 @@
 
 namespace App\Controllers;
 
-use App\Models\User;
-use HivePHP\Database;
+use HivePHP\AssetsManager;
 
-class AuthController extends BaseController
+class AssetsController extends BaseController
 {
-    public function register()
+    public function loadAssets(): void
     {
-        $user = new User($this->db);
-        $user->register();
-
-    }
-
-    public function login()
-    {
-
+        AssetsManager::addCss('/assets/css/layout.css');
+        AssetsManager::addJs('/assets/js/app.js');
     }
 }

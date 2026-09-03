@@ -1,0 +1,68 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http;
+
+use App\Http\Middleware\Auth;
+use App\Http\Middleware\Guest;
+use App\Http\Middleware\WebAssets;
+use Closure;
+
+final class Kernel
+{
+    protected array $middleware = [];
+
+    protected array $middlewareGroups = [
+        'web' => [
+            WebAssets::class,
+        ],
+    ];
+
+    protected array $middlewareAliases = [
+        'auth'  => Auth::class,
+        'guest' => Guest::class,
+        'web'   => WebAssets::class,
+    ];
+
+    public function getGlobalMiddleware(): array
+    {
+        return $this->middleware;
+    }
+
+    public function getMiddlewareGroups(): array
+    {
+        return $this->middlewareGroups;
+    }
+
+    public function getMiddlewareAliases(): array
+    {
+        return $this->middlewareAliases;
+    }
+
+    public function resolveMiddleware(array $names): array
+    {
+        $resolved = [];
+
+        foreach ($names as $name) {
+            if (isset($this->middlewareGroups[$name])) {
+                foreach ($this->middlewareGroups[$name] as $groupMember) {
+                    $resolved[] = $this->resolveAlias($groupMember);
+                }
+            } else {
+                $resolved[] = $this->resolveAlias($name);
+            }
+        }
+
+        return array_values(array_unique($resolved));
+    }
+
+    private function resolveAlias(string $alias): string
+    {
+        if (isset($this->middlewareAliases[$alias])) {
+            return $this->middlewareAliases[$alias];
+        }
+
+        return $alias;
+    }
+}

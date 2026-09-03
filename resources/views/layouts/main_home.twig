@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {{ assets_css() }}
+    <title>{{ title }} - {{ app.name }}</title>
+</head>
+<body class="body-home">
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <div class="footer-home">
+        <div class="container">
+            <div class="copy-footer-home">
+                &copy; 2025 {{ app.name }}. Все права защищены.
+            </div>
+            <div class="button-footer-home">
+                <a href="">О проекте</a>
+                <a href="">Блог</a>
+                <a href="">Правила пользования</a>
+                <a href="">Разработчикам</a>
+            </div>
+        </div>
+    </div>
+
+    {{ assets_js() }}
+</body>
+</html>

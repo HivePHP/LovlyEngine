@@ -1,0 +1,128 @@
+{% extends "layouts/main.twig" %}
+
+{% block content %}
+<div class="edit-profile-layout">
+
+    <aside class="profile-sidebar">
+        <div class="profile-avatar-card">
+            <div class="profile-avatar">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#b0b8c1" stroke-width="1.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="profile-avatar-name">{{ name }} {{ surname }}</div>
+        </div>
+
+        <nav class="profile-nav">
+            <a href="/id{{ user_id }}" class="profile-nav-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Моя страница
+            </a>
+            <a href="/editprofile" class="profile-nav-item active">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                Редактировать
+            </a>
+        </nav>
+    </aside>
+
+    <div class="profile-main">
+        <div class="profile-card">
+            <h2 class="edit-title">Редактирование профиля</h2>
+
+            <div id="success-message" class="edit-success" style="display:none;">
+                Изменения сохранены!
+            </div>
+
+            <form id="edit-profile-form">
+                <div class="edit-field">
+                    <label class="edit-label" for="about">Обо мне</label>
+                    <textarea
+                        id="about"
+                        name="about"
+                        class="edit-textarea"
+                        placeholder="Расскажите о себе..."
+                        rows="4"
+                    >{{ about }}</textarea>
+                </div>
+
+                <div class="edit-field">
+                    <label class="edit-label" for="interests">Интересы</label>
+                    <textarea
+                        id="interests"
+                        name="interests"
+                        class="edit-textarea"
+                        placeholder="Ваши увлечения и интересы..."
+                        rows="4"
+                    >{{ interests }}</textarea>
+                </div>
+
+                <div class="edit-field">
+                    <label class="edit-label" for="favorite_films">Любимые фильмы</label>
+                    <textarea
+                        id="favorite_films"
+                        name="favorite_films"
+                        class="edit-textarea"
+                        placeholder="Список любимых фильмов..."
+                        rows="4"
+                    >{{ favorite_films }}</textarea>
+                </div>
+
+                <div class="edit-actions">
+                    <button type="submit" class="btn-primary edit-save-btn" id="save-btn">
+                        Сохранить
+                    </button>
+                    <a href="/id{{ user_id }}" class="btn-secondary edit-cancel-btn">
+                        Отмена
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('edit-profile-form');
+    const saveBtn = document.getElementById('save-btn');
+    const successMsg = document.getElementById('success-message');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const data = {
+            about: document.getElementById('about').value,
+            interests: document.getElementById('interests').value,
+            favorite_films: document.getElementById('favorite_films').value
+        };
+
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Сохранение...';
+
+        fetch('/api/profile/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.status === 'ok') {
+                successMsg.style.display = 'block';
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 3000);
+            } else {
+                alert('Ошибка сохранения');
+            }
+        })
+        .catch(() => {
+            alert('Ошибка сети');
+        })
+        .finally(() => {
+            saveBtn.disabled = false;
+            saveBtn.textContent = 'Сохранить';
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,68 @@
+.btn-primary {
+    padding: 10px;
+    background: #1877f2;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 14px;
+}
+.btn-primary:hover { background: #145fcc; }
+
+.btn-secondary {
+    padding: 10px;
+    background: #afd2ff;
+    color: #1877f2;
+    border-radius: 8px;
+    font-size: 14px;
+}
+.btn-secondary:hover { background: #89bdff; }
+
+/* CHECKBOX */
+/* === Универсальный контейнер чекбокса === */
+.ui-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Скрываем стандартный чекбокс */
+.ui-checkbox input {
+    display: none;
+}
+
+/* === Кастомная круглая точка === */
+.ui-checkmark {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #999;
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.25s ease;
+}
+
+/* Активное состояние */
+.ui-checkbox input:checked + .ui-checkmark {
+    background: #1877f2;
+    border-color: #1877f2;
+}
+
+/* Белая точка внутри */
+.ui-checkbox input:checked + .ui-checkmark::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%;
+}
+
+/* === Универсальный контейнер строки (если нужен) === */
+.ui-row-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

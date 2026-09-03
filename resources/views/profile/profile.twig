@@ -1,0 +1,132 @@
+{% extends "layouts/main.twig" %}
+
+{% block content %}
+<div class="profile-layout">
+
+    <aside class="profile-sidebar">
+        <div class="profile-avatar-card">
+            <div class="profile-avatar">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#b0b8c1" stroke-width="1.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            {% if userId == user_id %}
+            <a href="/editprofile" class="btn-secondary btn-sm">Редактировать</a>
+            {% endif %}
+        </div>
+
+        <nav class="profile-nav">
+            <a href="/id{{ user_id }}" class="profile-nav-item active">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Моя страница
+            </a>
+            {% if userId == user_id %}
+            <a href="/editprofile" class="profile-nav-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                Редактировать
+            </a>
+            {% endif %}
+            <a href="#" class="profile-nav-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Друзья
+            </a>
+            <a href="#" class="profile-nav-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Сообщения
+            </a>
+            <a href="#" class="profile-nav-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                Фотографии
+            </a>
+            <a href="#" class="profile-nav-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                Группы
+            </a>
+        </nav>
+    </aside>
+
+    <div class="profile-main">
+
+        <div class="profile-card">
+            <div class="profile-card-header">
+                <h1 class="profile-name">{{ name }} {{ surname }}</h1>
+                <span class="profile-online">Online</span>
+            </div>
+
+            <div class="profile-status">
+                <input type="text" class="profile-status-input" placeholder="Изменить статус" disabled>
+            </div>
+
+            <div class="profile-info">
+                <div class="profile-info-row">
+                    <span class="profile-info-label">День рождения:</span>
+                    <span class="profile-info-value">{{ birthday }}</span>
+                </div>
+                {% if city %}
+                <div class="profile-info-row">
+                    <span class="profile-info-label">Город:</span>
+                    <span class="profile-info-value">{{ city }}</span>
+                </div>
+                {% endif %}
+                {% if country %}
+                <div class="profile-info-row">
+                    <span class="profile-info-label">Страна:</span>
+                    <span class="profile-info-value">{{ country }}</span>
+                </div>
+                {% endif %}
+                <div class="profile-info-row">
+                    <span class="profile-info-label">Пол:</span>
+                    <span class="profile-info-value">{{ sex == 'male' ? 'Мужской' : (sex == 'female' ? 'Женский' : 'Другое') }}</span>
+                </div>
+            </div>
+        </div>
+
+        {% if about or interests or favorite_films %}
+        <div class="profile-card">
+            <h3 class="profile-section-title">Обо мне</h3>
+
+            {% if about %}
+            <div class="profile-about-section">
+                <div class="profile-about-label">Обо мне</div>
+                <div class="profile-about-text">{{ about }}</div>
+            </div>
+            {% endif %}
+
+            {% if interests %}
+            <div class="profile-about-section">
+                <div class="profile-about-label">Интересы</div>
+                <div class="profile-about-text">{{ interests }}</div>
+            </div>
+            {% endif %}
+
+            {% if favorite_films %}
+            <div class="profile-about-section">
+                <div class="profile-about-label">Любимые фильмы</div>
+                <div class="profile-about-text">{{ favorite_films }}</div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="profile-card">
+            <div class="profile-photo-upload">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1877f2" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span>Добавить фотографии</span>
+            </div>
+        </div>
+
+        <div class="profile-card">
+            <div class="profile-wall-input">
+                <div class="profile-wall-avatar">{{ userInitials }}</div>
+                <div class="profile-wall-placeholder">Что у Вас нового?</div>
+            </div>
+        </div>
+
+        <div class="profile-card profile-wall-empty">
+            <div class="profile-wall-empty-icon">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#b0b8c1" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+            <p class="profile-wall-empty-text">На стене пока ни одной записи.</p>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

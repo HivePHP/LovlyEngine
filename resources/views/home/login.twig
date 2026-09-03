@@ -1,0 +1,73 @@
+{% extends "layouts/main_home.twig" %}
+
+{% block content %}
+
+    <div class="info-card">
+        <h1>{{ app.name }}</h1>
+
+        <div class="slider">
+            <div class="slides">
+                <div class="slide active">Зайди в свой аккаунт и будь на связи с друзьями, семьёй и всем миром.</div>
+                <div class="slide">Делись фотографиями, смотри ленту, участвуй в группах и находи новых друзей.</div>
+                <div class="slide">Будь в центре событий! Новости, общение, эмоции — всё здесь.</div>
+                <div class="slide">Создавай свой контент, собирай лайки, заводи новые знакомства!</div>
+            </div>
+        </div>
+
+        <div class="visitors">
+            <span class="icon"></span>
+            <span class="count">Онлайн сейчас: <b>{{ users_count }}</b></span>
+        </div>
+    </div>
+    <div class="login-card">
+        <h2>Авторизация</h2>
+
+        <form id="login-form">
+            <div class="form-group">
+                <label>Email</label>
+                <input
+                        type="email"
+                        name="email"
+                        placeholder="Введите email"
+                        autocomplete="email"
+                />
+            </div>
+
+            <div class="form-group">
+                <label>Пароль</label>
+                <input
+                        type="password"
+                        name="password"
+                        placeholder="Введите пароль"
+                        autocomplete="current-password"
+                />
+            </div>
+
+            <div class="options">
+                <label class="ui-checkbox">
+                    <input type="checkbox" name="remember" value="1">
+                    <span class="ui-checkmark"></span>
+                    Запомнить меня
+                </label>
+
+                <a href="/forgot">Забыли пароль?</a>
+            </div>
+
+            <button class="btn-primary btn-primary-login">
+                Войти
+            </button>
+        </form>
+
+        <div class="or-block">
+            <div class="or-line left"></div>
+            <span>ИЛИ</span>
+            <div class="or-line right"></div>
+        </div>
+
+        <div class="create-account">
+            <a href="/reg" class="btn-secondary btn-secondary-login">
+                Создать аккаунт
+            </a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends "layouts/main_home.twig" %}
+
+{% block content %}
+    <div class="reg-card">
+
+        <!-- Прогресс -->
+        <div class="progress-wrapper">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <h2>Регистрация</h2>
+
+        <!-- Шаг 1 -->
+        <div id="step-one" class="step">
+
+            <div class="step-text">
+                Пожалуйста, укажите <b>Ваше имя</b> и <b>фамилию</b>, это поможет Вашим друзьям находить Вас.
+            </div>
+
+            <div class="row-reg">
+                <div class="form-group" style="width:50%;">
+                    <label>Имя</label>
+                    <input type="text" name="name" placeholder="Введите имя" />
+                </div>
+                <div class="form-group" style="width:50%;">
+                    <label>Фамилия</label>
+                    <input type="text" name="surname" placeholder="Введите фамилию" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Шаг 2 -->
+        <div id="step-two" class="step" style="display:none;">
+
+            <div class="step-text">
+                Пожалуйста, укажите Вашу <b>Дату рождения</b> так ваши друзья легко смогут узнать о вашем дне рождения.
+            </div>
+
+            <div class="form-group birthdate">
+                <label>Дата рождения</label>
+                <div class="birthdate-selects">
+                    <select name="day" required>
+                        <option value="">День</option>
+                    </select>
+                    <select name="month" required>
+                        <option value="">Месяц</option>
+                    </select>
+                    <select name="year" required>
+                        <option value="">Год</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Шаг 3 -->
+        <div id="step-three" class="step" style="display:none;">
+
+            <div class="step-text">
+                Пожалуйста, укажите <b>Ваш пол</b> и <b>Место рождения (проживания)</b> так вы легко сможете найти людей которые рядом с вами.
+            </div>
+
+            <div class="form-group">
+                <label>Пол</label>
+                <select name="sex">
+                    <option value="">Выберите</option>
+                    <option value="male">Мужчина</option>
+                    <option value="female">Женщина</option>
+                    <option value="other">Другое</option>
+                </select>
+            </div>
+
+            <div class="row-reg">
+                <div class="form-group" style="width:50%;">
+                    <label>Город</label>
+                    <input type="text" name="city" placeholder="Ваш город" />
+                </div>
+                <div class="form-group" style="width:50%;">
+                    <label>Страна</label>
+                    <input type="text" name="country" placeholder="Страна" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Шаг 4 -->
+        <div id="step-four" class="step" style="display:none;">
+
+            <div class="step-text">
+                Укажите <b>Ваш электронный адрес</b> и <b>пароль</b>, который Вы будете использовать при входе.
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Введите email" />
+            </div>
+
+            <div class="form-group">
+                <label>Пароль</label>
+                <input type="password" name="password1" placeholder="Введите пароль" />
+            </div>
+
+            <div class="form-group">
+                <label>Повторите пароль</label>
+                <input type="password" name="password2" placeholder="Повторите пароль" />
+
+                <div class="password-strength">
+                    <div class="strength-bar"></div>
+                    <div class="strength-text"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Кнопка далее -->
+        <button class="btn-primary-reg btn-primary">Далее</button>
+
+        <div class="create-account">
+            <a href="/" class="btn-secondary-reg btn-secondary">Уже есть аккаунт</a>
+        </div>
+
+        {#        <button class="btn-back" style="display:none;">Назад</button>#}
+
+    </div>
+{% endblock %}

@@ -1,0 +1,86 @@
+/* EDIT PROFILE LAYOUT */
+.edit-profile-layout {
+    display: flex;
+    gap: 15px;
+    width: 1000px;
+    margin: 0 auto;
+}
+
+/* EDIT TITLE */
+.edit-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 24px 0;
+}
+
+/* SUCCESS MESSAGE */
+.edit-success {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* EDIT FIELD */
+.edit-field {
+    margin-bottom: 20px;
+}
+
+.edit-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.edit-textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d3d9de;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #333;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.edit-textarea:focus {
+    border-color: #1877f2;
+}
+
+.edit-textarea::placeholder {
+    color: #818c99;
+}
+
+/* EDIT ACTIONS */
+.edit-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.edit-save-btn {
+    padding: 10px 24px;
+    font-size: 14px;
+}
+
+.edit-cancel-btn {
+    padding: 10px 24px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* SIDEBAR NAME */
+.profile-avatar-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+}

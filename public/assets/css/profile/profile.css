@@ -1,3 +1,53 @@
+/* PROFILE HEADER CARD (VK-style) */
+.profile-header-card {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    padding: 24px;
+}
+
+/* sticky sidebar */
+.page-sidebar {
+    position: sticky;
+    top: 65px;
+}
+
+.profile-avatar-large {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: #e7e8ec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.profile-header-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.profile-header-top {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+.profile-header-top .profile-name {
+    font-size: 24px;
+}
+
+.header-edit-btn {
+    display: inline-block;
+    margin-top: 16px;
+    width: auto;
+    padding: 8px 20px;
+}
+
 /* PROFILE LAYOUT */
 .profile-layout {
     display: flex;
@@ -83,8 +133,9 @@
 /* CARD */
 .profile-card {
     background: #fff;
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
 
 .profile-card-header {

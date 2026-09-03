@@ -1,5 +1,11 @@
 <?php
-
+/*
+ * Copyright (c) 2026 HivePHP LovlyEngine
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *   file that was distributed with this source code.
+ *
+ */
 declare(strict_types=1);
 
 namespace App\Http\Middleware;
@@ -23,6 +29,8 @@ final class WebAssets implements MiddlewareInterface
         $this->assets->addCss('css/home/login.css');
         $this->assets->addCss('css/home/register.css');
         $this->assets->addCss('css/home/edit-profile.css');
+
+        $this->assets->addJs('js/app/shell.js');
 
         $next($request);
     }

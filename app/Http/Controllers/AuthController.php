@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2025 hivephp OldVkDev
+ * Copyright (c) 2026 HivePHP LovlyEngine
  *
  *  For the full copyright and license information, please view the LICENSE
  *   file that was distributed with this source code.
@@ -41,8 +41,8 @@ final class AuthController extends Controller
         $input = $this->request->json();
 
         $validator = Validator::make($input, [
-            'name'      => 'required|string|min:2|max:30',
-            'surname'   => 'required|string|min:2|max:30',
+            'name'      => 'required|string|alpha|min:2|max:30',
+            'surname'   => 'required|string|alpha|min:2|max:30',
             'email'     => 'required|email|max:100',
             'password1' => 'required|string|min:8|max:72',
             'password2' => 'required|same:password1',

@@ -56,180 +56,143 @@ class __TwigTemplate_90c20214f640d17dd9a234b15559069c extends Template
     {
         $macros = $this->macros;
         // line 4
-        yield "<div class=\"profile-layout\">
+        yield "    <div class=\"profile-main\">
 
-    <aside class=\"profile-sidebar\">
-        <div class=\"profile-avatar-card\">
-            <div class=\"profile-avatar\">
-                <svg width=\"80\" height=\"80\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#b0b8c1\" stroke-width=\"1.2\"><path d=\"M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2\"/><circle cx=\"12\" cy=\"7\" r=\"4\"/></svg>
+        <!-- VK-style profile header card: avatar + name + info -->
+        <div class=\"profile-card profile-header-card\">
+            <div class=\"profile-avatar profile-avatar-large\">
+                <svg width=\"100\" height=\"100\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#b0b8c1\" stroke-width=\"1.2\">
+                    <path d=\"M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2\"/><circle cx=\"12\" cy=\"7\" r=\"4\"/>
+                </svg>
             </div>
-            ";
-        // line 11
-        if (((isset($context["userId"]) || array_key_exists("userId", $context) ? $context["userId"] : (function () { throw new RuntimeError('Variable "userId" does not exist.', 11, $this->source); })()) == (isset($context["user_id"]) || array_key_exists("user_id", $context) ? $context["user_id"] : (function () { throw new RuntimeError('Variable "user_id" does not exist.', 11, $this->source); })()))) {
-            // line 12
-            yield "            <a href=\"/editprofile\" class=\"btn-secondary btn-sm\">Редактировать</a>
-            ";
-        }
-        // line 14
-        yield "        </div>
 
-        <nav class=\"profile-nav\">
-            <a href=\"/id";
-        // line 17
-        yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["user_id"]) || array_key_exists("user_id", $context) ? $context["user_id"] : (function () { throw new RuntimeError('Variable "user_id" does not exist.', 17, $this->source); })()), "html", null, true);
-        yield "\" class=\"profile-nav-item active\">
-                <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2\"/><circle cx=\"12\" cy=\"7\" r=\"4\"/></svg>
-                Моя страница
-            </a>
-            ";
-        // line 21
-        if (((isset($context["userId"]) || array_key_exists("userId", $context) ? $context["userId"] : (function () { throw new RuntimeError('Variable "userId" does not exist.', 21, $this->source); })()) == (isset($context["user_id"]) || array_key_exists("user_id", $context) ? $context["user_id"] : (function () { throw new RuntimeError('Variable "user_id" does not exist.', 21, $this->source); })()))) {
-            // line 22
-            yield "            <a href=\"/editprofile\" class=\"profile-nav-item\">
-                <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z\"/></svg>
-                Редактировать
-            </a>
-            ";
-        }
-        // line 27
-        yield "            <a href=\"#\" class=\"profile-nav-item\">
-                <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2\"/><circle cx=\"9\" cy=\"7\" r=\"4\"/><path d=\"M23 21v-2a4 4 0 0 0-3-3.87\"/><path d=\"M16 3.13a4 4 0 0 1 0 7.75\"/></svg>
-                Друзья
-            </a>
-            <a href=\"#\" class=\"profile-nav-item\">
-                <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\"/></svg>
-                Сообщения
-            </a>
-            <a href=\"#\" class=\"profile-nav-item\">
-                <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"/><circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"/><polyline points=\"21 15 16 10 5 21\"/></svg>
-                Фотографии
-            </a>
-            <a href=\"#\" class=\"profile-nav-item\">
-                <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M8 14s1.5 2 4 2 4-2 4-2\"/><line x1=\"9\" y1=\"9\" x2=\"9.01\" y2=\"9\"/><line x1=\"15\" y1=\"9\" x2=\"15.01\" y2=\"9\"/></svg>
-                Группы
-            </a>
-        </nav>
-    </aside>
-
-    <div class=\"profile-main\">
-
-        <div class=\"profile-card\">
-            <div class=\"profile-card-header\">
-                <h1 class=\"profile-name\">";
-        // line 50
-        yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["name"]) || array_key_exists("name", $context) ? $context["name"] : (function () { throw new RuntimeError('Variable "name" does not exist.', 50, $this->source); })()), "html", null, true);
+            <div class=\"profile-header-info\">
+                <div class=\"profile-header-top\">
+                    <h1 class=\"profile-name\">";
+        // line 16
+        yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["name"]) || array_key_exists("name", $context) ? $context["name"] : (function () { throw new RuntimeError('Variable "name" does not exist.', 16, $this->source); })()), "html", null, true);
         yield " ";
-        yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["surname"]) || array_key_exists("surname", $context) ? $context["surname"] : (function () { throw new RuntimeError('Variable "surname" does not exist.', 50, $this->source); })()), "html", null, true);
+        yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["surname"]) || array_key_exists("surname", $context) ? $context["surname"] : (function () { throw new RuntimeError('Variable "surname" does not exist.', 16, $this->source); })()), "html", null, true);
         yield "</h1>
-                <span class=\"profile-online\">Online</span>
-            </div>
+                    <span class=\"profile-online\">Online</span>
+                </div>
 
-            <div class=\"profile-status\">
-                <input type=\"text\" class=\"profile-status-input\" placeholder=\"Изменить статус\" disabled>
-            </div>
-
-            <div class=\"profile-info\">
-                <div class=\"profile-info-row\">
-                    <span class=\"profile-info-label\">День рождения:</span>
-                    <span class=\"profile-info-value\">";
-        // line 61
-        yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["birthday"]) || array_key_exists("birthday", $context) ? $context["birthday"] : (function () { throw new RuntimeError('Variable "birthday" does not exist.', 61, $this->source); })()), "html", null, true);
+                <div class=\"profile-info\">
+                    <div class=\"profile-info-row\">
+                        <span class=\"profile-info-label\">Пол:</span>
+                        <span class=\"profile-info-value\">";
+        // line 23
+        yield (string) ((((isset($context["sex"]) || array_key_exists("sex", $context) ? $context["sex"] : (function () { throw new RuntimeError('Variable "sex" does not exist.', 23, $this->source); })()) == "male")) ? ("Мужской") : (((((isset($context["sex"]) || array_key_exists("sex", $context) ? $context["sex"] : (function () { throw new RuntimeError('Variable "sex" does not exist.', 23, $this->source); })()) == "female")) ? ("Женский") : ("Другое"))));
         yield "</span>
-                </div>
-                ";
-        // line 63
-        if ((($tmp = (isset($context["city"]) || array_key_exists("city", $context) ? $context["city"] : (function () { throw new RuntimeError('Variable "city" does not exist.', 63, $this->source); })())) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
-            // line 64
-            yield "                <div class=\"profile-info-row\">
-                    <span class=\"profile-info-label\">Город:</span>
-                    <span class=\"profile-info-value\">";
-            // line 66
-            yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["city"]) || array_key_exists("city", $context) ? $context["city"] : (function () { throw new RuntimeError('Variable "city" does not exist.', 66, $this->source); })()), "html", null, true);
+                    </div>
+                    <div class=\"profile-info-row\">
+                        <span class=\"profile-info-label\">День рождения:</span>
+                        <span class=\"profile-info-value\">";
+        // line 27
+        yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["birthday"]) || array_key_exists("birthday", $context) ? $context["birthday"] : (function () { throw new RuntimeError('Variable "birthday" does not exist.', 27, $this->source); })()), "html", null, true);
+        yield "</span>
+                    </div>
+                    ";
+        // line 29
+        if ((($tmp = (isset($context["city"]) || array_key_exists("city", $context) ? $context["city"] : (function () { throw new RuntimeError('Variable "city" does not exist.', 29, $this->source); })())) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            // line 30
+            yield "                    <div class=\"profile-info-row\">
+                        <span class=\"profile-info-label\">Город:</span>
+                        <span class=\"profile-info-value\">";
+            // line 32
+            yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["city"]) || array_key_exists("city", $context) ? $context["city"] : (function () { throw new RuntimeError('Variable "city" does not exist.', 32, $this->source); })()), "html", null, true);
             yield "</span>
-                </div>
+                    </div>
+                    ";
+        }
+        // line 35
+        yield "                    ";
+        if ((($tmp = (isset($context["country"]) || array_key_exists("country", $context) ? $context["country"] : (function () { throw new RuntimeError('Variable "country" does not exist.', 35, $this->source); })())) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            // line 36
+            yield "                    <div class=\"profile-info-row\">
+                        <span class=\"profile-info-label\">Страна:</span>
+                        <span class=\"profile-info-value\">";
+            // line 38
+            yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["country"]) || array_key_exists("country", $context) ? $context["country"] : (function () { throw new RuntimeError('Variable "country" does not exist.', 38, $this->source); })()), "html", null, true);
+            yield "</span>
+                    </div>
+                    ";
+        }
+        // line 41
+        yield "                </div>
+
+                ";
+        // line 43
+        if (((isset($context["userId"]) || array_key_exists("userId", $context) ? $context["userId"] : (function () { throw new RuntimeError('Variable "userId" does not exist.', 43, $this->source); })()) == (isset($context["user_id"]) || array_key_exists("user_id", $context) ? $context["user_id"] : (function () { throw new RuntimeError('Variable "user_id" does not exist.', 43, $this->source); })()))) {
+            // line 44
+            yield "                    <a href=\"/editprofile\" class=\"btn-secondary btn-sm header-edit-btn\">Редактировать профиль</a>
                 ";
         }
-        // line 69
-        yield "                ";
-        if ((($tmp = (isset($context["country"]) || array_key_exists("country", $context) ? $context["country"] : (function () { throw new RuntimeError('Variable "country" does not exist.', 69, $this->source); })())) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
-            // line 70
-            yield "                <div class=\"profile-info-row\">
-                    <span class=\"profile-info-label\">Страна:</span>
-                    <span class=\"profile-info-value\">";
-            // line 72
-            yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["country"]) || array_key_exists("country", $context) ? $context["country"] : (function () { throw new RuntimeError('Variable "country" does not exist.', 72, $this->source); })()), "html", null, true);
-            yield "</span>
-                </div>
-                ";
-        }
-        // line 75
-        yield "                <div class=\"profile-info-row\">
-                    <span class=\"profile-info-label\">Пол:</span>
-                    <span class=\"profile-info-value\">";
-        // line 77
-        yield (string) ((((isset($context["sex"]) || array_key_exists("sex", $context) ? $context["sex"] : (function () { throw new RuntimeError('Variable "sex" does not exist.', 77, $this->source); })()) == "male")) ? ("Мужской") : (((((isset($context["sex"]) || array_key_exists("sex", $context) ? $context["sex"] : (function () { throw new RuntimeError('Variable "sex" does not exist.', 77, $this->source); })()) == "female")) ? ("Женский") : ("Другое"))));
-        yield "</span>
-                </div>
-            </div>
+        // line 46
+        yield "            </div>
         </div>
 
         ";
-        // line 82
-        if ((((($tmp = (isset($context["about"]) || array_key_exists("about", $context) ? $context["about"] : (function () { throw new RuntimeError('Variable "about" does not exist.', 82, $this->source); })())) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = (isset($context["interests"]) || array_key_exists("interests", $context) ? $context["interests"] : (function () { throw new RuntimeError('Variable "interests" does not exist.', 82, $this->source); })())) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = (isset($context["favorite_films"]) || array_key_exists("favorite_films", $context) ? $context["favorite_films"] : (function () { throw new RuntimeError('Variable "favorite_films" does not exist.', 82, $this->source); })())) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
-            // line 83
+        // line 49
+        if ((((($tmp = (isset($context["about"]) || array_key_exists("about", $context) ? $context["about"] : (function () { throw new RuntimeError('Variable "about" does not exist.', 49, $this->source); })())) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = (isset($context["interests"]) || array_key_exists("interests", $context) ? $context["interests"] : (function () { throw new RuntimeError('Variable "interests" does not exist.', 49, $this->source); })())) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = (isset($context["favorite_films"]) || array_key_exists("favorite_films", $context) ? $context["favorite_films"] : (function () { throw new RuntimeError('Variable "favorite_films" does not exist.', 49, $this->source); })())) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
+            // line 50
             yield "        <div class=\"profile-card\">
             <h3 class=\"profile-section-title\">Обо мне</h3>
 
             ";
-            // line 86
-            if ((($tmp = (isset($context["about"]) || array_key_exists("about", $context) ? $context["about"] : (function () { throw new RuntimeError('Variable "about" does not exist.', 86, $this->source); })())) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
-                // line 87
+            // line 53
+            if ((($tmp = (isset($context["about"]) || array_key_exists("about", $context) ? $context["about"] : (function () { throw new RuntimeError('Variable "about" does not exist.', 53, $this->source); })())) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+                // line 54
                 yield "            <div class=\"profile-about-section\">
                 <div class=\"profile-about-label\">Обо мне</div>
                 <div class=\"profile-about-text\">";
-                // line 89
-                yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["about"]) || array_key_exists("about", $context) ? $context["about"] : (function () { throw new RuntimeError('Variable "about" does not exist.', 89, $this->source); })()), "html", null, true);
+                // line 56
+                yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["about"]) || array_key_exists("about", $context) ? $context["about"] : (function () { throw new RuntimeError('Variable "about" does not exist.', 56, $this->source); })()), "html", null, true);
                 yield "</div>
             </div>
             ";
             }
-            // line 92
+            // line 59
             yield "
             ";
-            // line 93
-            if ((($tmp = (isset($context["interests"]) || array_key_exists("interests", $context) ? $context["interests"] : (function () { throw new RuntimeError('Variable "interests" does not exist.', 93, $this->source); })())) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
-                // line 94
+            // line 60
+            if ((($tmp = (isset($context["interests"]) || array_key_exists("interests", $context) ? $context["interests"] : (function () { throw new RuntimeError('Variable "interests" does not exist.', 60, $this->source); })())) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+                // line 61
                 yield "            <div class=\"profile-about-section\">
                 <div class=\"profile-about-label\">Интересы</div>
                 <div class=\"profile-about-text\">";
-                // line 96
-                yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["interests"]) || array_key_exists("interests", $context) ? $context["interests"] : (function () { throw new RuntimeError('Variable "interests" does not exist.', 96, $this->source); })()), "html", null, true);
+                // line 63
+                yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["interests"]) || array_key_exists("interests", $context) ? $context["interests"] : (function () { throw new RuntimeError('Variable "interests" does not exist.', 63, $this->source); })()), "html", null, true);
                 yield "</div>
             </div>
             ";
             }
-            // line 99
+            // line 66
             yield "
             ";
-            // line 100
-            if ((($tmp = (isset($context["favorite_films"]) || array_key_exists("favorite_films", $context) ? $context["favorite_films"] : (function () { throw new RuntimeError('Variable "favorite_films" does not exist.', 100, $this->source); })())) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
-                // line 101
+            // line 67
+            if ((($tmp = (isset($context["favorite_films"]) || array_key_exists("favorite_films", $context) ? $context["favorite_films"] : (function () { throw new RuntimeError('Variable "favorite_films" does not exist.', 67, $this->source); })())) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+                // line 68
                 yield "            <div class=\"profile-about-section\">
                 <div class=\"profile-about-label\">Любимые фильмы</div>
                 <div class=\"profile-about-text\">";
-                // line 103
-                yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["favorite_films"]) || array_key_exists("favorite_films", $context) ? $context["favorite_films"] : (function () { throw new RuntimeError('Variable "favorite_films" does not exist.', 103, $this->source); })()), "html", null, true);
+                // line 70
+                yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["favorite_films"]) || array_key_exists("favorite_films", $context) ? $context["favorite_films"] : (function () { throw new RuntimeError('Variable "favorite_films" does not exist.', 70, $this->source); })()), "html", null, true);
                 yield "</div>
             </div>
             ";
             }
-            // line 106
+            // line 73
             yield "        </div>
         ";
         }
-        // line 108
+        // line 75
         yield "
-        <div class=\"profile-card\">
+        ";
+        // line 76
+        if ((($tmp = (isset($context["userId"]) || array_key_exists("userId", $context) ? $context["userId"] : (function () { throw new RuntimeError('Variable "userId" does not exist.', 76, $this->source); })())) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            // line 77
+            yield "        <div class=\"profile-card\">
             <div class=\"profile-photo-upload\">
                 <svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#1877f2\" stroke-width=\"2\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"/><circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"/><polyline points=\"21 15 16 10 5 21\"/></svg>
                 <span>Добавить фотографии</span>
@@ -239,9 +202,9 @@ class __TwigTemplate_90c20214f640d17dd9a234b15559069c extends Template
         <div class=\"profile-card\">
             <div class=\"profile-wall-input\">
                 <div class=\"profile-wall-avatar\">";
-        // line 118
-        yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["userInitials"]) || array_key_exists("userInitials", $context) ? $context["userInitials"] : (function () { throw new RuntimeError('Variable "userInitials" does not exist.', 118, $this->source); })()), "html", null, true);
-        yield "</div>
+            // line 86
+            yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["userInitials"]) || array_key_exists("userInitials", $context) ? $context["userInitials"] : (function () { throw new RuntimeError('Variable "userInitials" does not exist.', 86, $this->source); })()), "html", null, true);
+            yield "</div>
                 <div class=\"profile-wall-placeholder\">Что у Вас нового?</div>
             </div>
         </div>
@@ -252,9 +215,11 @@ class __TwigTemplate_90c20214f640d17dd9a234b15559069c extends Template
             </div>
             <p class=\"profile-wall-empty-text\">На стене пока ни одной записи.</p>
         </div>
-
+        ";
+        }
+        // line 98
+        yield "
     </div>
-</div>
 ";
         yield from [];
     }
@@ -280,7 +245,7 @@ class __TwigTemplate_90c20214f640d17dd9a234b15559069c extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  243 => 118,  231 => 108,  227 => 106,  221 => 103,  217 => 101,  215 => 100,  212 => 99,  206 => 96,  202 => 94,  200 => 93,  197 => 92,  191 => 89,  187 => 87,  185 => 86,  180 => 83,  178 => 82,  170 => 77,  166 => 75,  160 => 72,  156 => 70,  153 => 69,  147 => 66,  143 => 64,  141 => 63,  136 => 61,  120 => 50,  95 => 27,  88 => 22,  86 => 21,  79 => 17,  74 => 14,  70 => 12,  68 => 11,  59 => 4,  52 => 3,  41 => 1,);
+        return array (  221 => 98,  206 => 86,  195 => 77,  193 => 76,  190 => 75,  186 => 73,  180 => 70,  176 => 68,  174 => 67,  171 => 66,  165 => 63,  161 => 61,  159 => 60,  156 => 59,  150 => 56,  146 => 54,  144 => 53,  139 => 50,  137 => 49,  132 => 46,  128 => 44,  126 => 43,  122 => 41,  116 => 38,  112 => 36,  109 => 35,  103 => 32,  99 => 30,  97 => 29,  92 => 27,  85 => 23,  73 => 16,  59 => 4,  52 => 3,  41 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -288,81 +253,48 @@ class __TwigTemplate_90c20214f640d17dd9a234b15559069c extends Template
         return new Source("{% extends \"layouts/main.twig\" %}
 
 {% block content %}
-<div class=\"profile-layout\">
-
-    <aside class=\"profile-sidebar\">
-        <div class=\"profile-avatar-card\">
-            <div class=\"profile-avatar\">
-                <svg width=\"80\" height=\"80\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#b0b8c1\" stroke-width=\"1.2\"><path d=\"M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2\"/><circle cx=\"12\" cy=\"7\" r=\"4\"/></svg>
-            </div>
-            {% if userId == user_id %}
-            <a href=\"/editprofile\" class=\"btn-secondary btn-sm\">Редактировать</a>
-            {% endif %}
-        </div>
-
-        <nav class=\"profile-nav\">
-            <a href=\"/id{{ user_id }}\" class=\"profile-nav-item active\">
-                <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2\"/><circle cx=\"12\" cy=\"7\" r=\"4\"/></svg>
-                Моя страница
-            </a>
-            {% if userId == user_id %}
-            <a href=\"/editprofile\" class=\"profile-nav-item\">
-                <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z\"/></svg>
-                Редактировать
-            </a>
-            {% endif %}
-            <a href=\"#\" class=\"profile-nav-item\">
-                <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2\"/><circle cx=\"9\" cy=\"7\" r=\"4\"/><path d=\"M23 21v-2a4 4 0 0 0-3-3.87\"/><path d=\"M16 3.13a4 4 0 0 1 0 7.75\"/></svg>
-                Друзья
-            </a>
-            <a href=\"#\" class=\"profile-nav-item\">
-                <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\"/></svg>
-                Сообщения
-            </a>
-            <a href=\"#\" class=\"profile-nav-item\">
-                <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"/><circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"/><polyline points=\"21 15 16 10 5 21\"/></svg>
-                Фотографии
-            </a>
-            <a href=\"#\" class=\"profile-nav-item\">
-                <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M8 14s1.5 2 4 2 4-2 4-2\"/><line x1=\"9\" y1=\"9\" x2=\"9.01\" y2=\"9\"/><line x1=\"15\" y1=\"9\" x2=\"15.01\" y2=\"9\"/></svg>
-                Группы
-            </a>
-        </nav>
-    </aside>
-
     <div class=\"profile-main\">
 
-        <div class=\"profile-card\">
-            <div class=\"profile-card-header\">
-                <h1 class=\"profile-name\">{{ name }} {{ surname }}</h1>
-                <span class=\"profile-online\">Online</span>
+        <!-- VK-style profile header card: avatar + name + info -->
+        <div class=\"profile-card profile-header-card\">
+            <div class=\"profile-avatar profile-avatar-large\">
+                <svg width=\"100\" height=\"100\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#b0b8c1\" stroke-width=\"1.2\">
+                    <path d=\"M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2\"/><circle cx=\"12\" cy=\"7\" r=\"4\"/>
+                </svg>
             </div>
 
-            <div class=\"profile-status\">
-                <input type=\"text\" class=\"profile-status-input\" placeholder=\"Изменить статус\" disabled>
-            </div>
+            <div class=\"profile-header-info\">
+                <div class=\"profile-header-top\">
+                    <h1 class=\"profile-name\">{{ name }} {{ surname }}</h1>
+                    <span class=\"profile-online\">Online</span>
+                </div>
 
-            <div class=\"profile-info\">
-                <div class=\"profile-info-row\">
-                    <span class=\"profile-info-label\">День рождения:</span>
-                    <span class=\"profile-info-value\">{{ birthday }}</span>
+                <div class=\"profile-info\">
+                    <div class=\"profile-info-row\">
+                        <span class=\"profile-info-label\">Пол:</span>
+                        <span class=\"profile-info-value\">{{ sex == \x27male\x27 ? \x27Мужской\x27 : (sex == \x27female\x27 ? \x27Женский\x27 : \x27Другое\x27) }}</span>
+                    </div>
+                    <div class=\"profile-info-row\">
+                        <span class=\"profile-info-label\">День рождения:</span>
+                        <span class=\"profile-info-value\">{{ birthday }}</span>
+                    </div>
+                    {% if city %}
+                    <div class=\"profile-info-row\">
+                        <span class=\"profile-info-label\">Город:</span>
+                        <span class=\"profile-info-value\">{{ city }}</span>
+                    </div>
+                    {% endif %}
+                    {% if country %}
+                    <div class=\"profile-info-row\">
+                        <span class=\"profile-info-label\">Страна:</span>
+                        <span class=\"profile-info-value\">{{ country }}</span>
+                    </div>
+                    {% endif %}
                 </div>
-                {% if city %}
-                <div class=\"profile-info-row\">
-                    <span class=\"profile-info-label\">Город:</span>
-                    <span class=\"profile-info-value\">{{ city }}</span>
-                </div>
+
+                {% if userId == user_id %}
+                    <a href=\"/editprofile\" class=\"btn-secondary btn-sm header-edit-btn\">Редактировать профиль</a>
                 {% endif %}
-                {% if country %}
-                <div class=\"profile-info-row\">
-                    <span class=\"profile-info-label\">Страна:</span>
-                    <span class=\"profile-info-value\">{{ country }}</span>
-                </div>
-                {% endif %}
-                <div class=\"profile-info-row\">
-                    <span class=\"profile-info-label\">Пол:</span>
-                    <span class=\"profile-info-value\">{{ sex == \x27male\x27 ? \x27Мужской\x27 : (sex == \x27female\x27 ? \x27Женский\x27 : \x27Другое\x27) }}</span>
-                </div>
             </div>
         </div>
 
@@ -393,6 +325,7 @@ class __TwigTemplate_90c20214f640d17dd9a234b15559069c extends Template
         </div>
         {% endif %}
 
+        {% if userId %}
         <div class=\"profile-card\">
             <div class=\"profile-photo-upload\">
                 <svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#1877f2\" stroke-width=\"2\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"/><circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"/><polyline points=\"21 15 16 10 5 21\"/></svg>
@@ -413,9 +346,9 @@ class __TwigTemplate_90c20214f640d17dd9a234b15559069c extends Template
             </div>
             <p class=\"profile-wall-empty-text\">На стене пока ни одной записи.</p>
         </div>
+        {% endif %}
 
     </div>
-</div>
 {% endblock %}
 ", "profile/profile.twig", "E:\\OSPanel\\home\\hivephp.local\\resources\\views\\profile\\profile.twig");
     }

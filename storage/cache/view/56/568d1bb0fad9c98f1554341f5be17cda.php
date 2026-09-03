@@ -48,32 +48,36 @@ class __TwigTemplate_b077f0855ba6586af0aee04ff9320e4c extends Template
     <meta name=\"viewport\"
            content=\"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0\">
     <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">
-    ";
+    <meta name=\"csrf-token\" content=\"";
         // line 8
+        yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["csrfToken"]) || array_key_exists("csrfToken", $context) ? $context["csrfToken"] : (function () { throw new RuntimeError('Variable "csrfToken" does not exist.', 8, $this->source); })()), "html", null, true);
+        yield "\">
+    ";
+        // line 9
         yield (string) $this->env->getFunction('assets_css')->getCallable()();
         yield "
     <title>";
-        // line 9
-        yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["title"]) || array_key_exists("title", $context) ? $context["title"] : (function () { throw new RuntimeError('Variable "title" does not exist.', 9, $this->source); })()), "html", null, true);
+        // line 10
+        yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape((isset($context["title"]) || array_key_exists("title", $context) ? $context["title"] : (function () { throw new RuntimeError('Variable "title" does not exist.', 10, $this->source); })()), "html", null, true);
         yield " - ";
-        yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 9, $this->source); })()), "name", [], "any", false, false, false, 9), "html", null, true);
+        yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 10, $this->source); })()), "name", [], "any", false, false, false, 10), "html", null, true);
         yield "</title>
 </head>
 <body class=\"body-home\">
 
     <div class=\"container\">
         ";
-        // line 14
-        yield from $this->unwrap()->yieldBlock('content', $context, $blocks);
         // line 15
+        yield from $this->unwrap()->yieldBlock('content', $context, $blocks);
+        // line 16
         yield "    </div>
 
     <div class=\"footer-home\">
         <div class=\"container\">
             <div class=\"copy-footer-home\">
                 &copy; 2025 ";
-        // line 20
-        yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 20, $this->source); })()), "name", [], "any", false, false, false, 20), "html", null, true);
+        // line 21
+        yield (string) $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 21, $this->source); })()), "name", [], "any", false, false, false, 21), "html", null, true);
         yield ". Все права защищены.
             </div>
             <div class=\"button-footer-home\">
@@ -86,7 +90,7 @@ class __TwigTemplate_b077f0855ba6586af0aee04ff9320e4c extends Template
     </div>
 
     ";
-        // line 31
+        // line 32
         yield (string) $this->env->getFunction('assets_js')->getCallable()();
         yield "
 </body>
@@ -94,7 +98,7 @@ class __TwigTemplate_b077f0855ba6586af0aee04ff9320e4c extends Template
         yield from [];
     }
 
-    // line 14
+    // line 15
     /**
      * @return iterable<null|scalar|\Stringable>
      */
@@ -125,7 +129,7 @@ class __TwigTemplate_b077f0855ba6586af0aee04ff9320e4c extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  98 => 14,  90 => 31,  76 => 20,  69 => 15,  67 => 14,  57 => 9,  53 => 8,  44 => 1,);
+        return array (  102 => 15,  94 => 32,  80 => 21,  73 => 16,  71 => 15,  61 => 10,  57 => 9,  53 => 8,  44 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -137,6 +141,7 @@ class __TwigTemplate_b077f0855ba6586af0aee04ff9320e4c extends Template
     <meta name=\"viewport\"
            content=\"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0\">
     <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">
+    <meta name=\"csrf-token\" content=\"{{ csrfToken }}\">
     {{ assets_css() }}
     <title>{{ title }} - {{ app.name }}</title>
 </head>

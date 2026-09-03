@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS `lovly` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE IF NOT EXISTS `hivephp` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-USE `lovly`;
+USE `hivephp`;
 
 CREATE TABLE IF NOT EXISTS `users` (
     `id`         INT AUTO_INCREMENT PRIMARY KEY,

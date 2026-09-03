@@ -1,11 +1,18 @@
 <?php
-
+/*
+ * Copyright (c) 2026 HivePHP LovlyEngine
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *   file that was distributed with this source code.
+ *
+ */
 declare(strict_types=1);
 
 namespace HivePHP\Providers;
 
 use App\Services\AuthService;
 use HivePHP\Assets\Assets;
+use HivePHP\Security\CsrfToken;
 use HivePHP\Support\Config;
 use HivePHP\Support\Container;
 use HivePHP\View\TwigFactory;
@@ -37,6 +44,8 @@ class ViewServiceProvider implements ServiceProviderInterface
         $view = $container->get(View::class);
         $auth = $container->get(AuthService::class);
         $user = $auth->user();
+
+        $view->share('csrfToken', CsrfToken::token());
 
         if ($user) {
             $initials = mb_substr($user['name'], 0, 1) . mb_substr($user['surname'], 0, 1);

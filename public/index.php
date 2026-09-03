@@ -1,5 +1,11 @@
 <?php
-
+/*
+ * Copyright (c) 2026 HivePHP LovlyEngine
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *   file that was distributed with this source code.
+ *
+ */
 declare(strict_types=1);
 
 define('BASE_PATH', dirname(__DIR__));
@@ -29,14 +35,22 @@ set_exception_handler(static function (Throwable $e): void {
         $e->getLine(),
         $e->getTraceAsString()
     );
-    file_put_contents(BASE_PATH . '/storage/logs/error.log', $log, FILE_APPEND);
+
+    $logDir = BASE_PATH . '/storage/logs';
+    if (!is_dir($logDir)) {
+        @mkdir($logDir, 0777, true);
+    }
+    file_put_contents($logDir . '/error.log', $log, FILE_APPEND);
 
     http_response_code(500);
     header_remove('X-Powered-By');
     header('Content-Type: application/json; charset=utf-8');
+
+    $debug = filter_var(env('APP_DEBUG', 'false'), FILTER_VALIDATE_BOOLEAN);
+
     echo json_encode([
         'status'  => 'error',
-        'message' => $e->getMessage(),
+        'message' => $debug ? $e->getMessage() : 'Internal server error',
     ], JSON_UNESCAPED_UNICODE);
     exit;
 });

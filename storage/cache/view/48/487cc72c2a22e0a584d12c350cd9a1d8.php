@@ -110,8 +110,6 @@ class __TwigTemplate_5313a288cfe4ccb5b16f6dd02243882c extends Template
                     <span class=\"ui-checkmark\"></span>
                     Запомнить меня
                 </label>
-
-                <a href=\"/forgot\">Забыли пароль?</a>
             </div>
 
             <button class=\"btn-primary btn-primary-login\">
@@ -212,8 +210,6 @@ class __TwigTemplate_5313a288cfe4ccb5b16f6dd02243882c extends Template
                     <span class=\"ui-checkmark\"></span>
                     Запомнить меня
                 </label>
-
-                <a href=\"/forgot\">Забыли пароль?</a>
             </div>
 
             <button class=\"btn-primary btn-primary-login\">

@@ -1,5 +1,11 @@
 <?php
-
+/*
+ * Copyright (c) 2026 HivePHP LovlyEngine
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *   file that was distributed with this source code.
+ *
+ */
 declare(strict_types=1);
 
 namespace App\Http\Controllers;
@@ -35,6 +41,7 @@ final class EditProfileController extends Controller
 
         $this->assets->addCss('css/profile/profile.css');
         $this->assets->addCss('css/home/edit-profile.css');
+        $this->assets->addJs('js/app/edit-profile.js');
 
         $this->response->html($this->view->render('profile/edit', [
             'title'           => 'Редактирование профиля',

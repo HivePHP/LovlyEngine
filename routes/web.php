@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2025 hivephp OldVkDev
+ * Copyright (c) 2026 HivePHP LovlyEngine
  *
  *  For the full copyright and license information, please view the LICENSE
  *   file that was distributed with this source code.
@@ -20,7 +20,7 @@ $router->middleware('guest', 'web')->       get('/', [HomeController::class, 'sh
 $router->middleware('guest', 'web')->       get('/reg', [HomeController::class, 'showRegister']);
 $router->middleware('guest')->              post('/login', [AuthController::class, 'login']);
 $router->middleware('guest')->              post('/register', [AuthController::class, 'register']);
-$router->middleware('auth')->               get('/logout', [AuthController::class, 'logout']);
+$router->middleware('auth')->                post('/logout', [AuthController::class, 'logout']);
 
 $router->middleware('web')->get('/id{id}', [UserController::class, 'show']);
 

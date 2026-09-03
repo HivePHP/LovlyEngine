@@ -1,17 +1,27 @@
 <?php
-
+/*
+ * Copyright (c) 2026 HivePHP LovlyEngine
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *   file that was distributed with this source code.
+ *
+ */
 declare(strict_types=1);
 
 namespace App\Http;
 
 use App\Http\Middleware\Auth;
 use App\Http\Middleware\Guest;
+use App\Http\Middleware\ThrottleRequests;
+use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Middleware\WebAssets;
-use Closure;
 
 final class Kernel
 {
-    protected array $middleware = [];
+    protected array $middleware = [
+        ThrottleRequests::class,
+        VerifyCsrfToken::class,
+    ];
 
     protected array $middlewareGroups = [
         'web' => [
@@ -20,9 +30,11 @@ final class Kernel
     ];
 
     protected array $middlewareAliases = [
-        'auth'  => Auth::class,
-        'guest' => Guest::class,
-        'web'   => WebAssets::class,
+        'auth'      => Auth::class,
+        'guest'     => Guest::class,
+        'web'       => WebAssets::class,
+        'csrf'      => VerifyCsrfToken::class,
+        'throttle'  => ThrottleRequests::class,
     ];
 
     public function getGlobalMiddleware(): array

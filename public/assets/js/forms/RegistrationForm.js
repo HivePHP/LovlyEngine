@@ -1,5 +1,6 @@
 import Dom from '../core/Dom.js';
 import FormErrors from '../core/FormErrors.js';
+import Ajax from '../core/Ajax.js';
 import Stepper from '../ui/Stepper.js';
 import PasswordStrength from '../ui/PasswordStrength.js';
 import BirthdateSelect from '../ui/BirthdateSelect.js';
@@ -65,25 +66,23 @@ export default class RegistrationForm {
         this.stepper.next();
     }
 
-    submit() {
+    async submit() {
         const data = Object.fromEntries(
             Dom.qsa('[name]').map(el => [el.name, el.value])
         );
 
-        fetch('/register', {
-            method: 'POST',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify(data)
-        })
-            .then(r => r.json())
-            .then(res => {
-                if (res.status === 'validation_error') {
-                    for (const [f,m] of Object.entries(res.errors)) {
-                        const el = Dom.qs(`[name="${f}"]`);
-                        if (el) FormErrors.show(el, m);
-                    }
+        try {
+            const res = await Ajax.post('/register', data);
+            if (res.status === 'validation_error') {
+                for (const [f, m] of Object.entries(res.errors)) {
+                    const el = Dom.qs(`[name="${f}"]`);
+                    if (el) FormErrors.show(el, m);
                 }
-                if (res.status === 'ok') location.href = '/id' + res.uid;
-            });
+            }
+            if (res.status === 'ok') location.href = '/id' + res.uid;
+        } catch (err) {
+            window.alert('Ошибка соединения (см. консоль)');
+            console.error(err);
+        }
     }
 }

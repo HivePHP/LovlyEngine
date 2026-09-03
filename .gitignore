@@ -31,3 +31,4 @@ Thumbs.db
 /build/
 dist/
 /storage/logs/
+/storage/cache/

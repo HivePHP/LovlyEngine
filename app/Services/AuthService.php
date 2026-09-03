@@ -1,5 +1,11 @@
 <?php
-
+/*
+ * Copyright (c) 2026 HivePHP LovlyEngine
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *   file that was distributed with this source code.
+ *
+ */
 declare(strict_types=1);
 
 namespace App\Services;
@@ -8,11 +14,11 @@ use App\Repositories\UserRememberRepository;
 use App\Repositories\UserRepository;
 use HivePHP\Http\Cookie;
 use HivePHP\Http\Request;
+use HivePHP\Security\CsrfToken;
 
 final class AuthService
 {
     private const COOKIE_NAME = 'remember_token';
-    private const CSRF_SESSION_KEY = '_csrf_token';
     private const TTL = 2592000; // 30 days
 
     private bool $resolved = false;
@@ -55,7 +61,7 @@ final class AuthService
     {
         session_regenerate_id(true);
         $_SESSION['uid'] = $userId;
-        $this->regenerateCsrfToken();
+        CsrfToken::refresh();
 
         if ($remember) {
             $this->rotateRememberToken($userId);
@@ -71,27 +77,9 @@ final class AuthService
             $this->cookies->delete(self::COOKIE_NAME);
         }
 
-        unset($_SESSION['uid'], $_SESSION[self::CSRF_SESSION_KEY]);
+        unset($_SESSION['uid']);
+        CsrfToken::refresh();
         session_regenerate_id(true);
-    }
-
-    public function csrfToken(): string
-    {
-        if (empty($_SESSION[self::CSRF_SESSION_KEY])) {
-            $this->regenerateCsrfToken();
-        }
-
-        return $_SESSION[self::CSRF_SESSION_KEY];
-    }
-
-    public function validateCsrfToken(string $token): bool
-    {
-        return hash_equals($this->csrfToken(), $token);
-    }
-
-    private function regenerateCsrfToken(): void
-    {
-        $_SESSION[self::CSRF_SESSION_KEY] = bin2hex(random_bytes(32));
     }
 
     private function rotateRememberToken(int $userId): void

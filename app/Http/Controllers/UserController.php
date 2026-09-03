@@ -17,6 +17,7 @@ use HivePHP\Http\Cookie;
 use HivePHP\Http\Request;
 use HivePHP\Http\Response;
 use HivePHP\View\View;
+use JsonException;
 
 final class UserController extends Controller
 {
@@ -37,6 +38,9 @@ final class UserController extends Controller
         parent::__construct($request, $response, $view, $db, $assets, $cookies, $users);
     }
 
+    /**
+     * @throws JsonException
+     */
     public function show(int $id): void
     {
         $user = $this->users->findProfileById($id);
@@ -51,12 +55,13 @@ final class UserController extends Controller
         $year  = (int)$user['year'];
         $birthday = $day . ' ' . (self::MONTH_NAMES[$month] ?? '') . ' ' . $year . ' г.';
 
-        $this->assets->addCss('css/profile/profile.css');
+        $this->assets->usePage('profile');
 
         $this->response->html($this->view->render('profile/profile', [
             'title'           => trim($user['name'] . ' ' . $user['surname']),
             'name'            => $user['name'],
             'surname'         => $user['surname'],
+            'status'          => $user['status'] ?? '',
             'sex'             => $user['sex'],
             'city'            => $user['city'],
             'country'         => $user['country'],

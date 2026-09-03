@@ -17,6 +17,22 @@
                     <span class="profile-online">Online</span>
                 </div>
 
+                {% if userId == user_id %}
+                    <div class="profile-status" data-status-widget data-current-status="{{ status|e('html_attr') }}">
+                        {% if status %}
+                            <button type="button" class="profile-status-text" data-status-toggle title="Нажмите, чтобы изменить статус">{{ status }}</button>
+                        {% else %}
+                            <button type="button" class="profile-status-set" data-status-toggle>Установить статус</button>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    {% if status %}
+                    <div class="profile-status">
+                        <span class="profile-status-text profile-status-readonly">{{ status }}</span>
+                    </div>
+                    {% endif %}
+                {% endif %}
+
                 <div class="profile-info">
                     <div class="profile-info-row">
                         <span class="profile-info-label">Пол:</span>
@@ -45,6 +61,28 @@
                 {% endif %}
             </div>
         </div>
+
+        {% if userId == user_id %}
+        <div class="status-modal" data-status-modal hidden>
+            <div class="status-modal-backdrop" data-status-close></div>
+            <div class="status-modal-card">
+                <h3 class="status-modal-title">Статус</h3>
+                <input
+                    type="text"
+                    name="status"
+                    class="status-modal-input"
+                    maxlength="120"
+                    placeholder="Введите статус..."
+                    autocomplete="off"
+                >
+                <div class="status-modal-error" data-status-error></div>
+                <div class="status-modal-actions">
+                    <button type="button" class="btn-primary status-save-btn" data-status-save>Сохранить</button>
+                    <button type="button" class="btn-secondary status-cancel-btn" data-status-close>Отмена</button>
+                </div>
+            </div>
+        </div>
+        {% endif %}
 
         {% if about or interests or favorite_films %}
         <div class="profile-card">

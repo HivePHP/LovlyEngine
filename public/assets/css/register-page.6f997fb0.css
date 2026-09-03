@@ -1,0 +1,156 @@
+/* ============================================================
+   PAGE: REGISTER — registration stepper card & progress
+   ("register-page" bundle, only on the registration screen)
+   ============================================================ */
+
+.reg-card {
+    width: 500px;
+    padding: 28px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.reg-card h2 {
+    text-align: center;
+    margin-bottom: 22px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.row-reg {
+    display: flex;
+    gap: 12px;
+}
+
+.birthdate-selects {
+    display: flex;
+    gap: 10px;
+}
+
+.birthdate-selects select {
+    flex: 1;
+}
+
+.create-account {
+    text-align: center;
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* PROGRESS */
+.progress-wrapper {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #e4e6eb;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: #1877f2;
+    transition: width 0.3s ease;
+}
+
+/* STEPS */
+#step-one,
+#step-two,
+#step-three,
+#step-four,
+#step-five {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#step-one[style*="block"],
+#step-two[style*="block"],
+#step-three[style*="block"],
+#step-four[style*="block"],
+#step-five[style*="block"] {
+    opacity: 1;
+}
+
+.step-text {
+    margin: 40px auto;
+    text-align: center;
+    font-size: 13px;
+    color: #4d4d4d;
+    width: 250px;
+    line-height: 1.5em;
+}
+
+.btn-back {
+    margin-bottom: 10px;
+    padding: 8px 15px;
+    background: #f1f1f1;
+    border-radius: 5px;
+    color: #1877f2;
+    border: solid 1px #d9d9d9;
+    cursor: pointer;
+}
+
+/* PASSWORD STRENGTH */
+.password-strength {
+    margin-top: 8px;
+    display: none;
+}
+
+.strength-bar {
+    height: 8px;
+    width: 0%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, red, orange);
+    transition: width 0.25s ease, background 0.25s ease;
+}
+
+.strength-text {
+    font-size: 12px;
+    margin-top: 6px;
+    color: #555;
+    font-weight: 500;
+}
+
+/* CAPTCHA */
+.captcha-group {
+    text-align: center;
+}
+
+.captcha-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.captcha-image {
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    background: #fff;
+    vertical-align: middle;
+}
+
+.captcha-refresh {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    background: #f1f1f1;
+    color: #1877f2;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.captcha-refresh:hover {
+    background: #e4e6eb;
+}

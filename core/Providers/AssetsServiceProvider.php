@@ -9,13 +9,14 @@
 namespace HivePHP\Providers;
 
 use HivePHP\Assets\Assets;
+use HivePHP\Support\Config;
 use HivePHP\Support\Container;
 
 class AssetsServiceProvider implements ServiceProviderInterface
 {
      public function register(Container $container): void
      {
-         $container->set(Assets::class, new Assets());
+         $container->set(Assets::class, new Assets(Config::get('assets')));
      }
 
      public function boot(Container $container): void{}

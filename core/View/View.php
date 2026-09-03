@@ -14,16 +14,26 @@ use Twig\Environment;
 
 final class View
 {
+    /** @var array<string, mixed> */
     private array $shared = [];
 
     public function __construct(
         private readonly Environment $twig
     ) {}
 
-
     public function share(string $key, mixed $value): void
     {
         $this->shared[$key] = $value;
+    }
+
+    /**
+     * Share many values at once.
+     *
+     * @param array<string, mixed> $values
+     */
+    public function shareMany(array $values): void
+    {
+        $this->shared = array_merge($this->shared, $values);
     }
 
     public function render(string $template, array $data = []): string
@@ -33,5 +43,4 @@ final class View
             array_merge($this->shared, $data)
         );
     }
-
 }

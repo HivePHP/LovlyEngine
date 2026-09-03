@@ -6,13 +6,13 @@
            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrfToken }}">
-    {{ assets_css() }}
+    <!-- HIVE-CSS:START -->{{ assets_css() }}<!-- HIVE-CSS:END -->
     <title>{{ title }} - {{ app.name }}</title>
 </head>
 <body class="body-home">
 
     <div class="container">
-        {% block content %}{% endblock %}
+        <!-- HIVE-CONTENT:START -->{% block content %}{% endblock %}<!-- HIVE-CONTENT:END -->
     </div>
 
     <div class="footer-home">
@@ -29,6 +29,6 @@
         </div>
     </div>
 
-    {{ assets_js() }}
+    <!-- HIVE-JS:START -->{{ assets_js() }}<!-- HIVE-JS:END -->
 </body>
 </html>

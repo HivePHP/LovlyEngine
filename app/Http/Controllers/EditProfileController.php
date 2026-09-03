@@ -39,9 +39,7 @@ final class EditProfileController extends Controller
     {
         $user = $this->auth->user();
 
-        $this->assets->addCss('css/profile/profile.css');
-        $this->assets->addCss('css/home/edit-profile.css');
-        $this->assets->addJs('js/app/edit-profile.js');
+        $this->assets->usePage('edit-profile');
 
         $this->response->html($this->view->render('profile/edit', [
             'title'           => 'Редактирование профиля',

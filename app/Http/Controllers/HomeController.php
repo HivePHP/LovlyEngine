@@ -14,8 +14,7 @@ final class HomeController extends Controller
 {
     public function showLogin(): void
     {
-        $this->assets->addCss('css/home/login.css');
-        $this->assets->addJs('js/home/login.js');
+        $this->assets->usePage('login');
 
         $this->response->html($this->view->render('home/login', [
             'title'       => 'Авторизация',
@@ -25,8 +24,7 @@ final class HomeController extends Controller
 
     public function showRegister(): void
     {
-        $this->assets->addCss('css/home/register.css');
-        $this->assets->addJs('js/home/register.js');
+        $this->assets->usePage('register');
 
         $this->response->html($this->view->render('home/register', [
             'title'       => 'Регистрация',

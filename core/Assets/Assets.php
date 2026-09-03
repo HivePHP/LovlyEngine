@@ -10,35 +10,87 @@ declare(strict_types=1);
 
 namespace HivePHP\Assets;
 
+use RuntimeException;
+
+/**
+ * Dependency-based static asset manager (OldVK-style).
+ *
+ * Pages declare what they need via usePage(); the renderers emit a single
+ * content-hashed URL per asset, so browser/edge caches can be long-lived
+ * (see public/.htaccess) without stale-content risk.
+ */
 final class Assets
 {
+    /** @var array<string, true> css bundles in registration order */
     private array $css = [];
-    private array $js  = [];
 
-    private string $basePath = '/assets';
+    /** @var array<string, true> js entries in registration order */
+    private array $js = [];
 
-    public function setBasePath(string $path): void
+    private array $config;
+    private array $manifest = [];
+    private bool $manifestLoaded = false;
+
+    public function __construct(array $config = [])
     {
-        $this->basePath = rtrim($path, '/');
+        $this->config = $config + [
+            'base_url'    => '/assets',
+            'manifest'    => 'storage/cache/assets/manifest.php',
+            'css_bundles' => [],
+            'pages'       => [],
+        ];
     }
 
-    public function addCss(string $file): void
+    /* ===================== */
+    /* Registration          */
+    /* ===================== */
+
+    /**
+     * Register everything a page needs (from the assets config).
+     */
+    public function usePage(string $page): void
     {
-        $this->css[$file] = true;
+        $pages = $this->config['pages'] ?? [];
+
+        if (!isset($pages[$page])) {
+            throw new RuntimeException("Unknown asset page [{$page}]");
+        }
+
+        foreach ($pages[$page]['css'] ?? [] as $bundle) {
+            $this->addCss($bundle);
+        }
+
+        foreach ($pages[$page]['js'] ?? [] as $entry) {
+            $this->addJs($entry);
+        }
     }
 
-    public function addJs(string $file): void
+    /**
+     * Register a CSS bundle (e.g. 'app', 'profile-page').
+     */
+    public function addCss(string $bundle): void
     {
-        $this->js[$file] = true;
+        $this->css[$bundle] = true;
     }
+
+    /**
+     * Register a JS entry module (e.g. 'js/pages/shell.js').
+     */
+    public function addJs(string $entry): void
+    {
+        $this->js[$entry] = true;
+    }
+
+    /* ===================== */
+    /* Rendering             */
+    /* ===================== */
 
     public function renderCss(): string
     {
         $html = '';
 
-        foreach ($this->getCssFiles() as $file) {
-            $path = $this->buildPath($file);
-            $html .= '<link rel="stylesheet" href="' . $path . '">' . PHP_EOL;
+        foreach (array_keys($this->css) as $bundle) {
+            $html .= '<link rel="stylesheet" href="' . $this->cssUrl($bundle) . '">' . PHP_EOL;
         }
 
         return $html;
@@ -48,26 +100,70 @@ final class Assets
     {
         $html = '';
 
-        foreach ($this->getJsFiles() as $file) {
-            $path = $this->buildPath($file);
-            $html .= '<script type="module" src="' . $path . '" defer></script>' . PHP_EOL;
+        foreach (array_keys($this->js) as $entry) {
+            $html .= '<script type="module" src="' . $this->jsUrl($entry) . '"></script>' . PHP_EOL;
         }
 
         return $html;
     }
 
-    private function getCssFiles(): array
+    /* ===================== */
+    /* URL resolution        */
+    /* ===================== */
+
+    private function cssUrl(string $bundle): string
     {
-        return array_keys($this->css);
+        $map = $this->manifestMap('css');
+
+        if (isset($map[$bundle])) {
+            return $this->baseUrl() . '/' . ltrim($map[$bundle], '/');
+        }
+
+        // Dev fallback: source bundle path (page.css.name).
+        $name = str_replace(['/', '\\'], '-', $bundle) . '.css';
+        return $this->baseUrl() . '/css/' . $name;
     }
 
-    private function getJsFiles(): array
+    private function jsUrl(string $entry): string
     {
-        return array_keys($this->js);
+        $map = $this->manifestMap('js');
+
+        if (isset($map[$entry])) {
+            return $this->baseUrl() . '/' . ltrim($map[$entry], '/');
+        }
+
+        // Dev fallback: source module path.
+        return $this->baseUrl() . '/' . ltrim($entry, '/');
     }
 
-    private function buildPath(string $file): string
+    private function baseUrl(): string
     {
-        return $this->basePath . '/' . ltrim($file, '/');
+        return rtrim($this->config['base_url'], '/');
+    }
+
+    private function manifestMap(string $type): array
+    {
+        $manifest = $this->loadManifest();
+        return $manifest[$type] ?? [];
+    }
+
+    private function loadManifest(): array
+    {
+        if ($this->manifestLoaded) {
+            return $this->manifest;
+        }
+
+        $this->manifestLoaded = true;
+
+        $path = BASE_PATH . '/' . ltrim($this->config['manifest'], '/');
+
+        if (is_file($path)) {
+            $data = require $path;
+            if (is_array($data)) {
+                $this->manifest = $data;
+            }
+        }
+
+        return $this->manifest;
     }
 }

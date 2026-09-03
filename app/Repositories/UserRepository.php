@@ -50,7 +50,7 @@ final class UserRepository
     public function findProfileById(int $id): ?array
     {
         return $this->db->fetch(
-            "SELECT id, name, surname, sex, city, country, day, month, year, about, interests, favorite_films
+            "SELECT id, name, surname, status, sex, city, country, day, month, year, about, interests, favorite_films
              FROM users
              WHERE id = :id
              LIMIT 1",
@@ -68,6 +68,14 @@ final class UserRepository
                 'interests'      => $interests,
                 'favorite_films' => $favoriteFilms,
             ]
+        );
+    }
+
+    public function updateStatus(int $id, string $status): void
+    {
+        $this->db->execute(
+            "UPDATE users SET status = :status WHERE id = :id",
+            ['id' => $id, 'status' => $status]
         );
     }
 

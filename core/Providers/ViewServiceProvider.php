@@ -13,7 +13,6 @@ namespace HivePHP\Providers;
 use App\Services\AuthService;
 use HivePHP\Assets\Assets;
 use HivePHP\Security\CsrfToken;
-use HivePHP\Support\Config;
 use HivePHP\Support\Container;
 use HivePHP\View\TwigFactory;
 use HivePHP\View\View;
@@ -24,38 +23,39 @@ class ViewServiceProvider implements ServiceProviderInterface
     public function register(Container $container): void
     {
         $container->set(Environment::class, function (Container $c) {
-            $factory = new TwigFactory();
-
-            return $factory->create(
-                Config::get('view'),
-                $c->get(Assets::class)
-            );
+            return (new TwigFactory($c->get(Assets::class)))->create();
         });
 
         $container->set(View::class, function (Container $c) {
-            return new View(
-                $c->get(Environment::class)
-            );
+            return new View($c->get(Environment::class));
         });
     }
 
     public function boot(Container $container): void
     {
         $view = $container->get(View::class);
-        $auth = $container->get(AuthService::class);
-        $user = $auth->user();
 
         $view->share('csrfToken', CsrfToken::token());
 
-        if ($user) {
-            $initials = mb_substr($user['name'], 0, 1) . mb_substr($user['surname'], 0, 1);
-            $view->share('userId', $user['id']);
-            $view->share('userName', $user['name'] . ' ' . $user['surname']);
-            $view->share('userInitials', mb_strtoupper($initials));
-        } else {
-            $view->share('userId', null);
-            $view->share('userName', '');
-            $view->share('userInitials', '');
+        $user = $container->get(AuthService::class)->user();
+
+        if (!$user) {
+            $view->shareMany([
+                'userId'       => null,
+                'userName'     => '',
+                'userInitials' => '',
+            ]);
+            return;
         }
+
+        $initials = mb_strtoupper(
+            mb_substr($user['name'], 0, 1) . mb_substr($user['surname'], 0, 1)
+        );
+
+        $view->shareMany([
+            'userId'       => $user['id'],
+            'userName'     => trim($user['name'] . ' ' . $user['surname']),
+            'userInitials' => $initials,
+        ]);
     }
 }

@@ -10,40 +10,46 @@ declare(strict_types=1);
 
 namespace HivePHP\View;
 
+use HivePHP\Assets\Assets;
+use HivePHP\Support\Config;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFunction;
-use HivePHP\Assets\Assets;
-use HivePHP\Support\Config;
 
+/**
+ * Builds the Twig Environment.
+ *
+ * Reads all options from the config, so the only required dependency is the
+ * asset manager (used for the rendered link/script helpers).
+ */
 final class TwigFactory
 {
-    public function create(array $config, Assets $assets): Environment
+    public function __construct(
+        private readonly Assets $assets
+    ) {}
+
+    public function create(): Environment
     {
-        $assets->setBasePath('/assets');
+        $twig = new Environment(
+            new FilesystemLoader(BASE_PATH . '/resources/views'),
+            Config::get('view')
+        );
 
-        $loader = new FilesystemLoader(BASE_PATH . '/resources/views');
-        $twig   = new Environment($loader, $config);
-
-        $app = Config::get('app');
+        $this->htmlFunction($twig, 'assets_css', fn () => $this->assets->renderCss());
+        $this->htmlFunction($twig, 'assets_js',  fn () => $this->assets->renderJs());
 
         $twig->addGlobal('app', [
-            'name' => $app['name'],
+            'name' => Config::value('app.name', 'LovlyEngine'),
         ]);
 
-        // assets helpers
-        $twig->addFunction(new TwigFunction(
-            'assets_css',
-            fn () => $assets->renderCss(),
-            ['is_safe' => ['html']]
-        ));
-
-        $twig->addFunction(new TwigFunction(
-            'assets_js',
-            fn () => $assets->renderJs(),
-            ['is_safe' => ['html']]
-        ));
-
         return $twig;
+    }
+
+    /**
+     * Register a Twig function whose return value is trusted HTML.
+     */
+    private function htmlFunction(Environment $twig, string $name, callable $fn): void
+    {
+        $twig->addFunction(new TwigFunction($name, $fn, ['is_safe' => ['html']]));
     }
 }

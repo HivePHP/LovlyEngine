@@ -1,0 +1,61 @@
+/* ============================================================
+   FORMS — shared form primitives & validation (global "app" bundle)
+   ============================================================ */
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-group label {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccd0d5;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #1877f2;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.2);
+}
+
+/* Full-width form submit buttons (home card + compact sidebar login) */
+.btn-primary-login {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+}
+
+.btn-primary-reg,
+.btn-secondary-reg {
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+}
+
+/* VALIDATION */
+.input-error {
+    border-color: #e53935 !important;
+    box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.12) !important;
+}
+
+.error-text {
+    display: block;
+    color: #e53935;
+    font-size: 12px;
+    line-height: 1.35;
+    margin-top: 5px;
+}

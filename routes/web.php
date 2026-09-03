@@ -9,8 +9,10 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CaptchaController;
 use App\Http\Controllers\EditProfileController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
 use HivePHP\Http\Router;
 
@@ -18,6 +20,7 @@ use HivePHP\Http\Router;
 
 $router->middleware('guest', 'web')->       get('/', [HomeController::class, 'showLogin']);
 $router->middleware('guest', 'web')->       get('/reg', [HomeController::class, 'showRegister']);
+$router->                                  get('/captcha/image', [CaptchaController::class, 'image']);
 $router->middleware('guest')->              post('/login', [AuthController::class, 'login']);
 $router->middleware('guest')->              post('/register', [AuthController::class, 'register']);
 $router->middleware('auth')->                post('/logout', [AuthController::class, 'logout']);
@@ -26,3 +29,4 @@ $router->middleware('web')->get('/id{id}', [UserController::class, 'show']);
 
 $router->middleware('auth', 'web')->get('/editprofile', [EditProfileController::class, 'show']);
 $router->middleware('auth')->post('/api/profile/update', [EditProfileController::class, 'save']);
+$router->middleware('auth')->post('/api/profile/status', [StatusController::class, 'save']);

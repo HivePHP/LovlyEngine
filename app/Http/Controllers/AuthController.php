@@ -13,6 +13,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\UserRepository;
 use App\Services\AuthService;
+use App\Services\CaptchaService;
 use HivePHP\Assets\Assets;
 use HivePHP\Database\Database;
 use HivePHP\Http\Cookie;
@@ -31,7 +32,8 @@ final class AuthController extends Controller
         Assets $assets,
         Cookie $cookies,
         UserRepository $users,
-        private readonly AuthService $auth
+        private readonly AuthService $auth,
+        private readonly CaptchaService $captcha
     ) {
         parent::__construct($request, $response, $view, $db, $assets, $cookies, $users);
     }
@@ -58,6 +60,14 @@ final class AuthController extends Controller
             $this->response->json([
                 'status' => 'validation_error',
                 'errors' => $validator->errors(),
+            ], 422);
+            return;
+        }
+
+        if (!$this->captcha->validate($input['captcha'] ?? null)) {
+            $this->response->json([
+                'status' => 'validation_error',
+                'errors' => ['captcha' => 'Введите символы с картинки'],
             ], 422);
             return;
         }

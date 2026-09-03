@@ -1,0 +1,115 @@
+/* ============================================================
+   BASE — reset, global layout containers, footer
+   (part of the global "app" bundle, loaded on every page)
+   ============================================================ */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Inter, Arial, sans-serif;
+    background: #e7e8ec;
+    color: #333333;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    transition: all 0.25s ease;
+}
+
+a {
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+input,
+textarea {
+    transition: all 0.25s ease;
+}
+
+/* CONTAINER */
+.container {
+    width: 1000px;
+    margin: 0 auto;
+    padding: 15px 0;
+}
+
+/* PAGE LAYOUT (sidebar + content) */
+.page-container {
+    padding-top: 15px;
+}
+
+.page-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.page-sidebar {
+    width: 220px;
+    flex-shrink: 0;
+}
+
+.page-content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* FOOTER */
+.footer-home {
+    background: #fff;
+    border-top: 1px solid #e7e8ec;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+.footer-home .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copy-footer-home {
+    font-size: 13px;
+    color: #818c99;
+}
+
+.button-footer-home {
+    display: flex;
+    gap: 20px;
+}
+
+.button-footer-home a {
+    font-size: 13px;
+    color: #818c99;
+}
+
+.button-footer-home a:hover {
+    color: #1877f2;
+}
+
+/* ============================================================
+   SPA PROGRESS BAR — thin bar fixed above the page header,
+   shown while a page fragment is being fetched via AJAX.
+   ============================================================ */
+.spa-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    z-index: 99999;
+    background: #8b0000;
+    border-radius: 0 3px 3px 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: width 0.25s ease, opacity 0.3s ease;
+}
+
+.spa-progress.spa-progress-active {
+    opacity: 1;
+}

@@ -1,0 +1,26 @@
+# HivePHP LovlyEngine — static assets
+# ============================================================
+# Built static assets carry a content hash in their filename
+# (e.g. app.45e13464.css), so we can tell the browser to cache
+# them for a very long time with zero risk of stale content.
+# ============================================================
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+</IfModule>
+
+# Front controller: route all dynamic requests to index.php.
+# Real files (built assets) are served directly by Apache and
+# never reach PHP.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Serve existing files (css/js/images) directly from disk.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Everything else -> index.php
+    RewriteRule ^ index.php [L]
+</IfModule>

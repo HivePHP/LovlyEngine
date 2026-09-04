@@ -46,6 +46,7 @@ export default class FriendButton {
     }
 
     render() {
+        const links = Array.from(this.root.querySelectorAll('a'));
         const buttons = PLANS[this.relation] || PLANS.none;
         this.root.innerHTML = '';
 
@@ -57,6 +58,7 @@ export default class FriendButton {
             btn.dataset.friendAction = plan.action;
             this.root.appendChild(btn);
         }
+        links.forEach((link) => this.root.appendChild(link));
     }
 
     onClick(e) {

@@ -1,0 +1,409 @@
+/* ============================================================
+   BASE — reset, global layout containers, footer
+   (part of the global "app" bundle, loaded on every page)
+   ============================================================ */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #edeef0;
+    color: #333;
+    font-size: 13px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    transition: all 0.25s ease;
+}
+
+a {
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+input,
+textarea {
+    transition: all 0.25s ease;
+}
+
+/* CONTAINER */
+.container {
+    width: 984px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* PAGE LAYOUT (sidebar + content) */
+.page-container {
+    padding-top: 9px;
+}
+
+.page-layout {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 15px;
+    align-items: start;
+}
+
+.page-sidebar {
+    width: auto;
+    flex-shrink: 0;
+}
+
+.page-content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* FOOTER */
+.footer-home {
+    background: #fff;
+    border-top: 1px solid #e7e8ec;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+.footer-home .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copy-footer-home {
+    font-size: 13px;
+    color: #818c99;
+}
+
+.button-footer-home {
+    display: flex;
+    gap: 20px;
+}
+
+.button-footer-home a {
+    font-size: 13px;
+    color: #818c99;
+}
+
+.button-footer-home a:hover {
+    color: #1877f2;
+}
+
+/* ============================================================
+   SPA PROGRESS BAR — thin bar fixed above the page header,
+   shown while a page fragment is being fetched via AJAX.
+   ============================================================ */
+.spa-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    z-index: 99999;
+    background: #8b0000;
+    border-radius: 0 3px 3px 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: width 0.25s ease, opacity 0.3s ease;
+}
+
+.spa-progress.spa-progress-active {
+    opacity: 1;
+}
+
+/* ============================================================
+   UPLOAD PROGRESS BAR — used by AjaxUpload.js
+   ============================================================ */
+.upload-progress {
+    padding: 14px 16px;
+    background: #f7f8fa;
+    border: 1px solid #dfe4e8;
+    border-radius: 2px;
+    margin-top: 10px;
+    animation: upload-progress-in 0.2s ease;
+}
+
+@keyframes upload-progress-in {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.upload-progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.upload-progress-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+}
+
+.upload-progress-cancel {
+    padding: 3px 10px;
+    border: 1px solid #d3d9de;
+    border-radius: 2px;
+    background: #fff;
+    color: #818c96;
+    font-size: 12px;
+}
+
+.upload-progress-cancel:hover {
+    background: #f2f4f7;
+    color: #333;
+}
+
+.upload-progress-track {
+    height: 6px;
+    background: #e1e5eb;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.upload-progress-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #4a76a8, #527da8);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.upload-progress-fill--done {
+    background: linear-gradient(90deg, #4caf50, #66bb6a);
+}
+
+.upload-progress-text {
+    font-size: 12px;
+    color: #818c96;
+    margin-top: 6px;
+    text-align: right;
+}
+
+/* DROP ZONE — used by AjaxUpload.attachDropZone */
+.upload-dropzone {
+    border: 2px dashed #d3d9de;
+    border-radius: 2px;
+    padding: 28px 16px;
+    text-align: center;
+    color: #818c96;
+    font-size: 13px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.upload-dropzone:hover {
+    border-color: #4a76a8;
+    background: #f0f5fb;
+}
+
+.upload-dropzone.is-dragover {
+    border-color: #1877f2;
+    background: #e8f0fe;
+    color: #1877f2;
+}
+
+.upload-dropzone-icon {
+    margin-bottom: 8px;
+    opacity: 0.5;
+}
+
+.upload-dropzone.is-dragover .upload-dropzone-icon {
+    opacity: 1;
+}
+
+/* ============================================================
+   ONLINE STATUS
+   ============================================================ */
+.online-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #4caf50;
+    border: 2px solid #fff;
+    vertical-align: middle;
+    margin-right: 4px;
+    flex-shrink: 0;
+}
+
+.online-dot--card {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #fff;
+}
+
+.online-dot--sidebar {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    border: 2px solid #fff;
+}
+
+.online-text {
+    color: #4caf50;
+    font-size: 12px;
+}
+
+.lastseen-text {
+    color: #818c96;
+    font-size: 12px;
+}
+
+.friend-status-text {
+    font-size: 12px;
+    min-height: 16px;
+}
+
+/* ============================================================
+   BUTTONS — buttons & checkbox (global "app" bundle)
+   ============================================================ */
+
+.btn-primary {
+    padding: 10px;
+    background: #1877f2;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.btn-primary:hover {
+    background: #145fcc;
+}
+
+.btn-secondary {
+    padding: 10px;
+    background: #afd2ff;
+    color: #1877f2;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.btn-secondary:hover {
+    background: #89bdff;
+}
+
+.btn-sm {
+    padding: 6px 14px;
+    font-size: 12px;
+    width: 100%;
+}
+
+/* CHECKBOX */
+.ui-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+}
+
+.ui-checkbox input {
+    display: none;
+}
+
+.ui-checkmark {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #999;
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.25s ease;
+}
+
+.ui-checkbox input:checked + .ui-checkmark {
+    background: #1877f2;
+    border-color: #1877f2;
+}
+
+.ui-checkbox input:checked + .ui-checkmark::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%;
+}
+
+/* LAYOUT UTILITY */
+.ui-row-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ============================================================
+   FORMS — shared form primitives & validation (global "app" bundle)
+   ============================================================ */
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-group label {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccd0d5;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #1877f2;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.2);
+}
+
+/* Full-width form submit buttons (home card + compact sidebar login) */
+.btn-primary-login {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+}
+
+.btn-primary-reg,
+.btn-secondary-reg {
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+}
+
+/* VALIDATION */
+.input-error {
+    border-color: #e53935 !important;
+    box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.12) !important;
+}
+
+.error-text {
+    display: block;
+    color: #e53935;
+    font-size: 12px;
+    line-height: 1.35;
+    margin-top: 5px;
+}

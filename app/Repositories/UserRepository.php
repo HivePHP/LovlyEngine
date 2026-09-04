@@ -50,7 +50,7 @@ final class UserRepository
     public function findProfileById(int $id): ?array
     {
         return $this->db->fetch(
-            "SELECT id, name, surname, avatar, status, sex, city, country, day, month, year, about, interests, favorite_films
+            "SELECT id, name, surname, avatar, status, sex, city, country, day, month, year, about, interests, favorite_films, last_seen_at
              FROM users
              WHERE id = :id
              LIMIT 1",
@@ -102,7 +102,7 @@ final class UserRepository
     public function recentUsers(int $excludeId, int $limit): array
     {
         return $this->db->fetchAll(
-            "SELECT id, name, surname, avatar, city, country
+            "SELECT id, name, surname, avatar, city, country, last_seen_at
                FROM users
               WHERE id <> :exclude_id
               ORDER BY created_at DESC, id DESC

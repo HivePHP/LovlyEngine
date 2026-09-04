@@ -107,6 +107,9 @@ $resolve = static function (string $relPath) use (&$resolve, $sourceRoot, $jsOut
     $dir    = dirname($relPath);
     $dir    = $dir === '.' ? '' : $dir;
 
+    // Mark as in-progress so recursive calls via preg_replace_callback skip this file.
+    $jsHashes[$relPath] = '__pending__';
+
     // Rewrite relative import specifiers to the target's hashed output.
     $rewritten = preg_replace_callback(
         '/(\bfrom\s+)([\'"])(\.[^"\']+\.js)([\'"])/',

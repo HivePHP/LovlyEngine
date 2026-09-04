@@ -2,6 +2,8 @@ import Dom from '../core/Dom.js';
 import Dropdown from '../core/Dropdown.js';
 import ConfirmSubmit from '../core/ConfirmSubmit.js';
 import LoginForm from '../forms/LoginForm.js';
+import NotificationBell from '../core/NotificationBell.js';
+import Heartbeat from '../core/Heartbeat.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     new Dropdown(
@@ -13,4 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
     new ConfirmSubmit(confirmForm, confirmForm?.dataset.confirm);
 
     new LoginForm(Dom.qs('#login-form-compact'));
+
+    new NotificationBell(Dom.qs('[data-notifications-root]'));
+
+    if (Dom.qs('[data-user-id]')) {
+        new Heartbeat().start();
+    }
 });

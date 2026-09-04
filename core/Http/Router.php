@@ -177,7 +177,12 @@ final class Router
 
     private function callHandler(callable|array $handler, array $params): void
     {
-        if (is_callable($handler)) {
+        if ($handler instanceof Closure) {
+            call_user_func_array($handler, $params);
+            return;
+        }
+
+        if (is_string($handler)) {
             call_user_func_array($handler, $params);
             return;
         }
@@ -185,7 +190,40 @@ final class Router
         [$class, $method] = $handler;
 
         $controller = $this->container->get($class);
-        call_user_func_array([$controller, $method], $params);
+
+        $controller->{$method}(...$this->orderParams($controller, $method, $params));
+    }
+
+    /**
+     * Reorder the route params (keyed by placeholder name) into the controller
+     * method's declared parameter order, so routes do not depend on the
+     * parameter being named identically to the URL placeholder.
+     */
+    private function orderParams(object $controller, string $method, array $params): array
+    {
+        $ref  = new \ReflectionMethod($controller, $method);
+        $args = [];
+
+        foreach ($ref->getParameters() as $param) {
+            $name = $param->getName();
+
+            if (array_key_exists($name, $params)) {
+                $value = $params[$name];
+                $type  = $param->getType();
+
+                if ($type instanceof \ReflectionNamedType && $type->getName() === 'int') {
+                    $value = (int)$value;
+                }
+
+                $args[] = $value;
+            } elseif ($param->isDefaultValueAvailable()) {
+                $args[] = $param->getDefaultValue();
+            } else {
+                $args[] = null;
+            }
+        }
+
+        return $args;
     }
 
     private function abort404(): void

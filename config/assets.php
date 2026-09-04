@@ -65,6 +65,9 @@ return [
         'edit-page'     => ['css/pages/edit-profile.css'],
         'albums-page'   => ['css/pages/albums.css'],
         'friends-page'  => ['css/pages/friends.css'],
+        'messages-page' => ['css/pages/messages.css'],
+        'notifications-page' => ['css/pages/notifications.css'],
+        'documents-page' => ['css/pages/documents.css'],
     ],
 
     // Page assets. A page maps to the css bundles (in order) and the JS
@@ -98,6 +101,21 @@ return [
         'friends' => [
             'css' => ['app', 'chrome', 'friends-page'],
             'js'  => ['js/pages/shell.js', 'js/pages/page-transition.js', 'js/pages/friends.js'],
+        ],
+
+        'messages' => [
+            'css' => ['app', 'chrome', 'messages-page'],
+            'js'  => ['js/pages/shell.js', 'js/pages/page-transition.js', 'js/pages/messages.js'],
+        ],
+
+        'notifications' => [
+            'css' => ['app', 'chrome', 'notifications-page'],
+            'js'  => ['js/pages/shell.js', 'js/pages/page-transition.js', 'js/pages/notifications.js'],
+        ],
+
+        'documents' => [
+            'css' => ['app', 'chrome', 'documents-page'],
+            'js'  => ['js/pages/shell.js', 'js/pages/page-transition.js', 'js/pages/documents.js'],
         ],
     ],
 ];

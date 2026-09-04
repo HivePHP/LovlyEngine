@@ -1,0 +1,582 @@
+/* ============================================================
+   HEADER — top bar, search & user dropdown
+   (part of the "chrome" bundle, only on main.twig pages)
+   ============================================================ */
+
+.header {
+    background: #527da8;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 41px;
+}
+
+.header-inner {
+    width: 984px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-logo {
+    font-weight: 700;
+    font-size: 22px;
+    color: #fff;
+    letter-spacing: -0.5px;
+}
+
+.header-logo:hover {
+    color: #fff;
+    opacity: 0.9;
+}
+
+.header-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.header-search-icon {
+    position: absolute;
+    left: 10px;
+    color: rgba(255, 255, 255, 0.6);
+    pointer-events: none;
+}
+
+.header-search-input {
+    width: 230px;
+    height: 28px;
+    background: #315b84;
+    border: none;
+    border-radius: 15px;
+    padding: 0 12px 0 34px;
+    font-size: 13px;
+    color: #fff;
+    outline: none;
+}
+
+.header-search-input::placeholder {
+    color: #b8c9da;
+}
+
+.header-search-input:focus {
+    background: #3a6a96;
+}
+
+/* HEADER RIGHT */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-login-btn,
+.header-register-btn {
+    padding: 5px 14px;
+    border-radius: 2px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.header-login-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.header-login-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.header-register-btn {
+    background: #fff;
+    color: #4a76a8;
+}
+
+.header-register-btn:hover {
+    background: #e3edff;
+}
+
+.header-icon-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.header-icon-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+/* HEADER USER DROPDOWN */
+.header-user {
+    position: relative;
+}
+
+.header-user-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 2px;
+    transition: background 0.2s;
+}
+
+.header-user-toggle:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.header-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #3b6d9c;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    overflow: hidden;
+}
+
+.header-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.header-arrow {
+    color: rgba(255, 255, 255, 0.7);
+    transition: transform 0.2s;
+}
+
+.header-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 220px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.2s ease;
+    overflow: hidden;
+    z-index: 200;
+}
+
+.header-dropdown.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.header-dropdown-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    background: #f5f7fa;
+}
+
+.header-dropdown-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #4a76a8;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    overflow: hidden;
+}
+
+.header-dropdown-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.header-dropdown-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.header-dropdown-divider {
+    height: 1px;
+    background: #e7e8ec;
+}
+
+.header-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    font-size: 13px;
+    color: #333;
+    transition: background 0.15s;
+}
+
+.header-dropdown-item:hover {
+    background: #f0f2f5;
+    color: #333;
+}
+
+.header-dropdown-item svg {
+    color: #818c99;
+    flex-shrink: 0;
+}
+
+.header-dropdown-item--danger {
+    color: #e64646;
+}
+
+.header-dropdown-item--danger svg {
+    color: #e64646;
+}
+
+.header-dropdown-item--danger:hover {
+    color: #e64646;
+}
+
+/* Logout button inside dropdown */
+.header-dropdown-form {
+    margin: 0;
+    display: block;
+}
+
+.header-dropdown-btn {
+    width: 100%;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+}
+
+/* =====================================================================
+   NOTIFICATIONS  (header bell + dropdown)
+   ===================================================================== */
+
+.header-notifications {
+    position: relative;
+}
+
+.header-icon-btn {
+    position: relative;
+}
+
+.header-notif-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 9px;
+    background: #e64646;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 16px;
+    text-align: center;
+    box-shadow: 0 0 0 2px #4a76a8;
+}
+
+.header-notif-badge[hidden],
+.header-notif-markall[hidden] {
+    display: none;
+}
+
+.header-notif-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 340px;
+    max-width: calc(100vw - 24px);
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.2s ease;
+    overflow: hidden;
+    z-index: 210;
+}
+
+.header-notif-dropdown.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.header-notif-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #f5f7fa;
+    border-bottom: 1px solid #e7e8ec;
+}
+
+.header-notif-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #222;
+}
+
+.header-notif-markall {
+    border: none;
+    background: none;
+    color: #4a76a8;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.header-notif-markall:hover {
+    text-decoration: underline;
+}
+
+.header-notif-list {
+    max-height: 340px;
+    overflow-y: auto;
+    padding: 0;
+}
+
+.header-notif-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px;
+    border-bottom: 1px solid #f0f2f5;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+
+.header-notif-item:hover {
+    background: #f0f2f5;
+}
+
+.header-notif-item.is-unread {
+    background: #eaf2fd;
+}
+
+.header-notif-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #4a76a8;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.header-notif-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.header-notif-body {
+    min-width: 0;
+    flex: 1;
+}
+
+.header-notif-text {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.header-notif-actor {
+    font-weight: 600;
+    color: #222;
+}
+
+.header-notif-time {
+    font-size: 11px;
+    color: #818c99;
+    margin-top: 2px;
+}
+
+.header-notif-empty {
+    padding: 28px 16px;
+    text-align: center;
+    color: #818c99;
+    font-size: 13px;
+}
+
+.header-notif-foot {
+    display: block;
+    padding: 10px 16px;
+    text-align: center;
+    font-size: 13px;
+    color: #4a76a8;
+    text-decoration: none;
+    border-top: 1px solid #f0f2f5;
+    background: #fafbfc;
+}
+
+.header-notif-foot:hover {
+    background: #f0f2f5;
+}
+
+/* ============================================================
+   SIDEBAR — layout, nav & compact guest login
+   (part of the "chrome" bundle, only on main.twig pages)
+   ============================================================ */
+
+/* Sticky sidebar */
+.page-sidebar {
+    position: sticky;
+    top: 50px;
+}
+
+/* NAV */
+.profile-nav {
+    background: #fff;
+    border: 1px solid #d3d9de;
+    border-radius: 2px;
+    padding: 8px 0;
+    margin-bottom: 15px;
+}
+
+.profile-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 18px;
+    font-size: 13px;
+    color: #45698a;
+    transition: background 0.15s;
+}
+
+.profile-nav-item:hover {
+    background: #e1e5e9;
+    color: #45698a;
+}
+
+.profile-nav-item.active {
+    background: #e1e5e9;
+    color: #2a5885;
+}
+
+.profile-nav-item.active svg {
+    color: #597d9f;
+}
+
+.profile-nav-item svg {
+    color: #8ca4b9;
+    flex-shrink: 0;
+}
+
+/* COMPACT LOGIN (guest sidebar) */
+.login-card-compact {
+    background: #fff;
+    border: 1px solid #d3d9de;
+    border-radius: 2px;
+    padding: 18px;
+}
+
+.login-compact-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 14px 0;
+    text-align: center;
+}
+
+.login-card-compact .form-group {
+    margin-bottom: 10px;
+}
+
+.login-card-compact .form-group input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid #d3d9de;
+    border-radius: 2px;
+    font-size: 13px;
+    outline: none;
+}
+
+.login-card-compact .form-group input:focus {
+    border-color: #527da8;
+}
+
+.login-card-compact .btn-primary-login {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+    margin-top: 4px;
+}
+
+.login-compact-footer {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 13px;
+}
+
+.login-compact-footer a {
+    color: #2a5885;
+}
+
+.login-compact-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Sidebar unread badges */
+.profile-nav-badge {
+    margin-left: auto;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 6px;
+    border-radius: 9px;
+    background: #527da8;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 18px;
+    text-align: center;
+}
+
+.profile-nav-badge[hidden] {
+    display: none;
+}

@@ -1,0 +1,1163 @@
+/* ============================================================
+   PAGE: PROFILE — old-VK style (#4a76a8) with cover banner
+   ("profile-page" bundle, on profile & edit-profile screens)
+   ============================================================ */
+
+:root {
+    --vk-blue: #4a76a8;
+    --vk-blue-dark: #3f6895;
+    --vk-blue-hover: #416a98;
+    --vk-blue-light: #eef4fa;
+    --vk-border: #dfe4e8;
+    --vk-text: #333;
+    --vk-text-dark: #222;
+    --vk-text-light: #818c96;
+    --vk-green: #79a85b;
+    --vk-red: #c75d5d;
+}
+
+/* MAIN LAYOUT */
+.profile-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* CARD — old-VK bordered card */
+.profile-card {
+    background: #fff;
+    border: 1px solid var(--vk-border);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.profile-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 48px;
+    padding: 0 16px;
+    border-bottom: 1px solid #e5e8eb;
+}
+
+.profile-card-header .profile-section-title {
+    margin: 0;
+    border-bottom: none;
+}
+
+/* ============================================================
+   PROFILE HEADER CARD (avatar + info + cover)
+   ============================================================ */
+.profile-header-card {
+    padding: 0;
+}
+
+/* Шапка-обложка профиля */
+.profile-cover {
+    position: relative;
+    height: 200px;
+    background: linear-gradient(135deg, #6b8cb8 0%, #4a76a8 50%, #3f6895 100%);
+}
+
+.profile-cover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.18));
+}
+
+/* Область: аватар перекрывает обложку, справа имя/статус/кнопки */
+.profile-header-body {
+    display: flex;
+    gap: 22px;
+    align-items: flex-end;
+    position: relative;
+    z-index: 1;
+    margin-top: -70px;
+    padding: 0 24px 20px;
+}
+
+/* Аватар 160x160 с лёгким скруглением (как в старом VK) */
+.profile-avatar-large {
+    width: 160px;
+    height: 160px;
+    border: 4px solid #fff;
+    border-radius: 5px;
+    background: #e7e8ec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+}
+
+.profile-avatar-large:hover .profile-avatar-img {
+    transform: scale(1.02);
+}
+
+.profile-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+/* Обёртка аватара для владельца (виджет + меню) */
+.profile-avatar-wrap {
+    position: relative;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+/* Зелёная точка «онлайн» на аватарке */
+.photo-online {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    z-index: 2;
+    width: 15px;
+    height: 15px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: var(--vk-green);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Кнопка «сменить фото» — кружок с карандашом, при наведении */
+.profile-avatar-overlay {
+    position: absolute;
+    right: 7px;
+    bottom: 46px;
+    z-index: 5;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    background: rgba(47, 67, 87, 0.88);
+    color: #fff;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: 0.2s ease;
+}
+
+.profile-avatar-overlay span {
+    display: none;
+}
+
+.profile-avatar-wrap:hover .profile-avatar-overlay,
+.profile-avatar-overlay:focus-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.profile-avatar-overlay:hover {
+    background: var(--vk-blue);
+    transform: scale(1.06);
+}
+
+/* Информация справа от аватара */
+.profile-header-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.profile-name {
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: -0.3px;
+    color: var(--vk-text-dark);
+    margin: 0;
+}
+
+.profile-online {
+    margin-top: 5px;
+    color: var(--vk-green);
+    font-size: 12px;
+}
+
+.profile-online::before {
+    content: "";
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-right: 5px;
+    border-radius: 50%;
+    background: var(--vk-green);
+    animation: vkOnlinePulse 2s infinite;
+}
+
+@keyframes vkOnlinePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(121, 168, 91, 0.35); }
+    50% { box-shadow: 0 0 0 5px rgba(121, 168, 91, 0); }
+}
+
+.profile-status {
+    max-width: 500px;
+    margin-top: 13px;
+    color: #6e757b;
+    font-size: 14px;
+}
+
+.profile-status-set {
+    border: none;
+    background: var(--vk-blue-light);
+    color: #456b8f;
+    border-radius: 4px;
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.profile-status-set:hover {
+    background: #e0ebf4;
+}
+
+.profile-status-text {
+    border: none;
+    background: transparent;
+    color: #6e757b;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: left;
+    padding: 0;
+    cursor: text;
+    border-bottom: 1px dashed transparent;
+}
+
+.profile-status-text:hover {
+    border-bottom-color: #aab5c1;
+}
+
+.profile-status-readonly {
+    cursor: default;
+}
+
+.profile-status-readonly:hover {
+    border-bottom-color: transparent;
+}
+
+.profile-actions {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.header-edit-btn {
+    display: inline-flex;
+    align-items: center;
+    height: 34px;
+    padding: 0 15px;
+    border: none;
+    border-radius: 4px;
+    background: #e5ebf1;
+    color: #456b8f;
+    font-size: 13px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.header-edit-btn:hover {
+    background: #dce5ed;
+    color: #315f8c;
+    text-decoration: none;
+}
+
+/* ============================================================
+   PROFILE INFORMATION (rows under the header)
+   ============================================================ */
+.profile-info {
+    padding: 15px 24px;
+    border-top: 1px solid #e5e8eb;
+}
+
+.profile-info-row {
+    display: flex;
+    align-items: baseline;
+    padding: 5px 0;
+    line-height: 20px;
+    transition: 0.2s ease;
+}
+
+.profile-info-row:hover {
+    padding-left: 3px;
+}
+
+.profile-info-label {
+    width: 140px;
+    flex-shrink: 0;
+    color: #8c949a;
+}
+
+.profile-info-value {
+    color: #333;
+}
+
+.profile-info-link {
+    color: #447bba;
+    text-decoration: none;
+}
+
+.profile-info-link:hover {
+    text-decoration: underline;
+}
+
+/* ============================================================
+   AVATAR DROPDOWN MENU (opens to the right of the avatar)
+   ============================================================ */
+.profile-avatar-menu {
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 10px);
+    z-index: 120;
+    width: 235px;
+    padding: 7px;
+    border: 1px solid #dce1e5;
+    border-radius: 7px;
+    background: #fff;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.16);
+    transform: translateY(-50%);
+}
+
+.profile-avatar-menu[hidden] {
+    display: none;
+}
+
+.avatar-menu-title {
+    padding: 9px 10px 8px;
+    border-bottom: 1px solid #edf0f2;
+    color: #555;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.profile-avatar-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 39px;
+    padding: 0 10px;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: #456b8f;
+    cursor: pointer;
+    font-size: 12px;
+    text-align: left;
+    transition: 0.18s ease;
+}
+
+.profile-avatar-menu-item::before {
+    content: "•";
+    width: 20px;
+    color: #7892a8;
+    font-size: 14px;
+    text-align: center;
+}
+
+.profile-avatar-menu-item:hover {
+    padding-left: 13px;
+    background: #edf3f8;
+    color: #315f8c;
+}
+
+.profile-avatar-menu-item--danger {
+    color: var(--vk-red);
+}
+
+.profile-avatar-menu-item--danger::before {
+    color: var(--vk-red);
+}
+
+.profile-avatar-menu-item--danger:hover {
+    background: #fdf0f0;
+    color: #b34d4d;
+}
+
+.avatar-menu-divider {
+    height: 1px;
+    margin: 5px 3px;
+    background: #edf0f2;
+}
+
+/* ============================================================
+   SECTION TITLE / ABOUT
+   ============================================================ */
+.profile-section-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    margin: 0;
+    padding: 16px;
+    border-bottom: 1px solid #e5e8eb;
+}
+
+.profile-card-header .profile-section-title {
+    padding-left: 0;
+    padding-right: 0;
+    border-bottom: none;
+}
+
+.profile-about-section {
+    padding: 14px 16px 0;
+}
+
+.profile-about-section:last-child {
+    padding-bottom: 16px;
+}
+
+.profile-about-label {
+    font-size: 12px;
+    color: #8c949a;
+    margin-bottom: 4px;
+}
+
+.profile-about-text {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+/* ============================================================
+   RECENT PHOTOS
+   ============================================================ */
+.profile-recent-photos {
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+}
+
+.profile-recent-photo {
+    display: block;
+    aspect-ratio: 1 / 1;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #e7e8ec;
+    border: 1px solid #d9dde1;
+}
+
+.profile-recent-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.25s ease;
+}
+
+.profile-recent-photo:hover img {
+    transform: scale(1.04);
+}
+
+/* ============================================================
+   PHOTO UPLOAD LINK / WALL
+   ============================================================ */
+.profile-photo-upload-link {
+    display: block;
+    text-decoration: none;
+}
+
+.profile-photo-upload {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #456b8f;
+    font-weight: 500;
+}
+
+.profile-photo-upload:hover {
+    background: #f5f8fb;
+}
+
+.profile-photo-upload-link:hover {
+    text-decoration: none;
+}
+
+.profile-wall-input {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+}
+
+.profile-wall-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #4a76a8;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.profile-wall-placeholder {
+    flex: 1;
+    padding: 10px 14px;
+    background: #f2f4f7;
+    border: 1px solid var(--vk-border);
+    border-radius: 20px;
+    font-size: 14px;
+    color: #818c96;
+    cursor: pointer;
+}
+
+.profile-wall-placeholder:hover {
+    background: #eaedf0;
+}
+
+.profile-wall-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 12px;
+}
+
+.profile-wall-empty-icon {
+    opacity: 0.5;
+}
+
+.profile-wall-empty-text {
+    font-size: 14px;
+    color: #818c96;
+    margin: 0;
+}
+
+/* ============================================================
+   MODAL (общие окна: avatar-crop, status)
+   ============================================================ */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal[hidden] {
+    display: none;
+}
+
+.modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-card {
+    position: relative;
+    background: #fff;
+    border-radius: 7px;
+    border: 1px solid var(--vk-border);
+    padding: 24px;
+    width: 100%;
+    max-width: 420px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.modal-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 16px 0;
+}
+
+.modal-error {
+    min-height: 18px;
+    font-size: 13px;
+    color: #e15c5c;
+    margin-top: 6px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+/* status-modal */
+.status-modal .modal-card {
+    max-width: 420px;
+}
+
+.status-modal-input {
+    width: 100%;
+    border: 1px solid #d3d9de;
+    border-radius: 5px;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.status-modal-input:focus {
+    border-color: var(--vk-blue);
+}
+
+/* ============================================================
+   AVATAR CROP MODAL
+   ============================================================ */
+.avatar-modal .modal-card {
+    max-width: 520px;
+}
+
+.avatar-crop-frame {
+    position: relative;
+    margin: 0 0 10px 0;
+    width: 100%;
+    height: 320px;
+    background: #f2f3f5;
+    border: 1px solid var(--vk-border);
+    border-radius: 5px;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.avatar-crop-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.avatar-crop-loader {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+    border: 0;
+}
+
+.avatar-crop-shade {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    z-index: 1;
+}
+
+.avatar-crop-frame.is-cropping .avatar-crop-shade {
+    opacity: 1;
+}
+
+.avatar-crop-box {
+    position: absolute;
+    box-sizing: border-box;
+    border: 2px solid #fff;
+    outline: 1px solid rgba(0, 0, 0, 0.5);
+    cursor: move;
+    opacity: 0;
+    touch-action: none;
+    z-index: 3;
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.4) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 1px, transparent 1px);
+    background-size: 33.333% 33.333%;
+    background-position: -1px -1px, -1px -1px;
+}
+
+.avatar-crop-box--active {
+    opacity: 1;
+}
+
+.avatar-crop-handle {
+    position: absolute;
+    background: #fff;
+    border: 2px solid var(--vk-blue);
+    box-sizing: border-box;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    touch-action: none;
+    z-index: 3;
+}
+.avatar-crop-handle--tl { top: -8px;  left: -8px;  cursor: nwse-resize; }
+.avatar-crop-handle--tr { top: -8px;  right: -8px; cursor: nesw-resize; }
+.avatar-crop-handle--bl { bottom: -8px; left: -8px; cursor: nesw-resize; }
+.avatar-crop-handle--br { bottom: -8px; right: -8px; cursor: nwse-resize; }
+
+.avatar-crop-size {
+    position: absolute;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.55);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 4;
+}
+
+.avatar-crop-hint {
+    font-size: 12px;
+    color: #818c96;
+    text-align: center;
+    margin: 6px 0 0 0;
+}
+
+.avatar-crop-bottom {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 10px;
+    min-height: 60px;
+}
+
+.avatar-crop-previews {
+    display: flex;
+    gap: 20px;
+}
+
+.avatar-crop-preview-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.avatar-crop-preview {
+    display: block;
+    border: 1px solid #333;
+    background: #eee;
+    border-radius: 2px;
+}
+
+.avatar-crop-preview-label {
+    font-size: 10px;
+    color: #818c96;
+}
+
+.avatar-crop-empty {
+    padding: 40px 0;
+    text-align: center;
+    color: #818c96;
+    font-size: 14px;
+}
+
+.avatar-modal-error {
+    min-height: 18px;
+    font-size: 13px;
+    color: #e15c5c;
+    margin-top: 6px;
+}
+
+.avatar-modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+.avatar-cancel-btn {
+    background: #e7e8ec !important;
+    color: #333 !important;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 600px) {
+    .profile-cover {
+        height: 120px;
+    }
+
+    .profile-header-body {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-top: -52px;
+        padding: 0 16px 18px;
+    }
+
+    .profile-avatar-large {
+        width: 120px;
+        height: 120px;
+    }
+
+    .profile-avatar-wrap {
+        display: block;
+        margin: 0 auto;
+        width: 120px;
+    }
+
+    .profile-header-info {
+        width: 100%;
+    }
+
+    .profile-actions {
+        justify-content: center;
+    }
+
+    /* На мобильном меню аватара открывается ниже аватарки */
+    .profile-avatar-menu {
+        top: calc(100% + 8px);
+        left: 0;
+        transform: none;
+    }
+
+    .profile-info {
+        padding: 12px 16px;
+    }
+
+    .profile-info-label {
+        width: 110px;
+    }
+
+    .profile-recent-photos {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .profile-block-friends {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .profile-block-albums {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================================
+   PROFILE FRIEND BUTTON (viewer ↔ profile owner)
+   ============================================================ */
+.friend-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 0 16px;
+    border-radius: 4px;
+    border: none;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.18s ease;
+    box-sizing: border-box;
+}
+
+.friend-btn[disabled] {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.friend-btn--profile {
+    min-width: 150px;
+}
+
+.friend-btn--primary {
+    background: var(--vk-blue);
+    color: #fff;
+}
+
+.friend-btn--primary:hover:not([disabled]) {
+    background: var(--vk-blue-hover);
+    color: #fff;
+}
+
+.friend-btn--danger {
+    background: #f3e7e7;
+    color: #a54242;
+    border: 1px solid #e8cdcd;
+}
+
+.friend-btn--danger:hover:not([disabled]) {
+    background: #eccfcf;
+    color: #8f3333;
+}
+
+/* Flat (neutral) variant — used for the "request sent" state */
+.profile-actions .friend-btn:not(.friend-btn--primary):not(.friend-btn--danger) {
+    background: #e5ebf1;
+    color: #456b8f;
+}
+
+.profile-actions .friend-btn:not(.friend-btn--primary):not(.friend-btn--danger):hover {
+    background: #dce5ed;
+    color: #8c4a4a;
+}
+
+/* ============================================================
+   PROFILE COMMON FRIENDS BLOCK
+   ============================================================ */
+.profile-common-friends {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 16px;
+}
+
+.profile-common-friend {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #e7e8ec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px var(--vk-border);
+    transition: transform 0.18s ease;
+}
+
+.profile-common-friend:hover {
+    transform: translateY(-2px);
+}
+
+.profile-common-friend img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.profile-common-initials {
+    background: var(--vk-blue);
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* ============================================================
+   PROFILE BLOCKS: FRIENDS, ALBUMS, DOCUMENTS
+   ============================================================ */
+
+/* --- Friends block --- */
+.profile-block-friends {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    padding: 16px;
+}
+
+.profile-block-friend {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: var(--vk-text);
+    transition: transform 0.18s ease;
+}
+
+.profile-block-friend:hover {
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+.profile-block-friend-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #e7e8ec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px var(--vk-border);
+}
+
+.profile-block-friend-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.profile-block-friend-initials {
+    background: var(--vk-blue);
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.profile-block-friend-name {
+    font-size: 12px;
+    text-align: center;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #333;
+}
+
+.profile-block-friend:hover .profile-block-friend-name {
+    color: var(--vk-blue);
+}
+
+/* --- Albums block --- */
+.profile-block-albums {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 16px;
+}
+
+.profile-block-album {
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--vk-border);
+    text-decoration: none;
+    color: var(--vk-text);
+    transition: box-shadow 0.2s ease;
+    background: #fff;
+}
+
+.profile-block-album:hover {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+
+.profile-block-album-cover {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #f0f2f5;
+}
+
+.profile-block-album-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.25s ease;
+}
+
+.profile-block-album:hover .profile-block-album-cover img {
+    transform: scale(1.04);
+}
+
+.profile-block-album-empty {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f2f5;
+}
+
+.profile-block-album-info {
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.profile-block-album-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.profile-block-album-count {
+    font-size: 12px;
+    color: var(--vk-text-light);
+}
+
+/* --- Documents block --- */
+.profile-block-docs {
+    padding: 8px 16px;
+}
+
+.profile-block-doc {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: var(--vk-text);
+    transition: background 0.15s ease;
+}
+
+.profile-block-doc:hover {
+    background: #f5f8fb;
+    text-decoration: none;
+}
+
+.profile-block-doc-icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f2f5;
+    border-radius: 6px;
+}
+
+.profile-block-doc-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+}
+
+.profile-block-doc-name {
+    font-size: 13px;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.profile-block-doc-size {
+    font-size: 11px;
+    color: var(--vk-text-light);
+}
+
+.profile-block-doc:hover .profile-block-doc-name {
+    color: var(--vk-blue);
+}
+

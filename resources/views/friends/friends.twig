@@ -1,123 +1,234 @@
 {% extends "layouts/main.twig" %}
 
 {% block content %}
-<div class="friends-main" data-friends-page data-viewer-id="{{ viewer_id }}">
+<div class="friends-page" data-friends-page data-viewer-id="{{ viewer_id }}">
 
-    <div class="profile-card">
-        <div class="friends-header">
-            <h2 class="friends-title">Друзья</h2>
-            <div class="friends-tabs" role="tablist">
-                <a class="friends-tab is-active" href="#friends" data-tab="friends">
-                    Мои друзья <span class="friends-badge">{{ friend_count }}</span>
+    <div class="friends-center">
+
+        <div class="friends-box">
+
+            <!-- TABS -->
+            <div class="friends-tabs">
+                <a class="friends-tab is-active" href="#all" data-tab="all">
+                    Все друзья&nbsp;{{ friend_count }}
+                </a>
+                <a class="friends-tab" href="#online" data-tab="online">
+                    Друзья онлайн&nbsp;{{ online_count }}
                 </a>
                 <a class="friends-tab" href="#incoming" data-tab="incoming">
-                    Заявки в друзья {% if incoming_count %}<span class="friends-badge">{{ incoming_count }}</span>{% endif %}
+                    Заявки в друзья{% if incoming_count %}&nbsp;{{ incoming_count }}{% endif %}
                 </a>
                 <a class="friends-tab" href="#outgoing" data-tab="outgoing">
-                    Исходящие заявки {% if outgoing_count %}<span class="friends-badge">{{ outgoing_count }}</span>{% endif %}
+                    Исходящие{% if outgoing_count %}&nbsp;{{ outgoing_count }}{% endif %}
+                </a>
+                <a href="/friends/find" class="friends-find-btn">Найти друзей</a>
+            </div>
+
+            <!-- SEARCH -->
+            <div class="friends-search">
+                <span class="friends-search-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                </span>
+                <input type="text" class="friends-search-input" placeholder="Начните вводить имя друга" data-friend-search>
+            </div>
+
+            <!-- SECTION: All friends -->
+            <div class="friends-section is-active" data-section="all">
+                {% if friends is empty %}
+                    <div class="friends-empty">У вас пока нет друзей.</div>
+                {% else %}
+                    <div class="friends-list">
+                        {% for f in friends %}
+                            <div class="friend-row" data-friend-id="{{ f.id }}" data-name="{{ f.name }} {{ f.surname }}">
+                                <div class="friend-avatar-wrap">
+                                    <a href="/id{{ f.id }}">
+                                        {% if f.avatar %}
+                                            <img class="friend-avatar" src="{{ f.avatar }}" alt="{{ f.name }}" loading="lazy">
+                                        {% else %}
+                                            <div class="friend-avatar friend-avatar--placeholder">{{ (f.name|slice(0,1) ~ f.surname|slice(0,1))|upper }}</div>
+                                        {% endif %}
+                                    </a>
+                                    {% if f.is_online %}<span class="online-dot online-dot--card"></span>{% endif %}
+                                </div>
+                                <div class="friend-info">
+                                    <a href="/id{{ f.id }}" class="friend-name">{{ f.name }} {{ f.surname }}</a>
+                                    <div class="friend-desc">
+                                        {% if f.city %}{{ f.city }}{% endif %}
+                                        {% if f.mutual_count %}<span class="friend-mutual">{{ f.mutual_count }} {{ f.mutual_count == 1 ? 'общий друг' : (f.mutual_count < 5 ? 'общих друга' : 'общих друзей') }}</span>{% endif %}
+                                    </div>
+                                    <a href="/messages?to={{ f.id }}" class="friend-msg-link">Написать сообщение</a>
+                                </div>
+                                <div class="friend-menu" data-friend-menu="{{ f.id }}" data-name="{{ f.name }} {{ f.surname }}">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- SECTION: Online friends -->
+            <div class="friends-section" data-section="online">
+                {% set online_friends = [] %}
+                {% for f in friends %}
+                    {% if f.is_online %}
+                        {% set online_friends = online_friends|merge([f]) %}
+                    {% endif %}
+                {% endfor %}
+                {% if online_friends is empty %}
+                    <div class="friends-empty">Нет друзей онлайн.</div>
+                {% else %}
+                    <div class="friends-list">
+                        {% for f in online_friends %}
+                            <div class="friend-row" data-friend-id="{{ f.id }}" data-name="{{ f.name }} {{ f.surname }}">
+                                <div class="friend-avatar-wrap">
+                                    <a href="/id{{ f.id }}">
+                                        {% if f.avatar %}
+                                            <img class="friend-avatar" src="{{ f.avatar }}" alt="{{ f.name }}" loading="lazy">
+                                        {% else %}
+                                            <div class="friend-avatar friend-avatar--placeholder">{{ (f.name|slice(0,1) ~ f.surname|slice(0,1))|upper }}</div>
+                                        {% endif %}
+                                    </a>
+                                    <span class="online-dot online-dot--card"></span>
+                                </div>
+                                <div class="friend-info">
+                                    <a href="/id{{ f.id }}" class="friend-name">{{ f.name }} {{ f.surname }}</a>
+                                    <div class="friend-desc">
+                                        {% if f.city %}{{ f.city }}{% endif %}
+                                    </div>
+                                    <a href="/messages?to={{ f.id }}" class="friend-msg-link">Написать сообщение</a>
+                                </div>
+                                <div class="friend-menu" data-friend-menu="{{ f.id }}" data-name="{{ f.name }} {{ f.surname }}">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- SECTION: Incoming requests -->
+            <div class="friends-section" data-section="incoming">
+                {% if incoming is empty %}
+                    <div class="friends-empty">Нет заявок в друзья.</div>
+                {% else %}
+                    <div class="friends-list">
+                        {% for r in incoming %}
+                            <div class="friend-row" data-friend-id="{{ r.friend_user_id }}" data-name="{{ r.name }} {{ r.surname }}">
+                                <div class="friend-avatar-wrap">
+                                    <a href="/id{{ r.friend_user_id }}">
+                                        {% if r.avatar %}
+                                            <img class="friend-avatar" src="{{ r.avatar }}" alt="{{ r.name }}" loading="lazy">
+                                        {% else %}
+                                            <div class="friend-avatar friend-avatar--placeholder">{{ (r.name|slice(0,1) ~ r.surname|slice(0,1))|upper }}</div>
+                                        {% endif %}
+                                    </a>
+                                    {% if r.is_online %}<span class="online-dot online-dot--card"></span>{% endif %}
+                                </div>
+                                <div class="friend-info">
+                                    <a href="/id{{ r.friend_user_id }}" class="friend-name">{{ r.name }} {{ r.surname }}</a>
+                                    <div class="friend-desc">
+                                        {% if r.city %}{{ r.city }}{% endif %}
+                                    </div>
+                                    <div class="friend-actions-row">
+                                        <button type="button" class="friend-btn-accept" data-friend-action="accept">Принять заявку</button>
+                                        <button type="button" class="friend-btn-decline" data-friend-action="decline">Отклонить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- SECTION: Outgoing requests -->
+            <div class="friends-section" data-section="outgoing">
+                {% if outgoing is empty %}
+                    <div class="friends-empty">Нет исходящих заявок.</div>
+                {% else %}
+                    <div class="friends-list">
+                        {% for r in outgoing %}
+                            <div class="friend-row" data-friend-id="{{ r.friend_user_id }}" data-name="{{ r.name }} {{ r.surname }}">
+                                <div class="friend-avatar-wrap">
+                                    <a href="/id{{ r.friend_user_id }}">
+                                        {% if r.avatar %}
+                                            <img class="friend-avatar" src="{{ r.avatar }}" alt="{{ r.name }}" loading="lazy">
+                                        {% else %}
+                                            <div class="friend-avatar friend-avatar--placeholder">{{ (r.name|slice(0,1) ~ r.surname|slice(0,1))|upper }}</div>
+                                        {% endif %}
+                                    </a>
+                                    {% if r.is_online %}<span class="online-dot online-dot--card"></span>{% endif %}
+                                </div>
+                                <div class="friend-info">
+                                    <a href="/id{{ r.friend_user_id }}" class="friend-name">{{ r.name }} {{ r.surname }}</a>
+                                    <div class="friend-desc">
+                                        {% if r.city %}{{ r.city }}{% endif %}
+                                    </div>
+                                    <button type="button" class="friend-btn-decline" data-friend-action="remove">Отменить заявку</button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
+    <!-- RIGHT SIDEBAR -->
+    <div class="friends-right">
+
+        <div class="friends-right-box">
+            <div class="friends-right-title">
+                Мои друзья
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="friends-right-title-icon"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            </div>
+            <div class="friends-right-links">
+                <a href="#incoming" class="friends-right-link" data-right-tab="incoming">
+                    Заявки в друзья
+                    {% if incoming_count %}<span class="friends-right-count">{{ incoming_count }}</span>{% endif %}
+                </a>
+                <a href="#outgoing" class="friends-right-link" data-right-tab="outgoing">
+                    Исходящие заявки
+                    {% if outgoing_count %}<span class="friends-right-count">{{ outgoing_count }}</span>{% endif %}
+                </a>
+                <a href="#online" class="friends-right-link" data-right-tab="online">
+                    Друзья онлайн
+                    {% if online_count %}<span class="friends-right-count">{{ online_count }}</span>{% endif %}
                 </a>
             </div>
         </div>
 
-        <!-- Confirmed friends -->
-        <section class="friends-section is-active" data-section="friends">
-            {% if friends is empty %}
-                <div class="friends-empty">
-                    <div class="friends-empty-icon">
-                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#b0b8c1" stroke-width="1.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        {% if possible is not empty %}
+        <div class="friends-right-box">
+            <div class="friends-right-title">Возможные друзья</div>
+            {% for p in possible %}
+                <div class="possible-friend">
+                    <a href="/id{{ p.id }}">
+                        {% if p.avatar %}
+                            <img class="possible-avatar" src="{{ p.avatar }}" alt="{{ p.name }}" loading="lazy">
+                        {% else %}
+                            <div class="possible-avatar possible-avatar--placeholder">{{ (p.name|slice(0,1) ~ p.surname|slice(0,1))|upper }}</div>
+                        {% endif %}
+                    </a>
+                    <div class="possible-info">
+                        <a href="/id{{ p.id }}" class="possible-name">{{ p.name }} {{ p.surname }}</a>
+                        {% if p.city %}<div class="possible-desc">{{ p.city }}</div>{% endif %}
+                        <a href="#" class="possible-add" data-add-friend="{{ p.id }}">+ Добавить в друзья</a>
                     </div>
-                    <p class="friends-empty-text">У вас пока нет друзей.</p>
                 </div>
-            {% else %}
-                <div class="friends-grid">
-                    {% for f in friends %}
-                        <div class="friend-card" data-friend-card data-friend-id="{{ f.id }}">
-                            <a href="/id{{ f.id }}" class="friend-avatar">
-                                {% if f.avatar %}
-                                    <img src="{{ f.avatar }}" alt="" loading="lazy">
-                                {% else %}
-                                    <span class="friend-initials">{{ (f.name|slice(0,1) ~ f.surname|slice(0,1))|upper }}</span>
-                                {% endif %}
-                            </a>
-                            <a href="/id{{ f.id }}" class="friend-name">{{ f.name }} {{ f.surname }}</a>
-                            {% if f.city %}
-                                <div class="friend-meta">{{ f.city }}</div>
-                            {% endif %}
-                            <div class="friend-mutual">
-                                {% if f.mutual_count %}
-                                    {{ f.mutual_count }} {{ f.mutual_count == 1 ? 'общий друг' : (f.mutual_count < 5 ? 'общих друга' : 'общих друзей') }}
-                                {% endif %}
-                            </div>
-                            <div class="friend-actions">
-                                <a href="/id{{ f.id }}" class="friend-btn friend-btn--primary">Посмотреть профиль</a>
-                                <button type="button" class="friend-btn friend-btn--danger" data-friend-action="remove">Удалить из друзей</button>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </section>
+            {% endfor %}
+        </div>
+        {% endif %}
 
-        <!-- Incoming requests -->
-        <section class="friends-section" data-section="incoming">
-            {% if incoming is empty %}
-                <div class="friends-empty">
-                    <p class="friends-empty-text">Нет заявок в друзья.</p>
-                </div>
-            {% else %}
-                <div class="friends-grid">
-                    {% for f in incoming %}
-                        <div class="friend-card" data-friend-card data-friend-id="{{ f.friend_user_id }}">
-                            <a href="/id{{ f.friend_user_id }}" class="friend-avatar">
-                                {% if f.avatar %}
-                                    <img src="{{ f.avatar }}" alt="" loading="lazy">
-                                {% else %}
-                                    <span class="friend-initials">{{ (f.name|slice(0,1) ~ f.surname|slice(0,1))|upper }}</span>
-                                {% endif %}
-                            </a>
-                            <a href="/id{{ f.friend_user_id }}" class="friend-name">{{ f.name }} {{ f.surname }}</a>
-                            {% if f.city %}
-                                <div class="friend-meta">{{ f.city }}</div>
-                            {% endif %}
-                            <div class="friend-actions">
-                                <button type="button" class="friend-btn friend-btn--primary" data-friend-action="accept">Принять заявку</button>
-                                <button type="button" class="friend-btn friend-btn--danger" data-friend-action="decline">Отклонить</button>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </section>
+    </div>
 
-        <!-- Outgoing requests -->
-        <section class="friends-section" data-section="outgoing">
-            {% if outgoing is empty %}
-                <div class="friends-empty">
-                    <p class="friends-empty-text">Нет исходящих заявок.</p>
-                </div>
-            {% else %}
-                <div class="friends-grid">
-                    {% for f in outgoing %}
-                        <div class="friend-card" data-friend-card data-friend-id="{{ f.friend_user_id }}">
-                            <a href="/id{{ f.friend_user_id }}" class="friend-avatar">
-                                {% if f.avatar %}
-                                    <img src="{{ f.avatar }}" alt="" loading="lazy">
-                                {% else %}
-                                    <span class="friend-initials">{{ (f.name|slice(0,1) ~ f.surname|slice(0,1))|upper }}</span>
-                                {% endif %}
-                            </a>
-                            <a href="/id{{ f.friend_user_id }}" class="friend-name">{{ f.name }} {{ f.surname }}</a>
-                            {% if f.city %}
-                                <div class="friend-meta">{{ f.city }}</div>
-                            {% endif %}
-                            <div class="friend-actions">
-                                <button type="button" class="friend-btn friend-btn--danger" data-friend-action="remove">Отменить заявку</button>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </section>
+    <!-- CONTEXT MENU: friend -->
+    <div class="friends-ctx" data-friends-ctx hidden>
+        <a class="friends-ctx-item" data-ctx-action="message" href="#">Написать сообщение</a>
+        <a class="friends-ctx-item" data-ctx-action="profile" href="#">Открыть профиль</a>
+        <div class="friends-ctx-sep"></div>
+        <button type="button" class="friends-ctx-item friends-ctx-item--danger" data-ctx-action="remove">Удалить из друзей</button>
     </div>
 
 </div>

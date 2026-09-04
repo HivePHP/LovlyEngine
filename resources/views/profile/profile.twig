@@ -1,16 +1,18 @@
 {% extends "layouts/main.twig" %}
 
 {% block content %}
-    <div class="profile-main">
+    <div class="profile-3col">
 
-        <!-- Profile header card: cover banner + squared avatar + info -->
-        <div class="profile-card profile-header-card">
-            <div class="profile-cover"></div>
+        <!-- CENTER COLUMN -->
+        <div class="profile-center">
 
-            <div class="profile-header-body">
+            <!-- Profile header: flat card with avatar + info -->
+            <div class="profile-card profile-header-card">
+                <div class="profile-header">
+
                 {% if userId == user_id %}
                 <div class="profile-avatar-wrap" data-avatar-widget data-current-avatar="{{ avatar|e('html_attr') }}" data-avatar-original="{{ avatar_original|e('html_attr') }}">
-                    <div class="profile-avatar profile-avatar-large">
+                    <div class="profile-avatar-large">
                         {% if avatar %}
                             <img class="profile-avatar-img" src="{{ avatar }}" alt="Аватар" data-avatar-img>
                         {% else %}
@@ -18,9 +20,8 @@
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
                             </svg>
                         {% endif %}
-                        <span class="photo-online"></span>
                         <button type="button" class="profile-avatar-overlay" data-avatar-toggle title="Сменить фотографию">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                             <span>Сменить фото</span>
                         </button>
                         <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" hidden data-avatar-input>
@@ -35,21 +36,33 @@
                     </div>
                 </div>
                 {% else %}
-                <div class="profile-avatar profile-avatar-large">
-                    {% if avatar %}
-                        <img class="profile-avatar-img" src="{{ avatar }}" alt="Аватар">
-                    {% else %}
-                        <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#b0b8c1" stroke-width="1.2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                        </svg>
-                    {% endif %}
-                    <span class="photo-online"></span>
+                <div class="profile-avatar-wrap">
+                    <div class="profile-avatar-large">
+                        {% if avatar %}
+                            <img class="profile-avatar-img" src="{{ avatar }}" alt="{{ name }} {{ surname }}">
+                        {% else %}
+                            <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#b0b8c1" stroke-width="1.2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                            </svg>
+                        {% endif %}
+                        <span class="photo-online"></span>
+                    </div>
                 </div>
                 {% endif %}
 
-                <div class="profile-header-info">
-                    <h1 class="profile-name">{{ name }} {{ surname }}</h1>
-                    <div class="profile-online">online</div>
+                <div class="profile-main">
+                    <div class="profile-top">
+                        <div>
+                            <h1 class="profile-name">{{ name }} {{ surname }}</h1>
+                            <div class="profile-online" data-online-status="{{ user_id }}">
+                                {% if is_online %}
+                                    <span class="online-dot"></span> online
+                                {% elseif last_seen_text %}
+                                    заходил {{ last_seen_text }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
 
                     {% if userId == user_id %}
                         <div class="profile-status" data-status-widget data-current-status="{{ status|e('html_attr') }}">
@@ -86,189 +99,285 @@
                         {% else %}
                             <button type="button" class="friend-btn friend-btn--primary friend-btn--profile" data-friend-action="add">Добавить в друзья</button>
                         {% endif %}
+                        <a href="/messages?to={{ user_id }}" class="friend-btn friend-btn--profile">Написать сообщение</a>
+                    </div>
+                    {% endif %}
+                </div>
+                </div>
+
+                <div class="profile-info">
+                    <div class="info-row">
+                        <div class="info-label">День рождения</div>
+                        <div class="info-value">{{ birthday }}</div>
+                    </div>
+                    {% if city %}
+                    <div class="info-row">
+                        <div class="info-label">Город</div>
+                        <div class="info-value">{{ city }}</div>
+                    </div>
+                    {% endif %}
+                    {% if country %}
+                    <div class="info-row">
+                        <div class="info-label">Страна</div>
+                        <div class="info-value">{{ country }}</div>
+                    </div>
+                    {% endif %}
+                    {% if photo_count %}
+                    <div class="info-row">
+                        <div class="info-label">Фотографии</div>
+                        <div class="info-value"><a href="{{ albums_url }}" class="profile-info-link">{{ photo_count }}</a></div>
                     </div>
                     {% endif %}
                 </div>
             </div>
 
-            <div class="profile-info">
-                <div class="profile-info-row">
-                    <span class="profile-info-label">День рождения:</span>
-                    <span class="profile-info-value">{{ birthday }}</span>
+            {% if common_friends %}
+            <div class="profile-card">
+                <div class="block-header">
+                    <div class="block-title">Общие друзья</div>
+                    <a href="/friends" class="block-link profile-info-link">Все друзья</a>
                 </div>
-                {% if city %}
-                <div class="profile-info-row">
-                    <span class="profile-info-label">Город:</span>
-                    <span class="profile-info-value">{{ city }}</span>
+                <div class="profile-common-friends" data-common-friends>
+                    {% for cf in common_friends %}
+                        <a href="/id{{ cf.id }}" class="profile-common-friend" data-common-avatar title="{{ cf.name }} {{ cf.surname }}">
+                            {% if cf.avatar %}
+                                <img src="{{ cf.avatar }}" alt="" loading="lazy">
+                            {% else %}
+                                <span class="profile-common-initials">{{ (cf.name|slice(0,1) ~ cf.surname|slice(0,1))|upper }}</span>
+                            {% endif %}
+                        </a>
+                    {% endfor %}
                 </div>
-                {% endif %}
-                {% if country %}
-                <div class="profile-info-row">
-                    <span class="profile-info-label">Страна:</span>
-                    <span class="profile-info-value">{{ country }}</span>
-                </div>
-                {% endif %}
-                {% if photo_count %}
-                <div class="profile-info-row">
-                    <span class="profile-info-label">Фотографии:</span>
-                    <a href="{{ albums_url }}" class="profile-info-value profile-info-link">{{ photo_count }}</a>
-                </div>
-                {% endif %}
             </div>
-        </div>
+            {% endif %}
 
-        {% if common_friends %}
-        <div class="profile-card">
-            <div class="profile-card-header">
-                <h3 class="profile-section-title">Общие друзья</h3>
-                <a href="/friends" class="profile-info-link">Все друзья</a>
-            </div>
-            <div class="profile-common-friends" data-common-friends>
-                {% for cf in common_friends %}
-                    <a href="/id{{ cf.id }}" class="profile-common-friend" data-common-avatar title="{{ cf.name }} {{ cf.surname }}">
-                        {% if cf.avatar %}
-                            <img src="{{ cf.avatar }}" alt="" loading="lazy">
-                        {% else %}
-                            <span class="profile-common-initials">{{ (cf.name|slice(0,1) ~ cf.surname|slice(0,1))|upper }}</span>
-                        {% endif %}
-                    </a>
-                {% endfor %}
-            </div>
-        </div>
-        {% endif %}
-
-        {% if userId == user_id %}
-        <div class="avatar-modal modal" data-avatar-modal data-modal hidden>
-            <div class="avatar-modal-backdrop modal-backdrop" data-modal-backdrop data-modal-close></div>
-            <div class="avatar-modal-card modal-card">
-                <h3 class="avatar-modal-title modal-title" data-modal-title>Изменение фотографии</h3>
-                <div class="modal-body">
-                    <div class="avatar-crop-wrap" data-avatar-wrap hidden>
-                        <figure class="avatar-crop-frame">
-                            <canvas class="avatar-crop-canvas" data-avatar-crop-canvas></canvas>
-                            <img class="avatar-crop-loader" alt="" data-avatar-crop-image aria-hidden="true">
-                            <div class="avatar-crop-box" data-avatar-crop-box hidden>
-                                <span class="avatar-crop-handle avatar-crop-handle--tl" data-handle="top-left"></span>
-                                <span class="avatar-crop-handle avatar-crop-handle--tr" data-handle="top-right"></span>
-                                <span class="avatar-crop-handle avatar-crop-handle--bl" data-handle="bottom-left"></span>
-                                <span class="avatar-crop-handle avatar-crop-handle--br" data-handle="bottom-right"></span>
-                            </div>
-                            <span class="avatar-crop-size" data-avatar-crop-size hidden></span>
-                        </figure>
-                        <p class="avatar-crop-hint">Перетаскивайте и изменяйте размер области, чтобы выбрать аватар.</p>
-                        <div class="avatar-crop-bottom">
-                            <div class="avatar-crop-previews">
-                                <div class="avatar-crop-preview-item">
-                                    <canvas class="avatar-crop-preview" data-avatar-preview="100" width="100" height="100"></canvas>
-                                    <span class="avatar-crop-preview-label">100×100</span>
+            {% if userId == user_id %}
+            <div class="avatar-modal modal" data-avatar-modal data-modal hidden>
+                <div class="avatar-modal-backdrop modal-backdrop" data-modal-backdrop data-modal-close></div>
+                <div class="avatar-modal-card modal-card">
+                    <h3 class="avatar-modal-title modal-title" data-modal-title>Изменение фотографии</h3>
+                    <div class="modal-body">
+                        <div class="avatar-crop-wrap" data-avatar-wrap hidden>
+                            <figure class="avatar-crop-frame">
+                                <canvas class="avatar-crop-canvas" data-avatar-crop-canvas></canvas>
+                                <img class="avatar-crop-loader" alt="" data-avatar-crop-image aria-hidden="true">
+                                <div class="avatar-crop-box" data-avatar-crop-box hidden>
+                                    <span class="avatar-crop-handle avatar-crop-handle--tl" data-handle="top-left"></span>
+                                    <span class="avatar-crop-handle avatar-crop-handle--tr" data-handle="top-right"></span>
+                                    <span class="avatar-crop-handle avatar-crop-handle--bl" data-handle="bottom-left"></span>
+                                    <span class="avatar-crop-handle avatar-crop-handle--br" data-handle="bottom-right"></span>
                                 </div>
-                                <div class="avatar-crop-preview-item">
-                                    <canvas class="avatar-crop-preview" data-avatar-preview="50" width="50" height="50"></canvas>
-                                    <span class="avatar-crop-preview-label">50×50</span>
+                                <span class="avatar-crop-size" data-avatar-crop-size hidden></span>
+                            </figure>
+                            <p class="avatar-crop-hint">Перетаскивайте и изменяйте размер области, чтобы выбрать аватар.</p>
+                            <div class="avatar-crop-bottom">
+                                <div class="avatar-crop-previews">
+                                    <div class="avatar-crop-preview-item">
+                                        <canvas class="avatar-crop-preview" data-avatar-preview="100" width="100" height="100"></canvas>
+                                        <span class="avatar-crop-preview-label">100×100</span>
+                                    </div>
+                                    <div class="avatar-crop-preview-item">
+                                        <canvas class="avatar-crop-preview" data-avatar-preview="50" width="50" height="50"></canvas>
+                                        <span class="avatar-crop-preview-label">50×50</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="avatar-crop-empty" data-avatar-empty>
+                            Выберите изображение, чтобы начать.
+                        </div>
                     </div>
-                    <div class="avatar-crop-empty" data-avatar-empty>
-                        Выберите изображение, чтобы начать.
+                    <div class="avatar-modal-error modal-error" data-modal-error></div>
+                    <div class="avatar-modal-actions modal-actions">
+                        <button type="button" class="btn-secondary" data-avatar-confirm hidden>Сохранить</button>
+                        <button type="button" class="btn-secondary avatar-cancel-btn" data-modal-close>Отмена</button>
                     </div>
                 </div>
-                <div class="avatar-modal-error modal-error" data-modal-error></div>
-                <div class="avatar-modal-actions modal-actions">
-                    <button type="button" class="btn-secondary" data-avatar-confirm hidden>Сохранить</button>
-                    <button type="button" class="btn-secondary avatar-cancel-btn" data-modal-close>Отмена</button>
-                </div>
             </div>
-        </div>
 
-        <div class="status-modal modal" data-status-modal data-modal hidden>
-            <div class="status-modal-backdrop modal-backdrop" data-modal-backdrop data-modal-close></div>
-            <div class="status-modal-card modal-card">
-                <h3 class="status-modal-title modal-title" data-modal-title>Статус</h3>
-                <div class="modal-body">
-                    <input
-                        type="text"
-                        name="status"
-                        class="status-modal-input"
-                        maxlength="120"
-                        placeholder="Введите статус..."
-                        autocomplete="off"
-                    >
+            <div class="status-modal modal" data-status-modal data-modal hidden>
+                <div class="status-modal-backdrop modal-backdrop" data-modal-backdrop data-modal-close></div>
+                <div class="status-modal-card modal-card">
+                    <h3 class="status-modal-title modal-title" data-modal-title>Статус</h3>
+                    <div class="modal-body">
+                        <input
+                            type="text"
+                            name="status"
+                            class="status-modal-input"
+                            maxlength="120"
+                            placeholder="Введите статус..."
+                            autocomplete="off"
+                        >
+                    </div>
+                    <div class="status-modal-error modal-error" data-modal-error></div>
+                    <div class="status-modal-actions modal-actions">
+                        <button type="button" class="btn-primary status-save-btn" data-status-save>Сохранить</button>
+                        <button type="button" class="btn-secondary status-cancel-btn" data-modal-close>Отмена</button>
+                    </div>
                 </div>
-                <div class="status-modal-error modal-error" data-modal-error></div>
-                <div class="status-modal-actions modal-actions">
-                    <button type="button" class="btn-primary status-save-btn" data-status-save>Сохранить</button>
-                    <button type="button" class="btn-secondary status-cancel-btn" data-modal-close>Отмена</button>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-
-        {% if about or interests or favorite_films %}
-        <div class="profile-card">
-            <h3 class="profile-section-title">Обо мне</h3>
-
-            {% if about %}
-            <div class="profile-about-section">
-                <div class="profile-about-label">Обо мне</div>
-                <div class="profile-about-text">{{ about }}</div>
             </div>
             {% endif %}
 
-            {% if interests %}
-            <div class="profile-about-section">
-                <div class="profile-about-label">Интересы</div>
-                <div class="profile-about-text">{{ interests }}</div>
+            {% if about or interests or favorite_films %}
+            <div class="profile-card">
+                <div class="block-header">
+                    <div class="block-title">Обо мне</div>
+                </div>
+
+                {% if about %}
+                <div class="profile-about-section">
+                    <div class="profile-about-label">Обо мне</div>
+                    <div class="profile-about-text">{{ about }}</div>
+                </div>
+                {% endif %}
+
+                {% if interests %}
+                <div class="profile-about-section">
+                    <div class="profile-about-label">Интересы</div>
+                    <div class="profile-about-text">{{ interests }}</div>
+                </div>
+                {% endif %}
+
+                {% if favorite_films %}
+                <div class="profile-about-section">
+                    <div class="profile-about-label">Любимые фильмы</div>
+                    <div class="profile-about-text">{{ favorite_films }}</div>
+                </div>
+                {% endif %}
             </div>
             {% endif %}
 
-            {% if favorite_films %}
-            <div class="profile-about-section">
-                <div class="profile-about-label">Любимые фильмы</div>
-                <div class="profile-about-text">{{ favorite_films }}</div>
+            {% if userId %}
+            <div class="profile-card">
+                <div class="profile-wall-input">
+                    <div class="profile-wall-avatar">{{ userInitials }}</div>
+                    <div class="profile-wall-placeholder">Что у Вас нового?</div>
+                </div>
+            </div>
+
+            <div class="profile-card profile-wall-empty">
+                <div class="profile-wall-empty-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#b0b8c1" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                </div>
+                <p class="profile-wall-empty-text">На стене пока ни одной записи.</p>
             </div>
             {% endif %}
-        </div>
-        {% endif %}
 
-        {% if recent_photos %}
-        <div class="profile-card">
-            <div class="profile-card-header">
-                <h3 class="profile-section-title">Фотографии</h3>
-                <a href="{{ albums_url }}" class="profile-info-link">Все фотографии</a>
-            </div>
-            <div class="profile-recent-photos">
-                {% for photo in recent_photos %}
-                <a href="/album/{{ photo.album_id }}" class="profile-recent-photo" title="{{ photo.album_title }}">
-                    <img src="{{ photo.thumb ?: photo.path }}" alt="{{ photo.album_title }}" loading="lazy">
-                </a>
-                {% endfor %}
-            </div>
-        </div>
-        {% endif %}
+        </div><!-- /profile-center -->
 
-        {% if userId %}
-        <a href="/albums/id{{ userId }}" class="profile-card profile-photo-upload-link">
-            <div class="profile-photo-upload">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1877f2" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                <span>Фотографии</span>
-            </div>
-        </a>
+        <!-- RIGHT COLUMN -->
+        <div class="profile-right">
 
-        <div class="profile-card">
-            <div class="profile-wall-input">
-                <div class="profile-wall-avatar">{{ userInitials }}</div>
-                <div class="profile-wall-placeholder">Что у Вас нового?</div>
+            {% if profile_friends is not empty %}
+            <div class="profile-card">
+                <div class="block-header">
+                    <div class="block-title">Друзья <span>{{ profile_friends_total }}</span></div>
+                    <a href="/friends" class="block-link profile-info-link">Все друзья</a>
+                </div>
+                <div class="profile-block-friends">
+                    {% for f in profile_friends %}
+                    <a href="/id{{ f.id }}" class="profile-block-friend">
+                        <div class="profile-block-friend-avatar-wrap">
+                            <div class="profile-block-friend-avatar">
+                                {% if f.avatar %}
+                                    <img src="{{ f.avatar }}" alt="{{ f.name }} {{ f.surname }}" loading="lazy">
+                                {% else %}
+                                    <span class="profile-block-friend-initials">{{ (f.name|slice(0,1) ~ f.surname|slice(0,1))|upper }}</span>
+                                {% endif %}
+                            </div>
+                            {% if f.is_online %}<span class="online-dot online-dot--sidebar"></span>{% endif %}
+                        </div>
+                        <span class="profile-block-friend-name">{{ f.name }}</span>
+                    </a>
+                    {% endfor %}
+                </div>
             </div>
-        </div>
+            {% endif %}
 
-        <div class="profile-card profile-wall-empty">
-            <div class="profile-wall-empty-icon">
-                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#b0b8c1" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            {% if profile_docs is not empty %}
+            <div class="profile-card">
+                <div class="block-header">
+                    <div class="block-title">Документы</div>
+                    <a href="/user/{{ user_id }}/documents" class="block-link profile-info-link">Все документы ({{ profile_docs_total }})</a>
+                </div>
+                <div class="profile-block-docs">
+                    {% for doc in profile_docs %}
+                    <a href="/user/{{ user_id }}/documents" class="profile-block-doc">
+                        <div class="profile-block-doc-icon">
+                            {% set ext = doc.name|split('.')|last|lower %}
+                            {% if ext in ['jpg','jpeg','png','gif','webp','svg'] %}
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4a9e6e" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                            {% elseif ext in ['mp4','avi','mkv','mov','webm'] %}
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c75d5d" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                            {% elseif ext in ['mp3','wav','ogg','flac'] %}
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9b59b6" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                            {% elseif ext == 'pdf' %}
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e15c5c" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            {% elseif ext == 'zip' %}
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            {% else %}
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4a76a8" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            {% endif %}
+                        </div>
+                        <div class="profile-block-doc-info">
+                            <span class="profile-block-doc-name">{{ doc.name }}</span>
+                            <span class="profile-block-doc-size">
+                                {% if doc.size > 1048576 %}{{ '%.1f'|format(doc.size / 1048576) }} МБ
+                                {% elseif doc.size > 1024 %}{{ '%.1f'|format(doc.size / 1024) }} КБ
+                                {% else %}{{ doc.size }} Б{% endif %}
+                            </span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
             </div>
-            <p class="profile-wall-empty-text">На стене пока ни одной записи.</p>
-        </div>
-        {% endif %}
+            {% endif %}
+
+            {% if profile_albums is not empty %}
+            <div class="profile-card">
+                <div class="block-header">
+                    <div class="block-title">Фотографии</div>
+                    <a href="{{ albums_url }}" class="block-link profile-info-link">Все альбомы ({{ profile_albums_total }})</a>
+                </div>
+                <div class="profile-block-albums">
+                    {% for a in profile_albums %}
+                    <a href="/album/{{ a.id }}" class="profile-block-album">
+                        <div class="profile-block-album-cover">
+                            {% if a.cover %}
+                                <img src="{{ a.cover }}" alt="{{ a.title }}" loading="lazy">
+                            {% else %}
+                                <div class="profile-block-album-empty">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#b0b8c1" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="profile-block-album-info">
+                            <span class="profile-block-album-title">{{ a.title }}</span>
+                            <span class="profile-block-album-count">{{ a.photo_count }} фото</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if recent_photos %}
+            <div class="profile-card">
+                <div class="block-header">
+                    <div class="block-title">Фотографии</div>
+                    <a href="{{ albums_url }}" class="block-link profile-info-link">Все фотографии</a>
+                </div>
+                <div class="profile-recent-photos">
+                    {% for photo in recent_photos %}
+                    <a href="/album/{{ photo.album_id }}" class="profile-recent-photo" title="{{ photo.album_title }}">
+                        <img src="{{ photo.thumb ?: photo.path }}" alt="{{ photo.album_title }}" loading="lazy">
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+        </div><!-- /profile-right -->
 
     </div>
 {% endblock %}

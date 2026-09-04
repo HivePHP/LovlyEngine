@@ -1,0 +1,120 @@
+{% extends "layouts/main.twig" %}
+
+{% block content %}
+<div class="messages-main" data-messages-page data-viewer-id="{{ viewer_id }}"{% if open_to %} data-open-to="{{ open_to }}"{% endif %}>
+
+    <div class="messages-pane">
+        <!-- LEFT: conversation list -->
+        <div class="messages-side">
+            <div class="messages-side-head">
+                <h2 class="messages-title">Сообщения</h2>
+            </div>
+            <div class="messages-list" data-messages-list>
+                {% if conversations is empty %}
+                    <div class="messages-empty">
+                        <p class="messages-empty-text">У вас пока нет диалогов.</p>
+                    </div>
+                {% else %}
+                    {% for c in conversations %}
+                        <button type="button" class="message-thread{% if loop.first %} is-active{% endif %}"
+                                data-thread data-other-id="{{ c.other_id }}"
+                                data-conversation-id="{{ c.conversation_id }}">
+                            <span class="message-thread-avatar">
+                                {% if c.other_avatar %}
+                                    <img src="{{ c.other_avatar }}" alt="" loading="lazy">
+                                {% else %}
+                                    <span class="message-thread-initials">{{ (c.other_name|slice(0,1))|upper }}</span>
+                                {% endif %}
+                            </span>
+                            <span class="message-thread-body">
+                                <span class="message-thread-name">{{ c.other_name }}</span>
+                                {% if c.last_body %}
+                                    <span class="message-thread-preview">
+                                        {% if c.last_sender == viewer_id %}<span class="message-thread-me">Вы: </span>{% endif %}{{ c.last_body }}
+                                    </span>
+                                {% endif %}
+                            </span>
+                            {% if c.unread %}
+                                <span class="message-thread-badge">{{ c.unread }}</span>
+                            {% endif %}
+                        </button>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- RIGHT: open conversation -->
+        <div class="messages-thread" data-messages-thread>
+            <div class="messages-thread-head">
+                <h3 class="messages-thread-name" data-thread-name></h3>
+            </div>
+            <div class="messages-thread-scroll" data-thread-scroll>
+                <div class="messages-bubbles" data-thread-bubbles>
+                    <div class="messages-empty messages-thread-placeholder">
+                        <p class="messages-empty-text">Выберите диалог слева, чтобы начать переписку.</p>
+                    </div>
+                </div>
+                <div class="messages-typing" data-typing-indicator hidden>
+                    <span class="messages-typing-dots"><span></span><span></span><span></span></span>
+                    <span class="messages-typing-text">печатает...</span>
+                </div>
+            </div>
+            <!-- Floating action bar -->
+            <div class="messages-delete-float" data-delete-float hidden>
+                <span class="messages-delete-count" data-delete-count>1</span>
+                <div class="messages-delete-actions">
+                    <button type="button" class="messages-action-btn" data-forward-selected title="Переслать">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+                        Переслать
+                    </button>
+                    <button type="button" class="messages-delete-btn messages-delete-for-me" data-delete-for-me>Удалить у себя</button>
+                    <button type="button" class="messages-delete-btn messages-delete-for-all" data-delete-for-all>Удалить у всех</button>
+                    <button type="button" class="messages-delete-cancel" data-delete-cancel>
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+            </div>
+            <form class="messages-composer" data-composer>
+                <textarea
+                    class="messages-composer-input"
+                    data-composer-input
+                    placeholder="Написать сообщение..."
+                    rows="2"
+                    maxlength="4000"
+                    autocomplete="off"
+                ></textarea>
+                <button type="submit" class="btn-primary messages-composer-btn">Отправить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Message context menu -->
+    <div class="messages-ctx" data-msg-ctx hidden>
+        <button type="button" class="messages-ctx-item" data-ctx-msg-forward>Переслать</button>
+        <button type="button" class="messages-ctx-item" data-ctx-msg-delete>Удалить у себя</button>
+        <button type="button" class="messages-ctx-item messages-ctx-item--danger" data-ctx-msg-delete-all>Удалить у всех</button>
+    </div>
+
+    <!-- Conversation context menu -->
+    <div class="messages-ctx" data-conv-ctx hidden>
+        <button type="button" class="messages-ctx-item messages-ctx-item--danger" data-ctx-conv-delete>Удалить у себя</button>
+        <button type="button" class="messages-ctx-item messages-ctx-item--danger" data-ctx-conv-delete-all>Удалить у всех</button>
+    </div>
+
+    <!-- Forward modal -->
+    <div class="messages-modal-overlay" data-forward-overlay hidden>
+        <div class="messages-modal" data-forward-modal>
+            <div class="messages-modal-head">
+                <h3 class="messages-modal-title">Переслать сообщение</h3>
+                <button type="button" class="messages-modal-close" data-forward-close>
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="messages-modal-search">
+                <input type="text" class="messages-modal-search-input" data-forward-search placeholder="Найти диалог..." autocomplete="off">
+            </div>
+            <div class="messages-modal-list" data-forward-list></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

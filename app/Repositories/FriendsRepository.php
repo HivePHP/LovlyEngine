@@ -175,7 +175,7 @@ final class FriendsRepository
     public function incomingRequests(int $userId): array
     {
         $rows = $this->db->fetchAll(
-            "SELECT f.id, u.id AS friend_user_id, u.name, u.surname, u.avatar, u.city, u.country
+            "SELECT f.id, u.id AS friend_user_id, u.name, u.surname, u.avatar, u.city, u.country, u.last_seen_at
                FROM friends f
                JOIN users u ON u.id = f.user_id
               WHERE f.friend_id = :u AND f.status = 'pending'
@@ -194,7 +194,7 @@ final class FriendsRepository
     public function outgoingRequests(int $userId): array
     {
         $rows = $this->db->fetchAll(
-            "SELECT f.id, u.id AS friend_user_id, u.name, u.surname, u.avatar, u.city, u.country
+            "SELECT f.id, u.id AS friend_user_id, u.name, u.surname, u.avatar, u.city, u.country, u.last_seen_at
                FROM friends f
                JOIN users u ON u.id = f.friend_id
               WHERE f.user_id = :u AND f.status = 'pending'
@@ -208,6 +208,49 @@ final class FriendsRepository
     public function countFriends(int $userId): int
     {
         return count($this->friendIds($userId));
+    }
+
+    /**
+     * Users who are NOT friends with $userId and have no pending requests.
+     * Used for "Возможные друзья" in the right sidebar.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function possibleFriends(int $userId, int $limit = 20): array
+    {
+        $friendIds = $this->friendIds($userId);
+
+        // Also exclude users we have pending requests with (incoming + outgoing).
+        $pendingRows = $this->db->fetchAll(
+            "SELECT CASE WHEN user_id = :u THEN friend_id ELSE user_id END AS pid
+               FROM friends
+              WHERE (user_id = :u1 OR friend_id = :u2)
+                AND status = 'pending'",
+            ['u' => $userId, 'u1' => $userId, 'u2' => $userId]
+        );
+        $pendingIds = array_map(fn($r) => (int)$r['pid'], $pendingRows);
+
+        $exclude = array_merge([$userId], $friendIds, $pendingIds);
+        $exclude = array_values(array_unique($exclude));
+
+        if (!$exclude) {
+            $placeholders = '?';
+            $params = [$userId];
+        } else {
+            $placeholders = implode(',', array_fill(0, count($exclude), '?'));
+            $params = $exclude;
+        }
+
+        $rows = $this->db->fetchAll(
+            "SELECT id, name, surname, avatar, city
+               FROM users
+              WHERE id NOT IN ({$placeholders})
+              ORDER BY RAND()
+              LIMIT {$limit}",
+            $params
+        );
+
+        return $rows;
     }
 
     /**
@@ -279,7 +322,7 @@ final class FriendsRepository
         }
 
         $placeholders = implode(',', array_fill(0, count($ids), '?'));
-        $query = "SELECT id, name, surname, avatar, city, country
+        $query = "SELECT id, name, surname, avatar, city, country, last_seen_at
                     FROM users
                    WHERE id IN ({$placeholders})
                    ORDER BY id ASC";

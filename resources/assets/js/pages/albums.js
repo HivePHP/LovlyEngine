@@ -1,5 +1,6 @@
 import Dom from '../core/Dom.js';
 import Ajax from '../core/Ajax.js';
+import AjaxUpload from '../core/AjaxUpload.js';
 import Modal from '../ui/Modal.js';
 import DragReorder from '../ui/DragReorder.js';
 
@@ -232,18 +233,14 @@ class AlbumPage {
         }));
 
         const area = Dom.qs('[data-upload-area]', this.root);
+        const progressTarget = Dom.qs('[data-upload-progress]', this.root);
+
         if (this.isOwner && area) {
-            area.addEventListener('click', () => this.input?.click());
-            area.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                area.classList.add('drag-active');
-            });
-            area.addEventListener('dragleave', () => area.classList.remove('drag-active'));
-            area.addEventListener('drop', (e) => {
-                e.preventDefault();
-                area.classList.remove('drag-active');
-                const files = [...e.dataTransfer.files].filter((f) => f.type.startsWith('image/'));
-                if (files.length) this.uploadPhotos(files);
+            AjaxUpload.attachDropZone(area, this.input, {
+                onFiles: (files) => {
+                    const imageFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+                    if (imageFiles.length) this.uploadPhotos(imageFiles);
+                },
             });
         }
 
@@ -254,54 +251,32 @@ class AlbumPage {
         });
     }
 
-    validateFiles(files) {
-        for (const file of files) {
-            if (!ALLOWED_TYPES.includes(file.type)) {
-                this.setError('Допустимы только JPEG, PNG, WebP или GIF.');
-                return false;
-            }
-            if (file.size > MAX_BYTES) {
-                this.setError('Файл слишком большой (макс. 8 МБ).');
-                return false;
-            }
-        }
-        return true;
-    }
-
-    async uploadPhotos(files) {
+    uploadPhotos(files) {
         if (this.uploading) return;
-        if (!this.validateFiles(files)) return;
-
         this.uploading = true;
         this.setError('');
 
-        const formData = new FormData();
-        // Bracket name so PHP folds repeated parts into $_FILES['photos'] as a
-        // multi-file array (a bare "photos" name keeps only the last file).
-        files.forEach((file) => formData.append('photos[]', file, file.name));
-        formData.append('csrf_token', Ajax.csrfToken());
+        const progressTarget = Dom.qs('[data-upload-progress]', this.root);
 
-        try {
-            const response = await fetch(`/api/albums/${this.albumId}/photos`, {
-                method: 'POST',
-                headers: { 'Accept': 'application/json', 'X-CSRF-Token': Ajax.csrfToken() },
-                body: formData,
-                credentials: 'same-origin',
-            });
+        const up = new AjaxUpload(`/api/albums/${this.albumId}/photos`, {
+            fieldName: 'photos[]',
+            files,
+            accept: ALLOWED_TYPES.join(','),
+            maxFileSize: MAX_BYTES,
+            multiple: true,
+            progressTarget,
+            onSuccess: () => {
+                window.location.reload();
+            },
+            onError: (msg) => {
+                this.setError(msg);
+            },
+            onComplete: () => {
+                this.uploading = false;
+            },
+        });
 
-            let payload = {};
-            try { payload = await response.json(); } catch (e) { /* ignore */ }
-
-            if (response.status !== 200 || payload.status !== 'ok') {
-                throw new Error(payload.message || 'Не удалось загрузить фотографии.');
-            }
-
-            window.location.reload();
-        } catch (err) {
-            this.setError(err.message || 'Ошибка сети. Попробуйте ещё раз.');
-        } finally {
-            this.uploading = false;
-        }
+        up.upload();
     }
 
     /* ---- Delete photo (confirm modal) ---- */

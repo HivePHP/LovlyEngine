@@ -113,6 +113,11 @@ final class Assets
 
     private function cssUrl(string $bundle): string
     {
+        // Dev mode: concatenate source CSS files directly
+        if ($this->isDevMode()) {
+            return $this->devCssUrl($bundle);
+        }
+
         $map = $this->manifestMap('css');
 
         if (isset($map[$bundle])) {
@@ -129,11 +134,52 @@ final class Assets
         $map = $this->manifestMap('js');
 
         if (isset($map[$entry])) {
-            return $this->baseUrl() . '/' . ltrim($map[$entry], '/');
+            $url = $this->baseUrl() . '/' . ltrim($map[$entry], '/');
+            if ($this->isDevMode()) {
+                $url .= '?' . time();
+            }
+            return $url;
         }
 
         // Dev fallback: source module path.
         return $this->baseUrl() . '/' . ltrim($entry, '/');
+    }
+
+    /**
+     * In dev mode, serve concatenated source CSS directly from resources/.
+     */
+    private function devCssUrl(string $bundle): string
+    {
+        $sources = $this->config['css_bundles'][$bundle] ?? [];
+
+        // Write concatenated source to a temp file with cache-buster
+        $concat = '';
+        foreach ($sources as $src) {
+            $path = BASE_PATH . '/resources/assets/' . $src;
+            if (is_file($path)) {
+                $concat .= file_get_contents($path) . "\n";
+            }
+        }
+
+        if ($concat === '') {
+            $name = str_replace(['/', '\\'], '-', $bundle) . '.css';
+            return $this->baseUrl() . '/css/' . $name;
+        }
+
+        // Write to public/assets/css/<bundle>.dev.css
+        $outDir = BASE_PATH . '/public/assets/css';
+        if (!is_dir($outDir)) {
+            mkdir($outDir, 0755, true);
+        }
+        $outPath = $outDir . '/' . str_replace(['/', '\\'], '-', $bundle) . '.dev.css';
+        file_put_contents($outPath, $concat);
+
+        return $this->baseUrl() . '/css/' . str_replace(['/', '\\'], '-', $bundle) . '.dev.css?' . filemtime($outPath);
+    }
+
+    private function isDevMode(): bool
+    {
+        return ($_ENV['VIEW_AUTO_RELOAD'] ?? getenv('VIEW_AUTO_RELOAD')) === 'true';
     }
 
     private function baseUrl(): string

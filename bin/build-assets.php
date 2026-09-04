@@ -121,6 +121,7 @@ $resolve = static function (string $relPath) use (&$resolve, $sourceRoot, $jsOut
             $targetRel = normalizePath($targetRel);
 
             // resolve (recursively) to get its hash
+            /** @var TYPE_NAME $resolve */
             $resolve($targetRel);
 
             $targetHash = $jsHashes[$targetRel];

@@ -1,0 +1,101 @@
+{% extends "layouts/main.twig" %}
+
+{% block content %}
+<div class="albums-main" data-albums-page data-user-id="{{ user_id }}" data-is-owner="{{ is_owner ? '1' : '0' }}">
+
+    <div class="profile-card albums-card">
+        <div class="albums-header">
+            <div class="albums-header-left">
+                <h2 class="albums-title">Фотографии</h2>
+                <span class="albums-subtitle">{{ owner_name }}</span>
+            </div>
+            {% if is_owner %}
+                <button type="button" class="btn-primary albums-create-btn" data-create-album>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Создать альбом
+                </button>
+            {% endif %}
+        </div>
+
+        {% if albums is empty %}
+            <div class="albums-empty">
+                <div class="albums-empty-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="9" r="1.5"/><path d="M4 17l5-5 3 3 2-2 6 6"/></svg>
+                </div>
+                <div class="albums-empty-title">У вас пока нет альбомов</div>
+                <div class="albums-empty-text">Создайте альбом, чтобы хранить фотографии отдельно.</div>
+                {% if is_owner %}
+                    <button type="button" class="btn-primary albums-empty-btn" data-create-album>Создать альбом</button>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="albums-grid">
+                {% for album in albums %}
+                    <a class="album-card{% if is_owner %} album-card--draggable{% endif %}" draggable="false" data-album-id="{{ album.id }}" href="/album/{{ album.id }}">
+                        <div class="album-cover">
+                            {% if album.cover %}
+                                <img src="{{ album.cover }}" alt="" loading="lazy">
+                            {% else %}
+                                <div class="album-default-cover">
+                                    <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="9" r="1.5"/><path d="M4 17l5-5 3 3 2-2 6 6"/></svg>
+                                </div>
+                            {% endif %}
+                            {% if is_owner and not album.is_protected %}
+                                <button type="button" class="album-delete" data-delete-album title="Удалить альбом">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                </button>
+                            {% endif %}
+                        </div>
+                        <div class="album-info">
+                            <div class="album-name">
+                                {{ album.title }}
+                                {% if album.is_protected %}<span class="album-badge">системный</span>{% endif %}
+                            </div>
+                            <div class="album-count">{{ album.photo_text }}</div>
+                            {% if album.description %}
+                                <div class="album-description">{{ album.description }}</div>
+                            {% endif %}
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    {% if is_owner %}
+    <div class="album-modal modal" data-album-modal data-modal hidden>
+        <div class="album-modal-backdrop modal-backdrop" data-modal-backdrop data-modal-close></div>
+        <div class="album-modal-card modal-card">
+            <h3 class="album-modal-title modal-title" data-modal-title>Создание альбома</h3>
+            <div class="modal-body">
+                <label class="album-field-label" for="album-title">Название альбома</label>
+                <input id="album-title" name="title" type="text" class="album-input" maxlength="255" placeholder="Например, Путешествие" autocomplete="off">
+                <label class="album-field-label" for="album-desc">Описание альбома</label>
+                <textarea id="album-desc" name="description" class="album-textarea" maxlength="5000" placeholder="Описание альбома..."></textarea>
+            </div>
+            <div class="album-modal-error modal-error" data-modal-error></div>
+            <div class="album-modal-actions modal-actions">
+                <button type="button" class="btn-primary album-save-btn" data-album-save>Создать</button>
+                <button type="button" class="btn-secondary" data-modal-close>Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="album-modal modal" data-confirm-modal data-modal hidden>
+        <div class="album-modal-backdrop modal-backdrop" data-modal-backdrop data-modal-close></div>
+        <div class="album-modal-card modal-card">
+            <h3 class="album-modal-title modal-title">Удаление альбома</h3>
+            <div class="modal-body">
+                <p class="album-confirm-text" data-confirm-text>Вы действительно хотите удалить альбом?</p>
+            </div>
+            <div class="album-modal-error modal-error" data-modal-error></div>
+            <div class="album-modal-actions modal-actions">
+                <button type="button" class="btn-primary album-danger-btn" data-confirm-yes>Да</button>
+                <button type="button" class="btn-secondary" data-modal-close>Нет</button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

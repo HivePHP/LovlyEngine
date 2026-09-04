@@ -1,4 +1,4 @@
-import PageTransition from '../core/PageTransition.8719105f.js';
+import PageTransition from '../core/PageTransition.4d307d32.js';
 
 function init() {
     if (document.documentElement.dataset.pageTransition === '1') return;

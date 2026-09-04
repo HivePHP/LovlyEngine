@@ -1,51 +1,39 @@
 import Dom from '../core/Dom.3c5c29e1.js';
 import Ajax from '../core/Ajax.ce7e7771.js';
+import Modal from '../ui/Modal.c0ac6b17.js';
 
-export default class StatusWidget {
-    constructor(cls = '[data-status-widget]', modal = '[data-status-modal]') {
-        this.widget = Dom.qs(cls);
-        this.modal = Dom.qs(modal);
+export default class StatusWidget extends Modal {
+    constructor(
+        cls = '[data-status-widget]',
+        modal = '[data-status-modal]'
+    ) {
+        const widget = Dom.qs(cls);
+        const modalRoot = Dom.qs(modal);
+        super(modalRoot);
 
-        if (!this.widget || !this.modal || this.widget.dataset.statusBound === '1') {
+        if (!widget || !modalRoot || widget.dataset.statusBound === '1') {
             return;
         }
 
+        this.widget = widget;
         this.widget.dataset.statusBound = '1';
 
-        this.input = Dom.qs('[name="status"]', this.modal);
-        this.error = Dom.qs('[data-status-error]', this.modal);
-        this.toggle = Dom.qs('[data-status-toggle]', this.widget);
+        this.input = Dom.qs('[name="status"]', modalRoot);
+        this.toggle = Dom.qs('[data-status-toggle]', widget);
 
-        this.bind();
-    }
-
-    bind() {
         if (this.toggle) {
             this.toggle.addEventListener('click', () => this.open());
         }
 
-        Dom.qs('[data-status-close]', this.modal)?.addEventListener('click', () => this.close());
-        Dom.qs('[data-status-save]', this.modal)?.addEventListener('click', () => this.save());
+        this.onOpen = () => {
+            this.input.value = this.toggle?.dataset.value ?? this.widget.dataset.currentStatus ?? '';
+            this.clearError();
+            this.input.focus();
+        };
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !this.modal.hidden) this.close();
-        });
-    }
+        this.onClose = () => this.clearError();
 
-    open() {
-        this.input.value = this.toggle?.dataset.value ?? this.widget.dataset.currentStatus ?? '';
-        this.setError('');
-        this.modal.hidden = false;
-        this.input.focus();
-    }
-
-    close() {
-        this.modal.hidden = true;
-        this.setError('');
-    }
-
-    setError(message) {
-        this.error.textContent = message;
+        Dom.qs('[data-status-save]', modalRoot)?.addEventListener('click', () => this.save());
     }
 
     async save() {
@@ -83,8 +71,8 @@ export default class StatusWidget {
             btn.className = 'profile-status-text';
             btn.dataset.statusToggle = '';
             btn.dataset.value = value;
-            btn.title = 'Нажмите, чтобы изменить статус';
             btn.textContent = value;
+            btn.title = 'Нажмите, чтобы изменить статус';
 
             this.widget.innerHTML = '';
             this.widget.appendChild(btn);
@@ -92,7 +80,6 @@ export default class StatusWidget {
 
         this.toggle = Dom.qs('[data-status-toggle]', this.widget);
         this.widget.dataset.currentStatus = value;
-
         this.toggle.addEventListener('click', () => this.open());
     }
 }

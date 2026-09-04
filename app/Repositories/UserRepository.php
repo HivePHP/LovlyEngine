@@ -42,7 +42,7 @@ final class UserRepository
     public function findById(int $id): ?array
     {
         return $this->db->fetch(
-            "SELECT id, name, surname, email FROM users WHERE id = :id LIMIT 1",
+            "SELECT id, name, surname, email, avatar FROM users WHERE id = :id LIMIT 1",
             ['id' => $id]
         ) ?: null;
     }
@@ -50,12 +50,20 @@ final class UserRepository
     public function findProfileById(int $id): ?array
     {
         return $this->db->fetch(
-            "SELECT id, name, surname, status, sex, city, country, day, month, year, about, interests, favorite_films
+            "SELECT id, name, surname, avatar, status, sex, city, country, day, month, year, about, interests, favorite_films
              FROM users
              WHERE id = :id
              LIMIT 1",
             ['id' => $id]
         ) ?: null;
+    }
+
+    public function updateAvatar(int $id, ?string $avatar): void
+    {
+        $this->db->execute(
+            "UPDATE users SET avatar = :avatar WHERE id = :id",
+            ['id' => $id, 'avatar' => $avatar]
+        );
     }
 
     public function updateProfile(int $id, string $about, string $interests, string $favoriteFilms): void
@@ -83,5 +91,23 @@ final class UserRepository
     {
         $row = $this->db->fetch("SELECT COUNT(*) as cnt FROM users");
         return (int)($row['cnt'] ?? 0);
+    }
+
+    /**
+     * Most recently registered users, excluding one id.
+     * Shown in the profile right sidebar as a "Users" block.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function recentUsers(int $excludeId, int $limit): array
+    {
+        return $this->db->fetchAll(
+            "SELECT id, name, surname, avatar, city, country
+               FROM users
+              WHERE id <> :exclude_id
+              ORDER BY created_at DESC, id DESC
+              LIMIT " . max(1, (int)$limit),
+            ['exclude_id' => $excludeId]
+        );
     }
 }

@@ -1,0 +1,124 @@
+{% extends "layouts/main.twig" %}
+
+{% block content %}
+<div class="friends-main" data-friends-page data-viewer-id="{{ viewer_id }}">
+
+    <div class="profile-card">
+        <div class="friends-header">
+            <h2 class="friends-title">Друзья</h2>
+            <div class="friends-tabs" role="tablist">
+                <a class="friends-tab is-active" href="#friends" data-tab="friends">
+                    Мои друзья <span class="friends-badge">{{ friend_count }}</span>
+                </a>
+                <a class="friends-tab" href="#incoming" data-tab="incoming">
+                    Заявки в друзья {% if incoming_count %}<span class="friends-badge">{{ incoming_count }}</span>{% endif %}
+                </a>
+                <a class="friends-tab" href="#outgoing" data-tab="outgoing">
+                    Исходящие заявки {% if outgoing_count %}<span class="friends-badge">{{ outgoing_count }}</span>{% endif %}
+                </a>
+            </div>
+        </div>
+
+        <!-- Confirmed friends -->
+        <section class="friends-section is-active" data-section="friends">
+            {% if friends is empty %}
+                <div class="friends-empty">
+                    <div class="friends-empty-icon">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#b0b8c1" stroke-width="1.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <p class="friends-empty-text">У вас пока нет друзей.</p>
+                </div>
+            {% else %}
+                <div class="friends-grid">
+                    {% for f in friends %}
+                        <div class="friend-card" data-friend-card data-friend-id="{{ f.id }}">
+                            <a href="/id{{ f.id }}" class="friend-avatar">
+                                {% if f.avatar %}
+                                    <img src="{{ f.avatar }}" alt="" loading="lazy">
+                                {% else %}
+                                    <span class="friend-initials">{{ (f.name|slice(0,1) ~ f.surname|slice(0,1))|upper }}</span>
+                                {% endif %}
+                            </a>
+                            <a href="/id{{ f.id }}" class="friend-name">{{ f.name }} {{ f.surname }}</a>
+                            {% if f.city %}
+                                <div class="friend-meta">{{ f.city }}</div>
+                            {% endif %}
+                            <div class="friend-mutual">
+                                {% if f.mutual_count %}
+                                    {{ f.mutual_count }} {{ f.mutual_count == 1 ? 'общий друг' : (f.mutual_count < 5 ? 'общих друга' : 'общих друзей') }}
+                                {% endif %}
+                            </div>
+                            <div class="friend-actions">
+                                <a href="/id{{ f.id }}" class="friend-btn friend-btn--primary">Посмотреть профиль</a>
+                                <button type="button" class="friend-btn friend-btn--danger" data-friend-action="remove">Удалить из друзей</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </section>
+
+        <!-- Incoming requests -->
+        <section class="friends-section" data-section="incoming">
+            {% if incoming is empty %}
+                <div class="friends-empty">
+                    <p class="friends-empty-text">Нет заявок в друзья.</p>
+                </div>
+            {% else %}
+                <div class="friends-grid">
+                    {% for f in incoming %}
+                        <div class="friend-card" data-friend-card data-friend-id="{{ f.friend_user_id }}">
+                            <a href="/id{{ f.friend_user_id }}" class="friend-avatar">
+                                {% if f.avatar %}
+                                    <img src="{{ f.avatar }}" alt="" loading="lazy">
+                                {% else %}
+                                    <span class="friend-initials">{{ (f.name|slice(0,1) ~ f.surname|slice(0,1))|upper }}</span>
+                                {% endif %}
+                            </a>
+                            <a href="/id{{ f.friend_user_id }}" class="friend-name">{{ f.name }} {{ f.surname }}</a>
+                            {% if f.city %}
+                                <div class="friend-meta">{{ f.city }}</div>
+                            {% endif %}
+                            <div class="friend-actions">
+                                <button type="button" class="friend-btn friend-btn--primary" data-friend-action="accept">Принять заявку</button>
+                                <button type="button" class="friend-btn friend-btn--danger" data-friend-action="decline">Отклонить</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </section>
+
+        <!-- Outgoing requests -->
+        <section class="friends-section" data-section="outgoing">
+            {% if outgoing is empty %}
+                <div class="friends-empty">
+                    <p class="friends-empty-text">Нет исходящих заявок.</p>
+                </div>
+            {% else %}
+                <div class="friends-grid">
+                    {% for f in outgoing %}
+                        <div class="friend-card" data-friend-card data-friend-id="{{ f.friend_user_id }}">
+                            <a href="/id{{ f.friend_user_id }}" class="friend-avatar">
+                                {% if f.avatar %}
+                                    <img src="{{ f.avatar }}" alt="" loading="lazy">
+                                {% else %}
+                                    <span class="friend-initials">{{ (f.name|slice(0,1) ~ f.surname|slice(0,1))|upper }}</span>
+                                {% endif %}
+                            </a>
+                            <a href="/id{{ f.friend_user_id }}" class="friend-name">{{ f.name }} {{ f.surname }}</a>
+                            {% if f.city %}
+                                <div class="friend-meta">{{ f.city }}</div>
+                            {% endif %}
+                            <div class="friend-actions">
+                                <button type="button" class="friend-btn friend-btn--danger" data-friend-action="remove">Отменить заявку</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </section>
+    </div>
+
+</div>
+{% endblock %}

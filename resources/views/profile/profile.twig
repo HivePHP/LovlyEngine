@@ -3,82 +3,202 @@
 {% block content %}
     <div class="profile-main">
 
-        <!-- VK-style profile header card: avatar + name + info -->
+        <!-- Profile header card: cover banner + squared avatar + info -->
         <div class="profile-card profile-header-card">
-            <div class="profile-avatar profile-avatar-large">
-                <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#b0b8c1" stroke-width="1.2">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                </svg>
-            </div>
+            <div class="profile-cover"></div>
 
-            <div class="profile-header-info">
-                <div class="profile-header-top">
-                    <h1 class="profile-name">{{ name }} {{ surname }}</h1>
-                    <span class="profile-online">Online</span>
-                </div>
-
+            <div class="profile-header-body">
                 {% if userId == user_id %}
-                    <div class="profile-status" data-status-widget data-current-status="{{ status|e('html_attr') }}">
-                        {% if status %}
-                            <button type="button" class="profile-status-text" data-status-toggle title="Нажмите, чтобы изменить статус">{{ status }}</button>
+                <div class="profile-avatar-wrap" data-avatar-widget data-current-avatar="{{ avatar|e('html_attr') }}" data-avatar-original="{{ avatar_original|e('html_attr') }}">
+                    <div class="profile-avatar profile-avatar-large">
+                        {% if avatar %}
+                            <img class="profile-avatar-img" src="{{ avatar }}" alt="Аватар" data-avatar-img>
                         {% else %}
-                            <button type="button" class="profile-status-set" data-status-toggle>Установить статус</button>
+                            <svg class="profile-avatar-fallback" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#b0b8c1" stroke-width="1.2" data-avatar-fallback>
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                            </svg>
                         {% endif %}
+                        <span class="photo-online"></span>
+                        <button type="button" class="profile-avatar-overlay" data-avatar-toggle title="Сменить фотографию">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <span>Сменить фото</span>
+                        </button>
+                        <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" hidden data-avatar-input>
                     </div>
+                    <div class="profile-avatar-menu" data-avatar-menu hidden>
+                        <div class="avatar-menu-title">Фотография профиля</div>
+                        <button type="button" class="profile-avatar-menu-item" data-avatar-action="upload" data-avatar-upload>Загрузить аватарку</button>
+                        <button type="button" class="profile-avatar-menu-item" data-avatar-action="update" data-avatar-update hidden>Обновить аватарку</button>
+                        <button type="button" class="profile-avatar-menu-item" data-avatar-action="recrop" data-avatar-recrop hidden>Редактировать область</button>
+                        <div class="avatar-menu-divider"></div>
+                        <button type="button" class="profile-avatar-menu-item profile-avatar-menu-item--danger" data-avatar-action="delete" data-avatar-delete hidden>Удалить аватарку</button>
+                    </div>
+                </div>
                 {% else %}
-                    {% if status %}
-                    <div class="profile-status">
-                        <span class="profile-status-text profile-status-readonly">{{ status }}</span>
-                    </div>
+                <div class="profile-avatar profile-avatar-large">
+                    {% if avatar %}
+                        <img class="profile-avatar-img" src="{{ avatar }}" alt="Аватар">
+                    {% else %}
+                        <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#b0b8c1" stroke-width="1.2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                        </svg>
                     {% endif %}
+                    <span class="photo-online"></span>
+                </div>
                 {% endif %}
 
-                <div class="profile-info">
-                    <div class="profile-info-row">
-                        <span class="profile-info-label">Пол:</span>
-                        <span class="profile-info-value">{{ sex == 'male' ? 'Мужской' : (sex == 'female' ? 'Женский' : 'Другое') }}</span>
-                    </div>
-                    <div class="profile-info-row">
-                        <span class="profile-info-label">День рождения:</span>
-                        <span class="profile-info-value">{{ birthday }}</span>
-                    </div>
-                    {% if city %}
-                    <div class="profile-info-row">
-                        <span class="profile-info-label">Город:</span>
-                        <span class="profile-info-value">{{ city }}</span>
-                    </div>
+                <div class="profile-header-info">
+                    <h1 class="profile-name">{{ name }} {{ surname }}</h1>
+                    <div class="profile-online">online</div>
+
+                    {% if userId == user_id %}
+                        <div class="profile-status" data-status-widget data-current-status="{{ status|e('html_attr') }}">
+                            {% if status %}
+                                <button type="button" class="profile-status-text" data-status-toggle title="Нажмите, чтобы изменить статус">{{ status }}</button>
+                            {% else %}
+                                <button type="button" class="profile-status-set" data-status-toggle>Установить статус</button>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        {% if status %}
+                        <div class="profile-status">
+                            <span class="profile-status-text profile-status-readonly">{{ status }}</span>
+                        </div>
+                        {% endif %}
                     {% endif %}
-                    {% if country %}
-                    <div class="profile-info-row">
-                        <span class="profile-info-label">Страна:</span>
-                        <span class="profile-info-value">{{ country }}</span>
+
+                    {% if userId == user_id %}
+                    <div class="profile-actions">
+                        <a href="/editprofile" class="btn header-edit-btn">Редактировать профиль</a>
+                    </div>
+                    {% else %}
+                    <div class="profile-actions" data-friend-widget
+                         data-viewer-id="{{ userId }}"
+                         data-profile-id="{{ user_id }}"
+                         data-relation="{{ friend_relation }}">
+                        {% if friend_relation == 'friends' %}
+                            <button type="button" class="friend-btn friend-btn--primary friend-btn--profile" data-friend-action="remove">Удалить из друзей</button>
+                        {% elseif friend_relation == 'incoming' %}
+                            <button type="button" class="friend-btn friend-btn--primary friend-btn--profile" data-friend-action="accept">Принять заявку</button>
+                            <button type="button" class="friend-btn friend-btn--danger friend-btn--profile" data-friend-action="decline">Отклонить</button>
+                        {% elseif friend_relation == 'outgoing' %}
+                            <button type="button" class="friend-btn friend-btn--profile" data-friend-action="remove">Заявка отправлена</button>
+                        {% else %}
+                            <button type="button" class="friend-btn friend-btn--primary friend-btn--profile" data-friend-action="add">Добавить в друзья</button>
+                        {% endif %}
                     </div>
                     {% endif %}
                 </div>
+            </div>
 
-                {% if userId == user_id %}
-                    <a href="/editprofile" class="btn-secondary btn-sm header-edit-btn">Редактировать профиль</a>
+            <div class="profile-info">
+                <div class="profile-info-row">
+                    <span class="profile-info-label">День рождения:</span>
+                    <span class="profile-info-value">{{ birthday }}</span>
+                </div>
+                {% if city %}
+                <div class="profile-info-row">
+                    <span class="profile-info-label">Город:</span>
+                    <span class="profile-info-value">{{ city }}</span>
+                </div>
+                {% endif %}
+                {% if country %}
+                <div class="profile-info-row">
+                    <span class="profile-info-label">Страна:</span>
+                    <span class="profile-info-value">{{ country }}</span>
+                </div>
+                {% endif %}
+                {% if photo_count %}
+                <div class="profile-info-row">
+                    <span class="profile-info-label">Фотографии:</span>
+                    <a href="{{ albums_url }}" class="profile-info-value profile-info-link">{{ photo_count }}</a>
+                </div>
                 {% endif %}
             </div>
         </div>
 
+        {% if common_friends %}
+        <div class="profile-card">
+            <div class="profile-card-header">
+                <h3 class="profile-section-title">Общие друзья</h3>
+                <a href="/friends" class="profile-info-link">Все друзья</a>
+            </div>
+            <div class="profile-common-friends" data-common-friends>
+                {% for cf in common_friends %}
+                    <a href="/id{{ cf.id }}" class="profile-common-friend" data-common-avatar title="{{ cf.name }} {{ cf.surname }}">
+                        {% if cf.avatar %}
+                            <img src="{{ cf.avatar }}" alt="" loading="lazy">
+                        {% else %}
+                            <span class="profile-common-initials">{{ (cf.name|slice(0,1) ~ cf.surname|slice(0,1))|upper }}</span>
+                        {% endif %}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
         {% if userId == user_id %}
-        <div class="status-modal" data-status-modal hidden>
-            <div class="status-modal-backdrop" data-status-close></div>
-            <div class="status-modal-card">
-                <h3 class="status-modal-title">Статус</h3>
-                <input
-                    type="text"
-                    name="status"
-                    class="status-modal-input"
-                    maxlength="120"
-                    placeholder="Введите статус..."
-                    autocomplete="off"
-                >
-                <div class="status-modal-error" data-status-error></div>
-                <div class="status-modal-actions">
+        <div class="avatar-modal modal" data-avatar-modal data-modal hidden>
+            <div class="avatar-modal-backdrop modal-backdrop" data-modal-backdrop data-modal-close></div>
+            <div class="avatar-modal-card modal-card">
+                <h3 class="avatar-modal-title modal-title" data-modal-title>Изменение фотографии</h3>
+                <div class="modal-body">
+                    <div class="avatar-crop-wrap" data-avatar-wrap hidden>
+                        <figure class="avatar-crop-frame">
+                            <canvas class="avatar-crop-canvas" data-avatar-crop-canvas></canvas>
+                            <img class="avatar-crop-loader" alt="" data-avatar-crop-image aria-hidden="true">
+                            <div class="avatar-crop-box" data-avatar-crop-box hidden>
+                                <span class="avatar-crop-handle avatar-crop-handle--tl" data-handle="top-left"></span>
+                                <span class="avatar-crop-handle avatar-crop-handle--tr" data-handle="top-right"></span>
+                                <span class="avatar-crop-handle avatar-crop-handle--bl" data-handle="bottom-left"></span>
+                                <span class="avatar-crop-handle avatar-crop-handle--br" data-handle="bottom-right"></span>
+                            </div>
+                            <span class="avatar-crop-size" data-avatar-crop-size hidden></span>
+                        </figure>
+                        <p class="avatar-crop-hint">Перетаскивайте и изменяйте размер области, чтобы выбрать аватар.</p>
+                        <div class="avatar-crop-bottom">
+                            <div class="avatar-crop-previews">
+                                <div class="avatar-crop-preview-item">
+                                    <canvas class="avatar-crop-preview" data-avatar-preview="100" width="100" height="100"></canvas>
+                                    <span class="avatar-crop-preview-label">100×100</span>
+                                </div>
+                                <div class="avatar-crop-preview-item">
+                                    <canvas class="avatar-crop-preview" data-avatar-preview="50" width="50" height="50"></canvas>
+                                    <span class="avatar-crop-preview-label">50×50</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="avatar-crop-empty" data-avatar-empty>
+                        Выберите изображение, чтобы начать.
+                    </div>
+                </div>
+                <div class="avatar-modal-error modal-error" data-modal-error></div>
+                <div class="avatar-modal-actions modal-actions">
+                    <button type="button" class="btn-secondary" data-avatar-confirm hidden>Сохранить</button>
+                    <button type="button" class="btn-secondary avatar-cancel-btn" data-modal-close>Отмена</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-modal modal" data-status-modal data-modal hidden>
+            <div class="status-modal-backdrop modal-backdrop" data-modal-backdrop data-modal-close></div>
+            <div class="status-modal-card modal-card">
+                <h3 class="status-modal-title modal-title" data-modal-title>Статус</h3>
+                <div class="modal-body">
+                    <input
+                        type="text"
+                        name="status"
+                        class="status-modal-input"
+                        maxlength="120"
+                        placeholder="Введите статус..."
+                        autocomplete="off"
+                    >
+                </div>
+                <div class="status-modal-error modal-error" data-modal-error></div>
+                <div class="status-modal-actions modal-actions">
                     <button type="button" class="btn-primary status-save-btn" data-status-save>Сохранить</button>
-                    <button type="button" class="btn-secondary status-cancel-btn" data-status-close>Отмена</button>
+                    <button type="button" class="btn-secondary status-cancel-btn" data-modal-close>Отмена</button>
                 </div>
             </div>
         </div>
@@ -111,13 +231,29 @@
         </div>
         {% endif %}
 
-        {% if userId %}
+        {% if recent_photos %}
         <div class="profile-card">
-            <div class="profile-photo-upload">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1877f2" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                <span>Добавить фотографии</span>
+            <div class="profile-card-header">
+                <h3 class="profile-section-title">Фотографии</h3>
+                <a href="{{ albums_url }}" class="profile-info-link">Все фотографии</a>
+            </div>
+            <div class="profile-recent-photos">
+                {% for photo in recent_photos %}
+                <a href="/album/{{ photo.album_id }}" class="profile-recent-photo" title="{{ photo.album_title }}">
+                    <img src="{{ photo.thumb ?: photo.path }}" alt="{{ photo.album_title }}" loading="lazy">
+                </a>
+                {% endfor %}
             </div>
         </div>
+        {% endif %}
+
+        {% if userId %}
+        <a href="/albums/id{{ userId }}" class="profile-card profile-photo-upload-link">
+            <div class="profile-photo-upload">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1877f2" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span>Фотографии</span>
+            </div>
+        </a>
 
         <div class="profile-card">
             <div class="profile-wall-input">

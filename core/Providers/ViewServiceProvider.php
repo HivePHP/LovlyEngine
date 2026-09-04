@@ -44,6 +44,7 @@ class ViewServiceProvider implements ServiceProviderInterface
                 'userId'       => null,
                 'userName'     => '',
                 'userInitials' => '',
+                'userAvatar'   => '',
             ]);
             return;
         }
@@ -56,6 +57,7 @@ class ViewServiceProvider implements ServiceProviderInterface
             'userId'       => $user['id'],
             'userName'     => trim($user['name'] . ' ' . $user['surname']),
             'userInitials' => $initials,
+            'userAvatar'   => $user['avatar'] ?? '',
         ]);
     }
 }

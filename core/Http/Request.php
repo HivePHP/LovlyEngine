@@ -71,6 +71,23 @@ final class Request
         return $_SERVER[$key] ?? null;
     }
 
+    /**
+     * Return one uploaded file entry from $_FILES, or null if absent.
+     *
+     * @return array{name?:string,type?:string,tmp_name?:string,error?:int,size?:int}|null
+     */
+    public function file(string $key): ?array
+    {
+        return $_FILES[$key] ?? null;
+    }
+
+    public function hasFile(string $key): bool
+    {
+        return isset($_FILES[$key])
+            && ($_FILES[$key]['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE;
+    }
+
+
     public function getMethod(): string
     {
         return $_SERVER['REQUEST_METHOD'] ?? 'GET';

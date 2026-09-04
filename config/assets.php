@@ -63,6 +63,8 @@ return [
         'register-page' => ['css/pages/register.css'],
         'profile-page'  => ['css/pages/profile.css'],
         'edit-page'     => ['css/pages/edit-profile.css'],
+        'albums-page'   => ['css/pages/albums.css'],
+        'friends-page'  => ['css/pages/friends.css'],
     ],
 
     // Page assets. A page maps to the css bundles (in order) and the JS
@@ -86,6 +88,16 @@ return [
         'edit-profile' => [
             'css' => ['app', 'chrome', 'profile-page', 'edit-page'],
             'js'  => ['js/pages/shell.js', 'js/pages/page-transition.js', 'js/pages/edit-profile.js'],
+        ],
+
+        'albums' => [
+            'css' => ['app', 'chrome', 'profile-page', 'albums-page'],
+            'js'  => ['js/pages/shell.js', 'js/pages/page-transition.js', 'js/pages/albums.js'],
+        ],
+
+        'friends' => [
+            'css' => ['app', 'chrome', 'friends-page'],
+            'js'  => ['js/pages/shell.js', 'js/pages/page-transition.js', 'js/pages/friends.js'],
         ],
     ],
 ];

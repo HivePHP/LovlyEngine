@@ -1,0 +1,589 @@
+/* ============================================================
+   PAGE: PROFILE — header card, main content, wall, about
+   ("profile-page" bundle, on profile & edit-profile screens)
+   ============================================================ */
+
+/* PROFILE HEADER CARD (VK-style) */
+.profile-header-card {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    padding: 24px;
+}
+
+.profile-avatar-large {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: #e7e8ec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.profile-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.profile-avatar-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.profile-avatar-overlay:hover,
+.profile-avatar-overlay:focus-visible {
+    opacity: 1;
+}
+
+.profile-avatar-large[data-avatar-widget]:hover .profile-avatar-overlay {
+    opacity: 1;
+}
+
+.profile-header-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.profile-header-top {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+.profile-header-top .profile-name {
+    font-size: 24px;
+}
+
+.header-edit-btn {
+    display: inline-block;
+    margin-top: 16px;
+    width: auto;
+    padding: 8px 20px;
+}
+
+/* MAIN */
+.profile-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* CARD */
+.profile-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.profile-card-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.profile-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+}
+
+.profile-online {
+    font-size: 13px;
+    color: #4bb34b;
+    font-weight: 500;
+}
+
+/* STATUS */
+.profile-status {
+    margin-bottom: 16px;
+}
+
+.profile-status-input {
+    width: 100%;
+    border: 1px solid #d3d9de;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #818c99;
+    outline: none;
+    background: #f5f7fa;
+    cursor: pointer;
+}
+
+.profile-status-input:hover {
+    border-color: #aab5c1;
+}
+
+.profile-status-input:focus {
+    border-color: #1877f2;
+    background: #fff;
+}
+
+/* STATUS: VK-style set button / editable text */
+.profile-status-set {
+    border: none;
+    background: #e7f1ff;
+    color: #1877f2;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.profile-status-set:hover {
+    background: #d3e6ff;
+}
+
+.profile-status-text {
+    border: none;
+    background: transparent;
+    color: #333;
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: left;
+    padding: 0;
+    cursor: text;
+    border-bottom: 1px dashed transparent;
+}
+
+.profile-status-text:hover {
+    border-bottom-color: #aab5c1;
+}
+
+.profile-status-readonly {
+    cursor: default;
+}
+
+.profile-status-readonly:hover {
+    border-bottom-color: transparent;
+}
+
+/* ============================================================
+   MODAL (универсальное модульное окно)
+   Оба окна (avatar-modal, status-modal) используют общие
+   классы .modal / .modal-backdrop / .modal-card и т.д.
+   ============================================================ */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal[hidden] {
+    display: none;
+}
+
+.modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-card {
+    position: relative;
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    width: 100%;
+    max-width: 420px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.modal-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 16px 0;
+}
+
+.modal-body {
+    /* контент окна */
+}
+
+.modal-error {
+    min-height: 18px;
+    font-size: 13px;
+    color: #e64646;
+    margin-top: 6px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+/* status-modal: сохраняет "родные" классы и ширину карточки */
+.status-modal .modal-card {
+    max-width: 420px;
+}
+
+.status-modal-input {
+    width: 100%;
+    border: 1px solid #d3d9de;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.status-modal-input:focus {
+    border-color: #1877f2;
+}
+
+/* INFO */
+.profile-info {
+    border-top: 1px solid #e7e8ec;
+    padding-top: 14px;
+}
+
+.profile-info-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.profile-info-label {
+    color: #818c99;
+    min-width: 130px;
+}
+
+.profile-info-value {
+    color: #333;
+}
+
+.profile-info-link {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #1877f2;
+}
+
+.profile-info-link:hover {
+    text-decoration: underline;
+}
+
+/* ============================================================
+   AVATAR CROP MODAL (VK-style)
+   ============================================================ */
+/* avatar-modal наследует базу .modal; здесь только ширина карточки */
+.avatar-modal .modal-card {
+    max-width: 520px;
+}
+
+.avatar-crop-frame {
+    position: relative;
+    margin: 0 0 10px 0;
+    width: 100%;
+    height: 320px;
+    background: #f2f3f5;
+    border-radius: 8px;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* Изображение рисуется на <canvas> (cover) — канва и есть источник истины,
+   координаты рамки считаются от неё, поэтому результат всегда совпадает. */
+.avatar-crop-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* Скрытый загрузчик изображения (используется только для чтения naturalWidth). */
+.avatar-crop-loader {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+    border: 0;
+}
+
+/* Затемняющие панели вокруг рамки. Позиционируются JS строго внутри фрейма,
+   поэтому физически не могут затемнить экран или заголовок окна. */
+.avatar-crop-shade {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    z-index: 1;
+}
+
+.avatar-crop-frame.is-cropping .avatar-crop-shade {
+    opacity: 1;
+}
+
+.avatar-crop-box {
+    position: absolute;
+    box-sizing: border-box;
+    border: 2px solid #fff;
+    outline: 1px solid rgba(0, 0, 0, 0.5);
+    cursor: move;
+    opacity: 0;
+    touch-action: none;
+    z-index: 3;
+    /* Лёгкая сетка 3x3 внутри выделения (как в CropperJS). */
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.4) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 1px, transparent 1px);
+    background-size: 33.333% 33.333%;
+    background-position: -1px -1px, -1px -1px;
+}
+
+.avatar-crop-box--active {
+    opacity: 1;
+}
+
+.avatar-crop-handle {
+    position: absolute;
+    background: #fff;
+    border: 2px solid #1877f2;
+    box-sizing: border-box;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    touch-action: none;
+    z-index: 3;
+}
+.avatar-crop-handle--tl { top: -8px;  left: -8px;  cursor: nwse-resize; }
+.avatar-crop-handle--tr { top: -8px;  right: -8px; cursor: nesw-resize; }
+.avatar-crop-handle--bl { bottom: -8px; left: -8px; cursor: nesw-resize; }
+.avatar-crop-handle--br { bottom: -8px; right: -8px; cursor: nwse-resize; }
+
+/* Подпись размера выбранной области. */
+.avatar-crop-size {
+    position: absolute;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.55);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 4;
+}
+
+.avatar-crop-hint {
+    font-size: 12px;
+    color: #818c99;
+    text-align: center;
+    margin: 6px 0 0 0;
+}
+
+/* Нижняя панель: превью слева */
+.avatar-crop-bottom {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 10px;
+    min-height: 60px;
+}
+
+.avatar-crop-previews {
+    display: flex;
+    gap: 20px;
+}
+
+.avatar-crop-preview-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.avatar-crop-preview {
+    display: block;
+    border: 1px solid #333;
+    background: #eee;
+    border-radius: 2px;
+}
+
+.avatar-crop-preview-label {
+    font-size: 10px;
+    color: #818c99;
+}
+
+.avatar-crop-empty {
+    padding: 40px 0;
+    text-align: center;
+    color: #818c99;
+    font-size: 14px;
+}
+
+.avatar-modal-error {
+    min-height: 18px;
+    font-size: 13px;
+    color: #e64646;
+    margin-top: 6px;
+}
+
+.avatar-modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+.avatar-cancel-btn {
+    background: #e7e8ec !important;
+    color: #333 !important;
+}
+
+/* PHOTO UPLOAD */
+.profile-photo-upload-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.profile-photo-upload-link:hover .profile-photo-upload {
+    opacity: 0.8;
+}
+
+.profile-photo-upload {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 4px 0;
+    font-size: 14px;
+    color: #1877f2;
+    font-weight: 500;
+}
+
+.profile-photo-upload:hover {
+    opacity: 0.8;
+}
+
+/* WALL INPUT */
+.profile-wall-input {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-wall-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #4a76a8;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.profile-wall-placeholder {
+    flex: 1;
+    padding: 10px 14px;
+    background: #f5f7fa;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #818c99;
+    cursor: pointer;
+}
+
+.profile-wall-placeholder:hover {
+    background: #ebedf0;
+}
+
+/* WALL EMPTY */
+.profile-wall-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 12px;
+}
+
+.profile-wall-empty-icon {
+    opacity: 0.5;
+}
+
+.profile-wall-empty-text {
+    font-size: 14px;
+    color: #818c99;
+    margin: 0;
+}
+
+/* PROFILE SECTION TITLE */
+.profile-section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 16px 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e7e8ec;
+}
+
+/* PROFILE ABOUT */
+.profile-about-section {
+    margin-bottom: 16px;
+}
+
+.profile-about-section:last-child {
+    margin-bottom: 0;
+}
+
+.profile-about-label {
+    font-size: 13px;
+    color: #818c99;
+    margin-bottom: 4px;
+}
+
+.profile-about-text {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}

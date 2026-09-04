@@ -150,7 +150,7 @@ export default class PageTransition {
             }
 
             this.apply(envelope);
-            window.history.pushState({ hive: true }, envelope.title || '', href);
+            window.history.pushState({ hive: true }, envelope.title || '', envelope.url || href);
             this.mountPageModule(envelope);
         } catch (err) {
             this.hardNavigate(href);
